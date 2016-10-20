@@ -4,7 +4,9 @@
   "description": "Greenfield project by Invalid Memories Team",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "grunt build && grunt upload",
+    "test": "grunt test",
+    "lint": "eslint ./"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,17 @@
   },
   "homepage": "https://github.com/hr-memories/greenfield#readme",
   "dependencies": {
+    "chai": "^3.5.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "express": "^4.14.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-nodemon": "^0.4.2",
+    "mocha": "^3.1.2",
     "nodemon": "^1.11.0",
     "request": "^2.75.0"
   }
