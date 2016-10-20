@@ -5,14 +5,14 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'index.js'
+        script: 'server/index.js'
       }
     },
 
     // TODO: add all other file paths that should be linted
     eslint: {
       target: [
-        'server/**/*.js', 'index.js'
+        'server/**/*.js'
       ]
     },
 
