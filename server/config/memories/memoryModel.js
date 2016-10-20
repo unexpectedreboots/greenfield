@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('../db-config');
 var Schema = mongoose.Schema;
 
 var memorySchema = new Schema({

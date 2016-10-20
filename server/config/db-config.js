@@ -9,3 +9,5 @@ db.once('open', function() {
   console.log('db is open!');
 });
 
+
+module.exports = mongoose;
