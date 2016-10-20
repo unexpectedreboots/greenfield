@@ -1,0 +1,24 @@
+{
+  "name": "invalid-memories-greenfield",
+  "version": "1.0.0",
+  "description": "Greenfield project by Invalid Memories Team",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hr-memories/greenfield.git"
+  },
+  "author": "Bill Zito, Bobby Wei, Karina Kinaman, Kyle Chun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hr-memories/greenfield/issues"
+  },
+  "homepage": "https://github.com/hr-memories/greenfield#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "nodemon": "^1.11.0",
+    "request": "^2.75.0"
+  }
+}
