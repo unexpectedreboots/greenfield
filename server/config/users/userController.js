@@ -1,14 +1,24 @@
 var User = require('./userModel');
 
 exports.login = function(req, res) {
-
+  User.findOne({username: req.body.username})
+    .then(function(user) {
+      res.status(201).send(user);
+    });
 };
 
 exports.signup = function(req, res) {
-  User.create({
-    username: req.body.username,
-    password: req.body.password
-  }).then(function(user) {
-    res.status(201).send(user);
-  });
+  User.findOne({username: req.body.username})
+    .then(function(user) {
+      if (!user) {
+        User.create({
+          username: req.body.username,
+          password: req.body.password
+        }).then(function(user) {
+          res.status(201).send(user);
+        });
+      } else {
+        res.status(201).send();
+      }
+    });
 };
