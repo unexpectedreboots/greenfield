@@ -4,6 +4,9 @@ exports.login = function(req, res) {
   User.findOne({username: req.body.username})
     .then(function(user) {
       // TODO: WHAT HAPPENS IF USER DOESN'T EXIST
+      if (!user) {
+        res.status(401).send();
+      }
       res.status(201).send(user);
     });
 };
