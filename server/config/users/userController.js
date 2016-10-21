@@ -3,6 +3,7 @@ var User = require('./userModel');
 exports.login = function(req, res) {
   User.findOne({username: req.body.username})
     .then(function(user) {
+      // TODO: WHAT HAPPENS IF USER DOESN'T EXIST
       res.status(201).send(user);
     });
 };
@@ -18,7 +19,7 @@ exports.signup = function(req, res) {
           res.status(201).send(user);
         });
       } else {
-        res.status(201).send();
+        res.status(401).send();
       }
     });
 };

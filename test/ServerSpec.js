@@ -1,8 +1,15 @@
 var expect = require('chai').expect;
 var request = require('request');
 
+var User = require('../server/config/users/userModel');
 
 describe('', function() {
+
+  //TODO: WRITE BEFORE EACH TO DELETE DOCUMENTS FROM COLLECTIONS
+  beforeEach(function(done) {
+    User.remove({username: 'Phillip'}).exec();
+    done();
+  });
 
   describe('User creation', function() {
     var signUpOptions = {
@@ -21,23 +28,35 @@ describe('', function() {
         }
         expect(res.body.username).to.equal('Phillip');
         expect(res.body.password).to.not.be.null;
+        expect(res.statusCode).to.equal(201);
         done();
       });
     });
 
     it('Should not add duplicate username to the database', function(done) {
       request(signUpOptions, function(err, res, body) {
-        if (err) {
-          console.log('ERROR:', err);
-        }
-        expect(res.body).to.be.undefined;
-        done();
+        request(signUpOptions, function(err, res, body) {
+          if (err) {
+            console.log('ERROR:', err);
+          }
+          expect(res.body).to.be.undefined;
+          expect(res.statusCode).to.equal(401);
+          done();
+        });
       });
     });
   });
 
   describe('User log in', function() {
     var signUpOptions = {
+      method: 'POST',
+      url: 'http://localhost:3000/api/signup',
+      json: {
+        username: 'Phillip',
+        password: 'Phillip'
+      }
+    };
+    var loginOptions = {
       method: 'POST',
       url: 'http://localhost:3000/api/login',
       json: {
@@ -48,18 +67,25 @@ describe('', function() {
 
     it('Should log in an existing user to the database', function(done) {
       request(signUpOptions, function(err, res, body) {
-        if (err) {
-          console.log('ERROR:', err);
-        }
-        expect(res.body.username).to.equal('Phillip');
-        expect(res.body.password).to.not.be.null;
-        done();
+        request(loginOptions, function(err, res, body) {
+          if (err) {
+            console.log('ERROR:', err);
+          }
+          expect(res.body.username).to.equal('Phillip');
+          expect(res.body.password).to.not.be.null;
+          expect(res.statusCode).to.equal(201);
+          done();
+        });
       });
     });
   });
 
+// TODO WHAT HAPPENS IF THE USER DOESN'T YET EXIST?
+
   describe('Memory creation', function() {
 
   });
+
+  // TODO: write tests for routes
 
 });
