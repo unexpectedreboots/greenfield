@@ -18,33 +18,45 @@ class App extends React.Component {
   }
 
   login() {
-    // check if username exits (make fetch to database)
-      // if it does exist, check password to see if matches
-      // else, give error message password
-    // else, give error message 
+    // check if username exits (make fetch to database) and check password to see if matches
+    
+    // if (usernameExists(this.state.username) && passwordMatch(this.state.password)) {
+    //   navigate to next scene
 
-    alert(this.state.username);
-    // login with this.state.username
-
-    // else, signup user with this.state.username
+    // } else {
+    //   give error message "invalid username or password"
+    // }
   }
 
   signup() {
     // check if username exists (make fetch)
     // if it doesnt, create new user/password combo
-    alert(this.state.password);
-    // 
+
+    // if (!usernameExists(this.state.username)) {
+    //   post(username, password);
+    // }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Hi Bill!</Text>
-        <TextInput style={styles.textbox} onChangeText={(text)=>this.setState({username: text})} value={this.state.username} placeholder="enter username here"/>
-        <TextInput secureTextEntry={true} style={styles.textbox} onChangeText={(text)=>this.setState({password: text})} value={this.state.password} placeholder="enter password here"/>
+        <Text>Selfsnap!</Text>
+        <TextInput 
+          style={styles.textbox} 
+          onChangeText={(text)=>this.setState({username: text})} 
+          value={this.state.username} 
+          placeholder="enter username here"/>
+        <TextInput 
+          secureTextEntry={true} 
+          style={styles.textbox} 
+          onChangeText={(text)=>this.setState({password: text})} 
+          value={this.state.password} 
+          placeholder="enter password here"/>
+
         <TouchableHighlight onPress={this.login.bind(this)}>
           <Text style={styles.textbox}>Login</Text>
         </TouchableHighlight>
+
         <TouchableHighlight onPress={this.signup.bind(this)}>
           <Text style={styles.textbox}>Signup</Text>
         </TouchableHighlight>
