@@ -5,7 +5,6 @@ var User = require('../server/config/users/userModel');
 
 describe('', function() {
 
-  //TODO: WRITE BEFORE EACH TO DELETE DOCUMENTS FROM COLLECTIONS
   beforeEach(function(done) {
     User.remove({username: 'Phillip'}).exec();
     done();
@@ -78,9 +77,19 @@ describe('', function() {
         });
       });
     });
-  });
 
-// TODO WHAT HAPPENS IF THE USER DOESN'T YET EXIST?
+    it('Should not log in a user that does not exist', function(done) {
+      request(loginOptions, function(err, res, body) {
+        if (err) {
+          console.log('ERROR:', err);
+        }
+        expect(res.body).to.be.undefined;
+        expect(res.statusCode).to.equal(401);
+        done();
+      });
+    });
+
+  });
 
   describe('Memory creation', function() {
 
