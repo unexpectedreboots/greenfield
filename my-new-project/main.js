@@ -1,4 +1,4 @@
-import Exponent from 'exponent';
+// import Exponent from 'exponent';
 import React from 'react';
 import {
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-Exponent.registerRootComponent(App);
+// Exponent.registerRootComponent(App);
