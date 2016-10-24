@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/greenfieldDB');
+mongoose.connect('mongodb://admin:admin@ds031157.mlab.com:31157/heroku_vt7nx6q4');
 
 var db = mongoose.connection;
 
