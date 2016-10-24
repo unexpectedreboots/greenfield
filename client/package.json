@@ -1,0 +1,22 @@
+{
+  "name": "my-new-project",
+  "version": "0.0.0",
+  "description": "Hello Exponent!",
+  "author": null,
+  "private": true,
+  "main": "main.js",
+  "dependencies": {
+    "exponent": "^10.0.4",
+    "react": "~15.3.2",
+    "react-native": "github:exponentjs/react-native#sdk-10.1.2"
+  },
+  "devDependencies": {
+    "jest-exponent": "^0.1.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-exponent"
+  }
+}
