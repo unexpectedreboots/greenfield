@@ -1,13 +1,21 @@
 import 'react-native';
 import React from 'react';
-import App from '../main';
+import Login from '../login';
+import Homescreen from '../homescreen';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
-it('renders correctly', () => {
+it('Login renders correctly', () => {
   const tree = renderer.create(
-    <App />
+    <Login />
+  ).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('Homescreen renders correctly', () => {
+  const tree = renderer.create(
+    <Homescreen />
   ).toJSON();
   expect(tree).toMatchSnapshot();
 });
