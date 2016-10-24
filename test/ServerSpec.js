@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var request = require('request');
 
-var User = require('../server/config/users/userModel');
+var User = require('../db/models/userModel');
 
 describe('', function() {
 

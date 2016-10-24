@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // configure server with routes
-require('./config/routes')(app, express);
+require('./routers/routes')(app, express);
 
 //start listening on given port
 var port = process.env.PORT || 3000;

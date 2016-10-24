@@ -1,5 +1,5 @@
-var userController = require('./users/userController');
-var memoryController = require('./memories/memoryController');
+var userController = require('../../db/controllers/userController');
+var memoryController = require('../../db/controllers/memoryController');
 
 module.exports = function(app, express) {
 
