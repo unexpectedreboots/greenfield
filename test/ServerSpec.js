@@ -20,7 +20,7 @@ describe('', function() {
       }
     };
 
-    it('Should add a new user to the database', function(done) {
+    it('Should return user info in response body for successful signups', function(done) {
       request(signUpOptions, function(err, res, body) {
         if (err) {
           console.log('ERROR:', err);
