@@ -1,4 +1,4 @@
-// import Exponent from 'exponent';
+import Exponent from 'exponent';
 import React from 'react';
 import {
   StyleSheet,
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// Exponent.registerRootComponent(App);
+Exponent.registerRootComponent(App);
