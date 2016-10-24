@@ -3,6 +3,12 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    run: {
+      server: {
+        args: ['./server/index.js']
+      }
+    },
+
     nodemon: {
       dev: {
         script: 'server/index.js'
@@ -42,9 +48,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-run');
 
   grunt.registerTask('server-dev', function(target) {
     grunt.task.run(['nodemon', 'watch']);
+  });
+
+  grunt.registerTask('start-prod', function(target) {
+    grunt.task.run(['run']);
   });
 
   //TODO: FILL OUT THE REST OF THESE TASKS
@@ -58,10 +69,11 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('upload', function(n) {
-    // if (grunt.option('prod')) {
-    // } else {
+    if (grunt.option('dev')) {
       grunt.task.run([ 'server-dev' ]);
-    // }
+    } else {
+      grunt.task.run([ 'start-prod' ]);
+    }
   });
 
   grunt.registerTask('deploy', function(n) {
