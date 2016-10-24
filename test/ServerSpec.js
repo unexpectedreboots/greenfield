@@ -41,8 +41,7 @@ describe('', function() {
         if (err) {
           console.log('ERROR:', err);
         }
-        expect(res.body.username).to.equal('Phillip');
-        expect(res.body.password).to.not.be.null;
+        expect(res.body.id_token).to.not.be.undefined;
         expect(res.statusCode).to.equal(201);
         done();
       });
@@ -98,8 +97,7 @@ describe('', function() {
             if (err) {
               console.log('ERROR:', err);
             }
-            expect(res.body.username).to.equal('Phillip');
-            expect(res.body.password).to.not.be.null;
+            expect(res.body.id_token).to.not.be.undefined;
             expect(res.statusCode).to.equal(201);
             done();
           });
