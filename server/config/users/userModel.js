@@ -2,7 +2,11 @@ var mongoose = require('../db-config');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  username: String,
+  username: {
+    type: String,
+    index: true,
+    unique: true
+  },
   password: String,
   memories: [{
     type: Schema.Types.ObjectId,
