@@ -4,7 +4,7 @@
   "description": "Greenfield project by Invalid Memories Team",
   "main": "index.js",
   "scripts": {
-    "start": "grunt build && grunt upload",
+    "start": "grunt upload",
     "test": "grunt test",
     "lint": "eslint ./"
   },
