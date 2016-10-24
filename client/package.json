@@ -1,10 +1,10 @@
 {
-  "name": "my-new-project",
+  "name": "memories",
   "version": "0.0.0",
-  "description": "Hello Exponent!",
+  "description": "auto-journal memories",
   "author": null,
   "private": true,
-  "main": "main.js",
+  "main": "homescreen.js",
   "dependencies": {
     "exponent": "^10.0.4",
     "react": "~15.3.2",
