@@ -1,19 +1,35 @@
 var expect = require('chai').expect;
 var request = require('request');
 
-var User = require('../server/config/users/userModel');
+var User = require('../db/models/userModel');
 
 describe('', function() {
 
-  beforeEach(function(done) {
-    User.remove({username: 'Phillip'}).exec();
-    done();
-  });
+  // beforeEach(function(done) {
+  //   console.log('BEFORE');
+  //   User.remove({username: 'Phillip'}, function(err) {
+  //     if (err) {
+  //       console.log(err);
+  //     }
+  //   });
+  //   done();
+  // });
 
   describe('User creation', function() {
+
+    beforeEach(function(done) {
+      console.log('BEFORE');
+      User.remove({username: 'Phillip'}, function(err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+      done();
+    });
+
     var signUpOptions = {
       method: 'POST',
-      url: 'http://localhost:3000/api/signup',
+      url: 'http://localhost:3000/api/users/signup',
       json: {
         username: 'Phillip',
         password: 'Phillip'
@@ -25,8 +41,7 @@ describe('', function() {
         if (err) {
           console.log('ERROR:', err);
         }
-        expect(res.body.username).to.equal('Phillip');
-        expect(res.body.password).to.not.be.null;
+        expect(res.body.id_token).to.not.be.undefined;
         expect(res.statusCode).to.equal(201);
         done();
       });
@@ -47,9 +62,20 @@ describe('', function() {
   });
 
   describe('User log in', function() {
+
+    // beforeEach(function(done) {
+    //   console.log('BEFORE');
+    //   User.remove({username: 'Phillip'}, function(err) {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //   });
+    //   done();
+    // });
+
     var signUpOptions = {
       method: 'POST',
-      url: 'http://localhost:3000/api/signup',
+      url: 'http://localhost:3000/api/users/signup',
       json: {
         username: 'Phillip',
         password: 'Phillip'
@@ -57,7 +83,7 @@ describe('', function() {
     };
     var loginOptions = {
       method: 'POST',
-      url: 'http://localhost:3000/api/login',
+      url: 'http://localhost:3000/api/users/login',
       json: {
         username: 'Phillip',
         password: 'Phillip'
@@ -65,27 +91,30 @@ describe('', function() {
     };
 
     it('Should log in an existing user to the database', function(done) {
-      request(signUpOptions, function(err, res, body) {
-        request(loginOptions, function(err, res, body) {
-          if (err) {
-            console.log('ERROR:', err);
-          }
-          expect(res.body.username).to.equal('Phillip');
-          expect(res.body.password).to.not.be.null;
-          expect(res.statusCode).to.equal(201);
-          done();
+      User.remove({username: 'Phillip'}, function(err) {
+        request(signUpOptions, function(err, res, body) {
+          request(loginOptions, function(err, res, body) {
+            if (err) {
+              console.log('ERROR:', err);
+            }
+            expect(res.body.id_token).to.not.be.undefined;
+            expect(res.statusCode).to.equal(201);
+            done();
+          });
         });
       });
     });
 
     it('Should not log in a user that does not exist', function(done) {
-      request(loginOptions, function(err, res, body) {
-        if (err) {
-          console.log('ERROR:', err);
-        }
-        expect(res.body).to.be.undefined;
-        expect(res.statusCode).to.equal(401);
-        done();
+      User.remove({username: 'Phillip'}, function(err) {
+        request(loginOptions, function(err, res, body) {
+          if (err) {
+            console.log('ERROR:', err);
+          }
+          expect(res.body).to.be.undefined;
+          expect(res.statusCode).to.equal(401);
+          done();
+        });
       });
     });
 

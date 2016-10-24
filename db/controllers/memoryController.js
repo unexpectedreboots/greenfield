@@ -12,6 +12,6 @@ exports.fetchOne = function(req, res) {
 
 };
 
-exports.addOne = function(req, res) {
+var addOne = function(req, res) {
 
 };

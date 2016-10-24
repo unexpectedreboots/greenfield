@@ -2,6 +2,9 @@ var express = require('express');
 
 var bodyParser = require('body-parser');
 
+var userRouter = require('./routers/user-routes');
+var protectedRouter = require('./routers/protected-routes');
+
 var app = express();
 
 // host static client files on server
@@ -11,7 +14,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // configure server with routes
-require('./config/routes')(app, express);
+app.use('/api/users', userRouter);
+app.use('/api/memories', protectedRouter);
+
+// require('./routers/routes')(app, express);
 
 //start listening on given port
 var port = process.env.PORT || 3000;
