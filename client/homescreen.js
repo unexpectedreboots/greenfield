@@ -16,9 +16,6 @@ var STORAGE_KEY = 'id_token';
 export default class Homescreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      image: this.props.image
-    };
   }
 
   async _userLogout() {
@@ -28,6 +25,16 @@ export default class Homescreen extends React.Component {
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
+  }
+
+  _navigate(imageUrl) {
+    console.log('changing scenes!');
+    this.props.navigator.push({
+      name: 'MemoryDetails',
+      passProps: {
+        'image': {uri: imageUrl}
+      }
+    })
   }
 
   logout() {
@@ -48,9 +55,7 @@ export default class Homescreen extends React.Component {
     };
     oneImage().then((image)=> { 
       console.log('image returned was', image);
-      this.setState({
-        image: image
-      });
+      this._navigate(image.uri);
     });
   }
 
@@ -61,9 +66,7 @@ export default class Homescreen extends React.Component {
       return Exponent.ImagePicker.launchCameraAsync({allowsEditing: true, aspect: [1, 1]});
     };
     newImage().then((image) => {
-      this.setState({
-        image: image
-      });
+      this._navigate(image.uri);
     });
   }
 
@@ -85,8 +88,6 @@ export default class Homescreen extends React.Component {
         <TouchableHighlight>
           <Text style={styles.textbox} onPress={this.logout.bind(this)}>Logout</Text>
         </TouchableHighlight> 
-
-        <Image style={{width:200, height:200}} source={{uri: this.state.image.uri}}/>
       </View>
     );
   }
