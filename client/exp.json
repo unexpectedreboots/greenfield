@@ -1,6 +1,6 @@
 {
-  "name": "my-new-project",
-  "description": "An empty new project",
+  "name": "memories",
+  "description": "autojournal memories",
   "slug": "my-new-project",
   "sdkVersion": "10.0.0",
   "version": "1.0.0",

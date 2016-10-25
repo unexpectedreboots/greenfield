@@ -27,10 +27,10 @@ export default class Login extends React.Component {
   _navigate() {
     console.log('changing scenes!');
     this.props.navigator.push({
-      name: 'Homescreen'
-      // passProps: {
-        // pass in props here if needed
-      // }
+      name: 'Homescreen',
+      passProps: {
+        'image': {uri: 'https://facebook.github.io/react/img/logo_og.png'}
+      }
     })
   }
   
