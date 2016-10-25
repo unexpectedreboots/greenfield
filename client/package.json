@@ -18,6 +18,13 @@
     "test": "jest"
   },
   "jest": {
-    "preset": "jest-exponent"
+    "preset": "jest-exponent",
+    "moduleNameMapper": {
+      "\\./datepicker$": "<rootDir>/node_modules/tcomb-form-native/lib/templates/bootstrap/datepicker.ios.js",
+      "\\./select$": "<rootDir>/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js"
+    },
+    "preprocessorIgnorePatterns": [
+      "node_modules/(?!react-native|tcomb-form-native|apsl-react-native-button)"
+    ]
   }
 }
