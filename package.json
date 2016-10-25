@@ -1,0 +1,42 @@
+{
+  "name": "invalid-memories-greenfield",
+  "version": "1.0.0",
+  "description": "Greenfield project by Invalid Memories Team",
+  "main": "index.js",
+  "scripts": {
+    "start": "grunt upload",
+    "test": "grunt test",
+    "lint": "eslint ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hr-memories/greenfield.git"
+  },
+  "author": "Bill Zito, Bobby Wei, Karina Kinaman, Kyle Chun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hr-memories/greenfield/issues"
+  },
+  "homepage": "https://github.com/hr-memories/greenfield#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-nodemon": "^0.4.2",
+    "grunt-run": "^0.6.0",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.16.4",
+    "mocha": "^3.1.2",
+    "mongoose": "^4.6.4",
+    "nodemon": "^1.11.0",
+    "request": "^2.75.0"
+  }
+}
