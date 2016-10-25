@@ -21,23 +21,12 @@ export default class Memory extends React.Component {
     };
   }
 
-  // async getToken() {
-  //   try {
-  //     var token = await AsyncStorage.getItem(STORAGE_KEY);
-  //     return token;
-  //   } catch (error) {
-  //     console.log('AsyncStorage error: ' + error.message);
-  //   }
-  // }
-
   async uploadPhoto() {
     // Send post to server with image
     var photo = {
       uri: this.state.image.uri,
       type: 'image/jpeg'
     };
-
-    // var token = this.getToken();
 
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
@@ -49,7 +38,8 @@ export default class Memory extends React.Component {
     var form = new FormData();
     form.append('memoryImage', photo);
     console.log(form);
-    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/upload', 
+
+    fetch('http://localhost:3000/api/memories/upload', 
       {
         body: form,
         method: 'POST',
@@ -61,12 +51,6 @@ export default class Memory extends React.Component {
         // send request for api data
         return resp.json();
       });
-
-    // var context = this;
-    // setTimeout(function() {
-    //   context.setState({details: 'DONE.'});
-    //   console.log('new details', context.state.details);
-    // }, 3000);
   }
 
   render() {

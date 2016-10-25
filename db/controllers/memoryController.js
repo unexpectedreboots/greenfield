@@ -4,6 +4,8 @@ exports.upload = function(req, res) {
   console.log('POST: /api/memories/upload');
   // TODO: fill this logic out
   console.log('req.file is now', req.file);
+  console.log('REQUEST', req);
+  console.log('TYPE', typeof req.body.memoryImage);
   res.send();
 };
 
