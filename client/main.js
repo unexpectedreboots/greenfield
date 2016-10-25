@@ -2,7 +2,7 @@ import Exponent from 'exponent';
 import React from 'react';
 import Login from './login';
 import Homescreen from './homescreen';
-import MemoryDetails from './memoryDetails';
+import Memory from './memory';
 import {
   StyleSheet,
   Text,
@@ -20,8 +20,8 @@ class App extends React.Component {
     if (route.name === 'Homescreen') {
       return <Homescreen navigator={navigator}/>
     }
-    if (route.name === 'MemoryDetails') {
-      return <MemoryDetails navigator={navigator} {...route.passProps}/>
+    if (route.name === 'Memory') {
+      return <Memory navigator={navigator} {...route.passProps}/>
     }
   }
 

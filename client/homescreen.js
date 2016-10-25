@@ -30,7 +30,7 @@ export default class Homescreen extends React.Component {
   _navigate(imageUrl) {
     console.log('changing scenes!');
     this.props.navigator.push({
-      name: 'MemoryDetails',
+      name: 'Memory',
       passProps: {
         'image': {uri: imageUrl}
       }
