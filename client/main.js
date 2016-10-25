@@ -11,7 +11,7 @@ import {
   Navigator
 } from 'react-native';
 
-export default class App extends React.Component {
+class App extends React.Component {
   renderScene(route, navigator) {
     if (route.name == 'Login') {
       return <Login navigator={navigator} />
