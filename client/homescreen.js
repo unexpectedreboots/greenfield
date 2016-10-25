@@ -27,12 +27,12 @@ export default class Homescreen extends React.Component {
     }
   }
 
-  _navigate(imageUrl) {
+  _navigate(imageUri) {
     console.log('changing scenes!');
     this.props.navigator.push({
       name: 'Memory',
       passProps: {
-        'image': {uri: imageUrl}
+        'image': {uri: imageUri}
       }
     })
   }
@@ -66,6 +66,7 @@ export default class Homescreen extends React.Component {
       return Exponent.ImagePicker.launchCameraAsync({allowsEditing: true, aspect: [1, 1]});
     };
     newImage().then((image) => {
+      console.log('image taken at', image);
       this._navigate(image.uri);
     });
   }
