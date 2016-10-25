@@ -3,29 +3,18 @@ var request = require('request');
 
 var User = require('../db/models/userModel');
 
-describe('', function() {
+describe('Unprotected routes: ', function() {
 
-  // beforeEach(function(done) {
-  //   console.log('BEFORE');
-  //   User.remove({username: 'Phillip'}, function(err) {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //   });
-  //   done();
-  // });
-
-  describe('User creation', function() {
-
-    beforeEach(function(done) {
-      console.log('BEFORE');
-      User.remove({username: 'Phillip'}, function(err) {
-        if (err) {
-          console.log(err);
-        }
-      });
+  beforeEach(function(done) {
+    User.remove({username: 'Phillip'}, function(err, something) {
+      if (err) {
+        console.log('err', err);
+      }
       done();
     });
+  });
+
+  describe('User signup', function() {
 
     var signUpOptions = {
       method: 'POST',
@@ -36,7 +25,7 @@ describe('', function() {
       }
     };
 
-    it('Should return user info in response body for successful signups', function(done) {
+    it('should return JWT in response body for successful signups', function(done) {
       request(signUpOptions, function(err, res, body) {
         if (err) {
           console.log('ERROR:', err);
@@ -47,7 +36,7 @@ describe('', function() {
       });
     });
 
-    it('Should not add duplicate username to the database', function(done) {
+    it('should return empty response for duplicate usernames', function(done) {
       request(signUpOptions, function(err, res, body) {
         request(signUpOptions, function(err, res, body) {
           if (err) {
@@ -59,19 +48,23 @@ describe('', function() {
         });
       });
     });
+
+    it('should insert new users into database', function(done) {
+      request(signUpOptions, function(err, res, body) {
+        if (err) {
+          console.log('ERROR:', err);
+        }
+        User.findOne({username: 'Phillip'})
+          .exec(function(err, user) {
+            expect(user.username).to.equal('Phillip');
+            expect(user.password).to.equal('Phillip'); // TODO change when encrypted
+          });
+        done();
+      });
+    });
   });
 
-  describe('User log in', function() {
-
-    // beforeEach(function(done) {
-    //   console.log('BEFORE');
-    //   User.remove({username: 'Phillip'}, function(err) {
-    //     if (err) {
-    //       console.log(err);
-    //     }
-    //   });
-    //   done();
-    // });
+  describe('User login', function() {
 
     var signUpOptions = {
       method: 'POST',
@@ -90,31 +83,27 @@ describe('', function() {
       }
     };
 
-    it('Should log in an existing user to the database', function(done) {
-      User.remove({username: 'Phillip'}, function(err) {
-        request(signUpOptions, function(err, res, body) {
-          request(loginOptions, function(err, res, body) {
-            if (err) {
-              console.log('ERROR:', err);
-            }
-            expect(res.body.id_token).to.not.be.undefined;
-            expect(res.statusCode).to.equal(201);
-            done();
-          });
-        });
-      });
-    });
-
-    it('Should not log in a user that does not exist', function(done) {
-      User.remove({username: 'Phillip'}, function(err) {
+    it('should return JWT with successful login', function(done) {
+      request(signUpOptions, function(err, res, body) {
         request(loginOptions, function(err, res, body) {
           if (err) {
             console.log('ERROR:', err);
           }
-          expect(res.body).to.be.undefined;
-          expect(res.statusCode).to.equal(401);
+          expect(res.body.id_token).to.not.be.undefined;
+          expect(res.statusCode).to.equal(201);
           done();
         });
+      });
+    });
+
+    it('should return empty response for nonexistent users', function(done) {
+      request(loginOptions, function(err, res, body) {
+        if (err) {
+          console.log('ERROR:', err);
+        }
+        expect(res.body).to.be.undefined;
+        expect(res.statusCode).to.equal(401);
+        done();
       });
     });
 
