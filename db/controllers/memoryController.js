@@ -3,6 +3,7 @@ var Memory = require('../models/memoryModel');
 exports.upload = function(req, res) {
   console.log('POST: /api/memories/upload');
   // TODO: fill this logic out
+  console.log('req.file is now', req.file);
   res.send();
 };
 
