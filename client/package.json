@@ -8,7 +8,8 @@
   "dependencies": {
     "exponent": "^10.0.4",
     "react": "~15.3.2",
-    "react-native": "github:exponentjs/react-native#sdk-10.1.2"
+    "react-native": "github:exponentjs/react-native#sdk-10.1.2",
+    "tcomb-form-native": "^0.6.1"
   },
   "devDependencies": {
     "jest-exponent": "^0.1.0"

@@ -4,12 +4,36 @@ import {
   Text,
   View,
   TextInput,
+  AlertIOS,
+  AsyncStorage,
   TouchableHighlight
 } from 'react-native';
+
+var STORAGE_KEY = 'id_token';
 
 export default class Homescreen extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  async _userLogout() {
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEY);
+      AlertIOS.alert("Logout Success!")
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
+
+  logout() {
+    console.log('logout called');
+    this._userLogout()
+    .then(()=>{
+      this.props.navigator.pop();
+    })
+    .catch((err)=>{
+      console.log('error logging out', err);
+    });
   }
 
   render() {
@@ -24,7 +48,7 @@ export default class Homescreen extends React.Component {
         </TouchableHighlight> 
 
         <TouchableHighlight>
-          <Text style={styles.textbox} onPress={ () => this.props.navigator.pop() }>Logout</Text>
+          <Text style={styles.textbox} onPress={this.logout.bind(this)}>Logout</Text>
         </TouchableHighlight> 
       </View>
     );

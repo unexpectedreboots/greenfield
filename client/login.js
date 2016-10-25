@@ -6,19 +6,27 @@ import {
   View,
   TextInput,
   TouchableHighlight,
-  Navigator
+  Navigator,
+  AlertIOS,
+  AsyncStorage
 } from 'react-native';
+var t = require('tcomb-form-native');
+
+var STORAGE_KEY = 'id_token';
+var Form = t.form.Form;
+
+var User = t.struct({
+  username: t.Str,
+  password: t.Str,
+});
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: '',
-      password: ''
-    };
   }
 
   _navigate() {
+    console.log('changing scenes!');
     this.props.navigator.push({
       name: 'Homescreen'
       // passProps: {
@@ -26,25 +34,75 @@ export default class Login extends React.Component {
       // }
     })
   }
+  
+  async _onValueChange(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+      console.log('token saved!');
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
 
   login() {
     // check if username exits (make fetch to database) and check password to see if matches
-    
+    var context = this;
+    var userInfo = this.refs.form.getValue();
+
+    if (userInfo) {
+      fetch('https://invalid-memories-greenfield.herokuapp.com/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: userInfo.username,
+          password: userInfo.password
+        })
+      })
+      .then(function(response) {
+        if (response.status === 201) {
+          var token = JSON.parse(response._bodyText).id_token;
+          return context._onValueChange(STORAGE_KEY, token)
+            .then(function() {
+              context._navigate();
+            });
+        } else {
+          AlertIOS.alert('USERNAME/PASSWORD IS INVALID, FOO!');
+        }
+      });
+    }
     // if (usernameExists(this.state.username) && passwordMatch(this.state.password)) {
     //   navigate to next scene
-
-    // } else {
-    //   give error message "invalid username or password"
-    // }
   }
 
   signup() {
-    // check if username exists (make fetch)
-    // if it doesnt, create new user/password combo
+    var context = this;
+    var userInfo = this.refs.form.getValue();
 
-    // if (!usernameExists(this.state.username)) {
-    //   post(username, password);
-    // }
+    if (userInfo) {
+      fetch('https://invalid-memories-greenfield.herokuapp.com/api/users/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: userInfo.username,
+          password: userInfo.password
+        })
+      })
+      .then(function(response) {
+        if (response.status === 201) {
+          var token = JSON.parse(response._bodyText).id_token;
+          return context._onValueChange(STORAGE_KEY, token)
+            .then(function() {
+              context._navigate();
+            });
+        } else {
+          AlertIOS.alert('USERNAME ALREADY EXISTS, FOO!');
+        }
+      });
+    }
   }
 
   render() {
@@ -52,20 +110,10 @@ export default class Login extends React.Component {
       <View style={styles.container}>
         <Text>{this.props.title}</Text>
         <Text>Selfsnap!</Text>
-        <TouchableHighlight onPress={ () => this._navigate()}>
-          <Text> Go to homescreen</Text>
-        </TouchableHighlight>
-        <TextInput 
-          style={styles.textbox} 
-          onChangeText={(text)=>this.setState({username: text})} 
-          value={this.state.username} 
-          placeholder="enter username here"/>
-        <TextInput 
-          secureTextEntry={true} 
-          style={styles.textbox} 
-          onChangeText={(text)=>this.setState({password: text})} 
-          value={this.state.password} 
-          placeholder="enter password here"/>
+        <Form
+          ref="form"
+          type={User}
+        />
 
         <TouchableHighlight onPress={this.login.bind(this)}>
           <Text style={styles.textbox}>Login</Text>
@@ -78,6 +126,12 @@ export default class Login extends React.Component {
     );
   }
 }
+
+// to navigate between scenes
+  // <TouchableHighlight onPress={ () => this._navigate()}>
+  //   <Text> Go to homescreen</Text>
+  // </TouchableHighlight>
+
 
 const styles = StyleSheet.create({
   container: {
