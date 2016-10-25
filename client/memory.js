@@ -22,10 +22,10 @@ export default class Memory extends React.Component {
   }
 
   async uploadPhoto() {
-    // Send post to server with image
     var photo = {
       uri: this.state.image.uri,
-      type: 'image/jpeg'
+      type: 'image/jpeg',
+      name: 'image.jpg'
     };
 
     try {
@@ -34,10 +34,8 @@ export default class Memory extends React.Component {
       console.log('AsyncStorage error: ' + error.message);
     }
 
-    console.log('TOKEN', JSON.stringify(token));
     var form = new FormData();
     form.append('memoryImage', photo);
-    console.log(form);
 
     fetch('http://localhost:3000/api/memories/upload', 
       {
@@ -48,12 +46,17 @@ export default class Memory extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       }).then(function(resp) {
-        // send request for api data
+        // resp will include memory id
+        // TODO: fetch analysis from server /api/memories/id/:id
+          // (:id is the memory id)
         return resp.json();
       });
   }
 
   render() {
+    // TODO: uploadPhoto() should be in a conditional of whether they came from the memories or upload/take photo page
+    console.log('ALSDFJALKSDF');
+    console.log('NAVIGATOR', this.props.navigator);
     this.uploadPhoto();
     return (
       <View>
