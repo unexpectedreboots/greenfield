@@ -1,9 +1,17 @@
 var memoryController = require('../../db/controllers/memoryController');
 
 var express = require('express');
+var jwt = require('express-jwt');
 
 var router = express.Router();
 
+
+var jwtCheck = jwt({
+  // TODO: change this secret to be stored in config file
+  secret: 'config.secret'
+});
+
+router.use('/', jwtCheck);
 
 // User uploads an image to create a memory
 router.route('/upload')
