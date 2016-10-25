@@ -2,6 +2,8 @@ var memoryController = require('../../db/controllers/memoryController');
 
 var express = require('express');
 var jwt = require('express-jwt');
+var multer = require('multer');
+var upload = multer({dest: 'uploads/'});
 
 var router = express.Router();
 
@@ -15,7 +17,7 @@ router.use('/', jwtCheck);
 
 // User uploads an image to create a memory
 router.route('/upload')
-  .post(memoryController.upload);
+  .post(upload.single('memoryImage'), memoryController.upload);
 
 // User clicks button to view all memories
 router.route('/all')
