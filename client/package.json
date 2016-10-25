@@ -4,7 +4,7 @@
   "description": "auto-journal memories",
   "author": null,
   "private": true,
-  "main": "homescreen.js",
+  "main": "main.js",
   "dependencies": {
     "exponent": "^10.0.4",
     "react": "~15.3.2",
@@ -12,7 +12,8 @@
     "tcomb-form-native": "^0.6.1"
   },
   "devDependencies": {
-    "jest-exponent": "^0.1.0"
+    "jest-exponent": "^0.1.0",
+    "whatwg-fetch": "^1.0.0"
   },
   "scripts": {
     "test": "jest"
