@@ -24,11 +24,11 @@ export default class Memories extends React.Component {
         },
         {
           id: '',
-          uri: 'http://i.huffpost.com/gen/3754046/original.jpg'
+          uri: 'http://www.nextavenue.org/wp-content/uploads/2015/08/The-People-You-Meet-While-Traveling-466243609.jpg'
         },
         {
           id: '',
-          uri: 'https://s.graphiq.com/sites/default/files/stories/t4/15_Tiniest_Dog_Breeds_1718_3083.jpg'
+          uri: 'http://www.simplyrecipes.com/wp-content/uploads/2016/10/2016-10-04-PumpkinIceCream-9.jpg'
         }
       ]
     };
@@ -56,8 +56,11 @@ export default class Memories extends React.Component {
     });
   }
 
+  componentDidMount() {
+    // TODO: fetchImages(); 
+  }
+
   render() {
-    // TODO: fetchImages();
     return (
       <View style={styles.container}>
         {this.state.imageList.map(image => 

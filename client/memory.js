@@ -17,7 +17,8 @@ export default class Memory extends React.Component {
     super(props);
     this.state = {
       image: this.props.image,
-      details: 'Loading...'
+      status: 'Loading...',
+      tags: []
     };
   }
 
@@ -48,31 +49,55 @@ export default class Memory extends React.Component {
       }).then(function(resp) {
         // resp will include memory id
         // TODO: getAnaylysis(id) --> fetch analysis from server /api/memories/id/:id
-
+        makeAPIcalls();
           // (:id is the memory id)
         return resp.json();
       });
   }
 
   getAnalysis(id) {
-    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
-      method: 'GET'
-    }).then(function(analysis) {
-      //NOTE: Expecting analysis to be a string
-      this.setState({details: analysis});
-    });
+    this.makeAPIcalls();
+    // fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
+    //   method: 'GET'
+    // }).then(function(analysis) {
+    //   //NOTE: Expecting analysis to be an array
+    //   this.setState({tags: analysis});
+        this.setState({status: 'Tags:'});
+    // });
   }
 
-  render() {
+  makeAPIcalls() {
+    var context = this;
+    //TODO: MOVE
+    var clarifaiToken = 'NJLX0qdAqLAqFaveSs99SW0wr8rbLY';
+    fetch('https://api.clarifai.com/v1/tag/?url=' + this.state.image.uri, {
+      method: 'GET',
+      // data: {
+      //   url: this.state.image.uri
+      // },
+      headers: {
+        'Authorization': 'Bearer ' + clarifaiToken
+      }
+    }).then(function(res) {
+      var tags = JSON.parse(res['_bodyInit']).results[0].result.tag.classes;
+      context.setState({tags: tags});
+    })
+  }
+
+  componentDidMount() {
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
     } else {
       // TODO: getAnalysis(this.props.id)
+      this.getAnalysis();
     }
+  }
+
+  render() {
     return (
       <View>
         <Image style={{width:200, height:200}} source={{uri: this.state.image.uri}}/>
-        <MemoryDetails details={this.state.details}/>
+        <MemoryDetails status={this.state.status} tags={this.state.tags}/>
       </View>
     );
   }
@@ -86,7 +111,8 @@ class MemoryDetails extends React.Component {
   render() {
     return (
       <View>
-        <Text>{this.props.details}</Text>
+        <Text>{this.props.status}</Text>
+        {this.props.tags.map(tag => <Text>{tag}</Text>)}
       </View>
     );
   }
