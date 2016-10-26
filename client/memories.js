@@ -18,20 +18,7 @@ export default class Memories extends React.Component {
     super(props);
     this.state = {
       image: {},
-      imageList: [
-        {
-          id: '',
-          uri: 'https://s3-us-west-1.amazonaws.com/invalidmemories/images/9961254d-064c-48ea-9ed5-060772f0199b-large.jpg'
-        },
-        {
-          id: '',
-          uri: 'http://www.nextavenue.org/wp-content/uploads/2015/08/The-People-You-Meet-While-Traveling-466243609.jpg'
-        },
-        {
-          id: '',
-          uri: 'http://www.simplyrecipes.com/wp-content/uploads/2016/10/2016-10-04-PumpkinIceCream-9.jpg'
-        }
-      ]
+      imageList: []
     };
   }
 
