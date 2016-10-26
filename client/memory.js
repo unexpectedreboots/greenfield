@@ -66,9 +66,12 @@ export default class Memory extends React.Component {
         'Authorization': 'Bearer ' + token
       }
     }).then(function(memory) {
-      var analyses = JSON.parse(memory['_bodyInit']).analyses;
-      console.log(analyses);
+      var analyses = JSON.parse(memory['_bodyInit']).analyses[0].tags;
       context.setState({tags: analyses, status: 'Tags:'});
+    }).catch(function(err) {
+      console.log('ERROR', err);
+      // Try pinging database again
+      context.getMemoryData(id);
     });
   }
 
