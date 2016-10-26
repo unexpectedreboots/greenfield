@@ -16,9 +16,6 @@ var STORAGE_KEY = 'id_token';
 export default class Homescreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      image: this.props.image
-    };
   }
 
   async _userLogout() {
@@ -28,6 +25,17 @@ export default class Homescreen extends React.Component {
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
+  }
+
+  _navigate(sceneName, imageUri) {
+    console.log('changing scenes!');
+    this.props.navigator.push({
+      name: sceneName,
+      passProps: {
+        'image': {uri: imageUri},
+        'prevScene': 'Homescreen'
+      }
+    });
   }
 
   logout() {
@@ -48,9 +56,7 @@ export default class Homescreen extends React.Component {
     };
     oneImage().then((image)=> { 
       console.log('image returned was', image);
-      this.setState({
-        image: image
-      });
+      this._navigate('Memory', image.uri);
     });
   }
 
@@ -61,16 +67,15 @@ export default class Homescreen extends React.Component {
       return Exponent.ImagePicker.launchCameraAsync({allowsEditing: true, aspect: [1, 1]});
     };
     newImage().then((image) => {
-      this.setState({
-        image: image
-      });
+      console.log('image taken at', image);
+      this._navigate('Memory', image.uri);
     });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => this._navigate('Memories')}>
           <Text style={styles.textbox}>View All</Text>
         </TouchableHighlight> 
 
@@ -85,8 +90,6 @@ export default class Homescreen extends React.Component {
         <TouchableHighlight>
           <Text style={styles.textbox} onPress={this.logout.bind(this)}>Logout</Text>
         </TouchableHighlight> 
-
-        <Image style={{width:200, height:200}} source={{uri: this.state.image.uri}}/>
       </View>
     );
   }

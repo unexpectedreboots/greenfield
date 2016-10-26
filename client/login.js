@@ -28,9 +28,6 @@ export default class Login extends React.Component {
     console.log('changing scenes!');
     this.props.navigator.push({
       name: 'Homescreen',
-      passProps: {
-        'image': {uri: 'https://facebook.github.io/react/img/logo_og.png'}
-      }
     })
   }
   
@@ -71,8 +68,6 @@ export default class Login extends React.Component {
         }
       });
     }
-    // if (usernameExists(this.state.username) && passwordMatch(this.state.password)) {
-    //   navigate to next scene
   }
 
   signup() {
