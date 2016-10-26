@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TextInput,
   AlertIOS,
   AsyncStorage,
@@ -40,43 +41,59 @@ export default class Memories extends React.Component {
       name: 'Memory',
       passProps: {
         'image': {uri: image.uri},
-        'id': image._id,
+        'id': image.id,
         'prevScene': 'Memories'
       }
     });
   }
 
-  fetchImages() {
+  async fetchMemories() {
+    var context = this;
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+
     fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/all', {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
     })
-    .then(function(images) {
-      //NOTE: Expecting response to be an array of objects with properties uri and _id
-      this.setState({imageList: images});
+    .then(function(memories) {
+      var memoryArray = JSON.parse(memories['_bodyInit']);
+      var images = memoryArray.map(memory => {
+        return {
+          id: memory._id,
+          uri: memory.filePath
+        };
+      });
+      context.setState({imageList: images});
     });
   }
 
   componentDidMount() {
-    // TODO: fetchImages(); 
+    this.fetchMemories(); 
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {this.state.imageList.map(image => 
           <TouchableHighlight onPress={this._navigate.bind(this, image)}>
             <Image style={{width:150, height:150}} source={{uri: image.uri}}/>
           </TouchableHighlight>)}
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    // flex: 1
+    // backgroundColor: '#fff',
+    // alignItems: 'center',
+    // justifyContent: 'space-around',
   }
 });

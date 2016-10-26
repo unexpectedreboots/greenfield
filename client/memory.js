@@ -23,6 +23,7 @@ export default class Memory extends React.Component {
   }
 
   async uploadPhoto() {
+    var context = this;
     var photo = {
       uri: this.state.image.uri,
       type: 'image/jpeg',
@@ -37,7 +38,6 @@ export default class Memory extends React.Component {
 
     var form = new FormData();
     form.append('memoryImage', photo);
-
     fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/upload', 
       {
         body: form,
@@ -48,16 +48,27 @@ export default class Memory extends React.Component {
         }
       }).then(function(resp) {
         var databaseId = JSON.parse(resp['_bodyInit']);
-        this.getAnaylysis(databaseId);
+        context.getMemoryData(databaseId);
       });
   }
 
-  getAnalysis(id) {
+  async getMemoryData(id) {
+    var context = this;
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+
     fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
-      method: 'GET'
-    }).then(function(analysis) {
-      //NOTE: Expecting analysis to be an array
-      this.setState({tags: analysis, status: 'Tags:'});
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }).then(function(memory) {
+      var analyses = JSON.parse(memory['_bodyInit']).analyses;
+      console.log(analyses);
+      context.setState({tags: analyses, status: 'Tags:'});
     });
   }
 
@@ -65,7 +76,7 @@ export default class Memory extends React.Component {
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
     } else {
-      this.getAnalysis(this.props.id);
+      this.getMemoryData(this.props.id);
     }
   }
 

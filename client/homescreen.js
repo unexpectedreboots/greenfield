@@ -55,7 +55,6 @@ export default class Homescreen extends React.Component {
       return Exponent.ImagePicker.launchImageLibraryAsync({allowsEditing: true, aspect:[1, 1]});
     };
     oneImage().then((image)=> { 
-      console.log('image returned was', image);
       this._navigate('Memory', image.uri);
     });
   }
@@ -67,7 +66,7 @@ export default class Homescreen extends React.Component {
       return Exponent.ImagePicker.launchCameraAsync({allowsEditing: true, aspect: [1, 1]});
     };
     newImage().then((image) => {
-      console.log('image taken at', image);
+      // console.log('image taken at', image);
       this._navigate('Memory', image.uri);
     });
   }
