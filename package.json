@@ -39,6 +39,7 @@
     "multer": "^1.2.0",
     "nodemon": "^1.11.0",
     "request": "^2.75.0",
+    "request-promise": "^4.1.1",
     "s3-uploader": "^2.0.2"
   }
 }
