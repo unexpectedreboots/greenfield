@@ -38,3 +38,6 @@ jspm_packages
 
 # Uploads
 uploads/*
+
+# Aws credentials
+.aws/credentials

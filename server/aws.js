@@ -1,18 +1,13 @@
-var AWS = require('aws-sdk');
-
 var Upload = require('s3-uploader');
 
-// AWS.config.region = 'us-west-1';
-// var s3bucket = AWS.S3({params: {Bucket: 'invalidmemories'}});
+module.exports = new Upload('invalidmemories', {
+  aws: {
+    path: 'images/',
+    region: 'us-west-1',
+    acl: 'public-read'
+  },
 
-var client = new Upload('invalidmemories', {
-	aws: {
-		path: 'images/',
-		region: 'us-west-1',
-		acl: 'public-read'
-	},
-
-	cleanup: {
+  cleanup: {
     versions: true,
     original: false
   },
@@ -48,15 +43,4 @@ var client = new Upload('invalidmemories', {
     aspect: '1:1',
     suffix: '-thumb2'
   }]
-});
-
-client.upload('../uploads/bill1.jpg', {}, function(err, versions, meta) {
-	if (err) { 
-		console.log('our error is', err); 
-		throw err;
-	} 
-
-	versions.forEach(function(image) {
-		console.log(image.width, image.height, image.url);
-	});
 });

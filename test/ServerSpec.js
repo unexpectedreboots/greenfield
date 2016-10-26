@@ -110,7 +110,36 @@ describe('Unprotected routes: ', function() {
   });
 
   describe('Memory creation', function() {
+    // var photo = {
+    //   uri: '~/Desktop/screenshots/kyle9.png',
+    //   type: 'image/png',
+    //   name: 'testImage.png'
+    // };
+    // var form = new FormData();
+    // form.append('memoryImage', photo);
+    // var uploadOptions = {
+    //   method: 'POST',
+    //   url: 'http://localhost:3000/api/memories/upload',
+    //   body: form,
+    //   headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //         'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
+    //   } 
+    // };
 
+    // // local: if works, should save a file to upload under that name (use fs.readfile?)
+    // it ('should create a local file', function(done) {
+    //   request(uploadOptions, function(err, res, body) {
+    //     if (err) {
+    //       console.log('ERROR creating local', err);
+    //     }
+    //     console.log('body is', body);
+    //     done();
+    //   });
+    // });
+    // if doesnt work, should 
+    // aws: if works, should return the name of the was file? 
+    // if doesnt work, should send back error message 
   });
 
   // TODO: write tests for routes
