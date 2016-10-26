@@ -5,50 +5,52 @@ var fs = require('fs');
 var clarifai = require('../../api/clarifai');
 
 exports.upload = function(req, res) {
-  console.log('POST: /api/memories/upload');
-  // console.log('req.file is now', req.file);
-  awsClient.upload('uploads/' + req.file.filename, {}, function(err, versions, meta) {
-		if (err) { 
-			console.log('s3 upload error: ', err); 
-		} 
+	if (!req.file) {
+		console.log('Multer failed to save file');
+		res.status(404).send();
+	} else {
+		  awsClient.upload('uploads/' + req.file.filename, {}, function(err, versions, meta) {
+				if (err) { 
+					console.log('s3 upload error: ', err); 
+				} 
 
-		versions.forEach(function(image) {
-			if (image.original) {
-				Memory.create({
-					title: req.file.filename,
-					filePath: image.url, 
-					createdAt: Date.now()
-				}).then(function(memory) {
-					fs.unlink('uploads/' + req.file.filename, function(err, success) {
-						if (err) {
-							console.log('Error deleting file,', err);
-						}
-					});
+				versions.forEach(function(image) {
+					if (image.original) {
+						Memory.create({
+							title: req.file.filename,
+							filePath: image.url, 
+							createdAt: Date.now()
+						}).then(function(memory) {
+							fs.unlink('uploads/' + req.file.filename, function(err, success) {
+								if (err) {
+									console.log('Error deleting file,', err);
+								}
+							});
 
-					clarifai(image.url).then(function(tags) {
-						results = {
-							api: 'clarifai',
-							tags: tags
-						};
+							clarifai(image.url).then(function(tags) {
+								results = {
+									api: 'clarifai',
+									tags: tags
+								};
 
-						memory.analyses.push(JSON.stringify(results));
-						memory.save();
-					});
+								memory.analyses.push(results);
+								memory.save();
+							});
 
-					User.findOne({username: req.user.username}).then(function(user) {
-						user.memories.push(memory._id);		
-						user.save(function(err) {
-  						res.status(201).send(memory._id);
+							User.findOne({username: req.user.username}).then(function(user) {
+								user.memories.push(memory._id);		
+								user.save(function(err) {
+		  						res.status(201).send(memory._id);
+								});
+							});
+						}).catch(function(err) {
+							console.log('Error creating memory,', err);
+							res.status(404).send();
 						});
-					});
-				}).catch(function(err) {
-					console.log('Error creating memory,', err);
-					res.status(404).send();
+					}
 				});
-			}
-		});
-	});
-
+			});
+	}
 };
 
 exports.fetchMemories = function(req, res) {
