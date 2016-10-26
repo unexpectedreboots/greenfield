@@ -37,7 +37,7 @@ export default class Memory extends React.Component {
     var form = new FormData();
     form.append('memoryImage', photo);
 
-    fetch('http://localhost:3000/api/memories/upload', 
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/upload', 
       {
         body: form,
         method: 'POST',
@@ -54,10 +54,9 @@ export default class Memory extends React.Component {
   }
 
   render() {
-    // TODO: uploadPhoto() should be in a conditional of whether they came from the memories or upload/take photo page
-    console.log('ALSDFJALKSDF');
-    console.log('NAVIGATOR', this.props.navigator);
-    this.uploadPhoto();
+    if (this.props.prevScene === 'Homescreen') {
+      this.uploadPhoto();
+    }
     return (
       <View>
         <Image style={{width:200, height:200}} source={{uri: this.state.image.uri}}/>

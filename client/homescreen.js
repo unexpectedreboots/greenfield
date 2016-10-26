@@ -32,7 +32,8 @@ export default class Homescreen extends React.Component {
     this.props.navigator.push({
       name: 'Memory',
       passProps: {
-        'image': {uri: imageUri}
+        'image': {uri: imageUri},
+        'prevScene': 'Homescreen'
       }
     })
   }
