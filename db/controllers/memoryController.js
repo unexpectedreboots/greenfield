@@ -1,5 +1,7 @@
 var Memory = require('../models/memoryModel');
+var User = require('../models/userModel');
 var awsClient = require('../../server/aws');
+var fs = require('fs');
 
 exports.upload = function(req, res) {
   console.log('POST: /api/memories/upload');
@@ -10,11 +12,32 @@ exports.upload = function(req, res) {
 		} 
 
 		versions.forEach(function(image) {
-			console.log(image.width, image.height, image.url);
+			if (image.original) {
+				Memory.create({
+					title: req.file.filename,
+					filePath: image.url, 
+					createdAt: Date.now()
+				}).then(function(memory) {
+					fs.unlink('uploads/' + req.file.filename, function(err, success) {
+						if (err) {
+							console.log('Error deleting file,', err);
+						}
+					});
+
+					User.findOne({username: req.user.username}).then(function(user) {
+						user.memories.push(memory._id);		
+						user.save(function(err) {
+  						res.status(201).send(memory._id);
+						});
+					});
+				}).catch(function(err) {
+					console.log('Error creating memory,', err);
+					res.status(404).send();
+				});
+			}
 		});
 	});
 
-  res.status(201).send(req.file.filename);
 };
 
 exports.fetchMemories = function(req, res) {
