@@ -3,6 +3,7 @@ import React from 'react';
 import Login from './login';
 import Homescreen from './homescreen';
 import Memory from './memory';
+import Memories from './memories';
 import {
   StyleSheet,
   Text,
@@ -22,6 +23,9 @@ class App extends React.Component {
     }
     if (route.name === 'Memory') {
       return <Memory navigator={navigator} {...route.passProps}/>
+    }
+    if (route.name === 'Memories') {
+      return <Memories navigator={navigator} {...route.passProps}/>
     }
   }
 

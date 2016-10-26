@@ -27,15 +27,15 @@ export default class Homescreen extends React.Component {
     }
   }
 
-  _navigate(imageUri) {
+  _navigate(sceneName, imageUri) {
     console.log('changing scenes!');
     this.props.navigator.push({
-      name: 'Memory',
+      name: sceneName,
       passProps: {
         'image': {uri: imageUri},
         'prevScene': 'Homescreen'
       }
-    })
+    });
   }
 
   logout() {
@@ -56,7 +56,7 @@ export default class Homescreen extends React.Component {
     };
     oneImage().then((image)=> { 
       console.log('image returned was', image);
-      this._navigate(image.uri);
+      this._navigate('Memory', image.uri);
     });
   }
 
@@ -68,14 +68,14 @@ export default class Homescreen extends React.Component {
     };
     newImage().then((image) => {
       console.log('image taken at', image);
-      this._navigate(image.uri);
+      this._navigate('Memory', image.uri);
     });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => this._navigate('Memories')}>
           <Text style={styles.textbox}>View All</Text>
         </TouchableHighlight> 
 

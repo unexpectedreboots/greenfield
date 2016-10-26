@@ -47,15 +47,27 @@ export default class Memory extends React.Component {
         }
       }).then(function(resp) {
         // resp will include memory id
-        // TODO: fetch analysis from server /api/memories/id/:id
+        // TODO: getAnaylysis(id) --> fetch analysis from server /api/memories/id/:id
+
           // (:id is the memory id)
         return resp.json();
       });
   }
 
+  getAnalysis(id) {
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
+      method: 'GET'
+    }).then(function(analysis) {
+      //NOTE: Expecting analysis to be a string
+      this.setState({details: analysis});
+    });
+  }
+
   render() {
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
+    } else {
+      // TODO: getAnalysis(this.props.id)
     }
     return (
       <View>
