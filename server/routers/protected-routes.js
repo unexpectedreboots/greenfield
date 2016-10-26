@@ -3,7 +3,18 @@ var memoryController = require('../../db/controllers/memoryController');
 var express = require('express');
 var jwt = require('express-jwt');
 var multer = require('multer');
-var upload = multer({dest: 'uploads/'});
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+  	console.log('the original file name is', file);
+    cb(null, file.originalname);
+  }
+})
+
+var upload = multer({ storage: storage })
 
 var router = express.Router();
 
