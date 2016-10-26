@@ -20,7 +20,7 @@ export default class Memories extends React.Component {
       imageList: [
         {
           _id: '',
-          uri: 'http://r.ddmcdn.com/s_f/o_1/cx_633/cy_0/cw_1725/ch_1725/w_720/APL/uploads/2014/11/too-cute-doggone-it-video-playlist.jpg'
+          uri: 'https://s3-us-west-1.amazonaws.com/invalidmemories/images/9961254d-064c-48ea-9ed5-060772f0199b-large.jpg'
         },
         {
           id: '',
