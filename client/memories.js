@@ -25,6 +25,10 @@ export default class Memories extends React.Component {
         {
           id: '',
           uri: 'http://i.huffpost.com/gen/3754046/original.jpg'
+        },
+        {
+          id: '',
+          uri: 'https://s.graphiq.com/sites/default/files/stories/t4/15_Tiniest_Dog_Breeds_1718_3083.jpg'
         }
       ]
     };
@@ -58,7 +62,7 @@ export default class Memories extends React.Component {
       <View style={styles.container}>
         {this.state.imageList.map(image => 
           <TouchableHighlight onPress={this._navigate.bind(this, image)}>
-            <Image style={{width:200, height:200}} source={{uri: image.uri}}/>
+            <Image style={{width:150, height:150}} source={{uri: image.uri}}/>
           </TouchableHighlight>)}
       </View>
     );
