@@ -47,49 +47,25 @@ export default class Memory extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       }).then(function(resp) {
-        // resp will include memory id
-        // TODO: getAnaylysis(id) --> fetch analysis from server /api/memories/id/:id
-        makeAPIcalls();
-          // (:id is the memory id)
-        return resp.json();
+        var databaseId = JSON.parse(resp['_bodyInit']);
+        this.getAnaylysis(databaseId);
       });
   }
 
   getAnalysis(id) {
-    this.makeAPIcalls();
-    // fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
-    //   method: 'GET'
-    // }).then(function(analysis) {
-    //   //NOTE: Expecting analysis to be an array
-    //   this.setState({tags: analysis});
-        this.setState({status: 'Tags:'});
-    // });
-  }
-
-  makeAPIcalls() {
-    var context = this;
-    //TODO: MOVE
-    var clarifaiToken = 'NJLX0qdAqLAqFaveSs99SW0wr8rbLY';
-    fetch('https://api.clarifai.com/v1/tag/?url=' + this.state.image.uri, {
-      method: 'GET',
-      // data: {
-      //   url: this.state.image.uri
-      // },
-      headers: {
-        'Authorization': 'Bearer ' + clarifaiToken
-      }
-    }).then(function(res) {
-      var tags = JSON.parse(res['_bodyInit']).results[0].result.tag.classes;
-      context.setState({tags: tags});
-    })
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
+      method: 'GET'
+    }).then(function(analysis) {
+      //NOTE: Expecting analysis to be an array
+      this.setState({tags: analysis, status: 'Tags:'});
+    });
   }
 
   componentDidMount() {
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
     } else {
-      // TODO: getAnalysis(this.props.id)
-      this.getAnalysis();
+      this.getAnalysis(this.props.id);
     }
   }
 

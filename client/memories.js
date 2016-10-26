@@ -19,7 +19,7 @@ export default class Memories extends React.Component {
       image: {},
       imageList: [
         {
-          _id: '',
+          id: '',
           uri: 'https://s3-us-west-1.amazonaws.com/invalidmemories/images/9961254d-064c-48ea-9ed5-060772f0199b-large.jpg'
         },
         {
