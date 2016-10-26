@@ -30,7 +30,7 @@ exports.upload = function(req, res) {
 							api: 'clarifai',
 							tags: tags
 						};
-						
+
 						memory.analyses.push(JSON.stringify(results));
 						memory.save();
 					});
@@ -52,11 +52,20 @@ exports.upload = function(req, res) {
 };
 
 exports.fetchMemories = function(req, res) {
-
+	User.findOne({ username: req.user.username }).populate('memories').then(function(user) {
+		res.status(200).send(user.memories);
+	}).catch(function(err) {
+		console.log('Error retrieving user,', err);
+		res.status(404).send();
+	});
 };
 
 exports.fetchOne = function(req, res) {
-
+	Memory.findOne({ _id: req.params.id }).then(function(memory) {
+		res.status(200).send(memory);
+	}).catch(function(err) {
+		res.status(404).send();
+	});
 };
 
 var addOne = function(req, res) {
