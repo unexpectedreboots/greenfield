@@ -10,69 +10,72 @@ exports.upload = function(req, res) {
     console.log('Multer failed to save file');
     res.status(404).send();
   } else {
-      awsClient.upload('uploads/' + req.file.filename, {}, function(err, versions, meta) {
-        if (err) { 
-          console.log('s3 upload error: ', err); 
-        } 
+    awsClient.upload('uploads/' + req.file.filename, {}, function(err, versions, meta) {
+      if (err) { 
+        console.log('s3 upload error: ', err); 
+      } 
 
-        versions.forEach(function(image) {
-          if (image.original) {
-            Memory.create({
-              title: req.file.filename,
-              filePath: image.url, 
-              createdAt: Date.now()
-            }).then(function(memory) {
-              fs.unlink('uploads/' + req.file.filename, function(err, success) {
-                if (err) {
-                  console.log('Error deleting file,', err);
+      versions.forEach(function(image) {
+        // S3-uploader library returns all images, including created thumbnails. Use only the original image
+        if (image.original) {
+
+          // Create the memory document and save to the server
+          Memory.create({
+            title: req.file.filename,
+            filePath: image.url, 
+            createdAt: Date.now()
+          }).then(function(memory) {
+            fs.unlink('uploads/' + req.file.filename, function(err, success) {
+              if (err) {
+                console.log('Error deleting file,', err);
+              }
+            });
+
+            // Call Clarifai API and store results
+            clarifai(image.url).then(function(tags) {
+              var results = {
+                api: 'clarifai',
+                tags: tags
+              };
+
+              memory.analyses.push(results);
+              memory.save();
+            });
+
+            // Call Microsoft API and store results
+            microsoft(image.url).then(function(tags) {
+              var results = {
+                api: 'microsoft',
+                tags: []
+              };
+
+              // Save original results
+              results.original = tags;
+
+              // Filter by tags of 0.5 score or higher
+              tags.forEach(function(tag) {
+                if (tag.confidence > 0.5) {
+                  results.tags.push(tag.name);
                 }
               });
 
-              // Call Clarifai API and store results
-              clarifai(image.url).then(function(tags) {
-                var results = {
-                  api: 'clarifai',
-                  tags: tags
-                };
-
-                memory.analyses.push(results);
-                memory.save();
-              });
-
-              // Call Microsoft API and store results
-              microsoft(image.url).then(function(tags) {
-                var results = {
-                  api: 'microsoft',
-                  tags: []
-                };
-
-                // Save original results
-                results.original = tags;
-
-                // Filter by tags of 0.5 score or higher
-                tags.forEach(function(tag) {
-                  if (tag.confidence > 0.5) {
-                    results.tags.push(tag.name);
-                  }
-                });
-
-                memory.analyses.push(results);
-                memory.save();
-              });
-
-              User.findOne({username: req.user.username}).then(function(user) {
-                user.memories.push(memory._id);   
-                user.save(function(err) {
-                  res.status(201).send(memory._id);
-                });
-              });
-            }).catch(function(err) {
-              console.log('Error creating memory,', err);
-              res.status(404).send();
+              memory.analyses.push(results);
+              memory.save();
             });
-          }
-        });
+
+            User.findOne({username: req.user.username}).then(function(user) {
+              user.memories.push(memory._id);   
+              user.save(function(err) {
+                res.status(201).send(memory._id);
+              });
+            });
+          }).catch(function(err) {
+            console.log('Error creating memory,', err);
+            res.status(404).send();
+          });
+        }
       });
+    });
   }
 };
 
@@ -93,6 +96,26 @@ exports.fetchOne = function(req, res) {
   });
 };
 
-var addOne = function(req, res) {
+exports.storeTags = function(req, res) {
+  // If there is no JSON body, return 400
+  if (!req.body || !req.body.tags) {
+    return res.sendStatus(400);
+  }
 
+  Memory.findOne({ _id: req.params.id }).then(function(memory) {
+    console.log('tags:', req.body.tags);
+    console.log('found memory:', memory);
+    memory.tags = req.body.tags;
+    memory.save(function(err) {
+      if (err) {
+        console.log('Error saving tags:', err);
+        res.sendStatus(404);
+      }
+
+      res.sendStatus(201);
+    });
+  }).catch(function(err) {
+    console.log('Error retrieving memory with ID:', req.params.id);
+    res.status(404).send();
+  });
 };

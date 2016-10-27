@@ -5,8 +5,8 @@ var memorySchema = new Schema({
   title: String,
   filePath: String,
   createdAt: Date,
-  /* TODO: How will we store this data? JSON? stringified? tags? */
-  analyses: []
+  analyses: [],
+  tags: []
 });
 
 module.exports = mongoose.model('Memory', memorySchema);
