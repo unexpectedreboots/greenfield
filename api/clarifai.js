@@ -11,5 +11,7 @@ module.exports = function(pubUrl) {
     }
   }).then(function(res) {
     return res.results[0].result.tag.classes;
-  })
+  }).catch(function(err) {
+    console.log('error requresting from clarifai', err);
+  });
 }

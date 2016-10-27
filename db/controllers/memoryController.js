@@ -5,6 +5,7 @@ var fs = require('fs');
 var clarifai = require('../../api/clarifai');
 var microsoft = require('../../api/microsoft');
 
+// techdebt: break upload into several functions to make it readable
 exports.upload = function(req, res) {
   if (!req.file) {
     console.log('Multer failed to save file');

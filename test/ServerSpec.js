@@ -1,5 +1,7 @@
 var expect = require('chai').expect;
 var request = require('request');
+var fs = require('fs');
+var FormData = require('form-data');
 
 var User = require('../db/models/userModel');
 
@@ -110,36 +112,73 @@ describe('Unprotected routes: ', function() {
   });
 
   describe('Memory creation', function() {
-    // var photo = {
-    //   uri: '~/Desktop/screenshots/kyle9.png',
-    //   type: 'image/png',
-    //   name: 'testImage.png'
-    // };
-    // var form = new FormData();
-    // form.append('memoryImage', photo);
-    // var uploadOptions = {
-    //   method: 'POST',
-    //   url: 'http://localhost:3000/api/memories/upload',
-    //   body: form,
-    //   headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //         'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
-    //   } 
-    // };
+   
+    // note: need aws credentials set up (in the current tab) for this to work
+    it ('should create a local file and push it to s3', function(done) {
+      // set timeout to 5 sec to give enough time to upload to s3
+      this.timeout(5000);
+      var form = new FormData();
+      form.append('type', 'image/png');
+      form.append('name', 'testImage.png');
+      form.append('memoryImage', fs.createReadStream('test/successkid.png'));
 
-    // // local: if works, should save a file to upload under that name (use fs.readfile?)
-    // it ('should create a local file', function(done) {
-    //   request(uploadOptions, function(err, res, body) {
-    //     if (err) {
-    //       console.log('ERROR creating local', err);
-    //     }
-    //     console.log('body is', body);
-    //     done();
-    //   });
-    // });
-    // if doesnt work, should 
-    // aws: if works, should return the name of the was file? 
-    // if doesnt work, should send back error message 
+      form.submit({
+        port: 3000,
+        path: '/api/memories/upload',
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'}
+        }, function(err, res) {
+          // res is the response to the form submission, not the response from the server (does not contain id)
+          if (err) {
+            console.log('err uploading image was ', err);
+          } 
+          expect(err).to.be.null;
+          expect(res.statusCode).to.equal(201);
+          done();
+      });
+    });
+  });
+
+  describe('Memory access', function() {
+    it ('should return the details of a memory given an id', function(done) {
+      // give it 5 sec to return all images
+      var accessOneOptions = {
+        method: 'GET',
+        url: 'http://localhost:3000/api/memories/id/5811455a578e4b766f7782f7',
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
+        }
+      };
+
+      request(accessOneOptions, function(err, res) {
+        if (err) {
+          console.log('err retrieving all', err);
+        }
+        // console.log('res.body', JSON.parse(res.body));
+        expect(JSON.parse(res.body).title).to.be.a('string');
+        done();
+      });
+    });
+
+    it ('should return the details of all memories for a user', function(done) {
+      // give it 5 sec to return all images
+      var accessAllOptions = {
+        method: 'GET',
+        url: 'http://localhost:3000/api/memories/all',
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
+        }
+      };
+
+      request(accessAllOptions, function(err, res) {
+        if (err) {
+          console.log('err retrieving all', err);
+        }
+        // console.log('res.body', JSON.parse(res.body)[0]);
+        expect(JSON.parse(res.body)[0].title).to.be.a('string');
+        done();
+      });
+    });
+
   });
 
   // TODO: write tests for routes

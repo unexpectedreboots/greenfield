@@ -15,5 +15,7 @@ module.exports = function(pubUrl) {
     }
   }).then(function(res) {
     return res.tags;
+  }).catch(function(err) {
+    console.log('err requesting from microsoft', err);
   });
 };
