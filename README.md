@@ -39,8 +39,8 @@ From within the root directory:
 npm install
 brew update
 brew install imagemagick
-### [Add environment variables for Amazon S3](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment)
 ```
+[Add environment variables for Amazon S3](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment)
 
 ### Roadmap
 
