@@ -1,12 +1,13 @@
 # Project Name
+TagMe
 
-> Pithy project description
+Photo and video journaling with automated tagging
 
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Bobby Wei
+  - __Scrum Master__: Bobby Wei
+  - __Development Team Members__: Kyle Chun, Karina Kinaman, Bill Zito, Bobby Wei
 
 ## Table of Contents
 
@@ -25,9 +26,7 @@
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
+- React Native
 - etc
 
 ## Development
@@ -37,14 +36,15 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
+brew update
+brew install imagemagick
+### [Add environment variables for Amazon S3](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment)
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/hr-memories/greenfield/issues)
 
 
 ## Contributing
