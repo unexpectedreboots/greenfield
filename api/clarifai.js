@@ -5,10 +5,11 @@ module.exports = function(pubUrl) {
   return requestPromise({
     uri: 'https://api.clarifai.com/v1/tag/?url=' + pubUrl, 
     method: 'GET',
+    json: true,
     headers: {
       'Authorization': 'Bearer ' + clarifaiToken
     }
   }).then(function(res) {
-    return JSON.parse(res).results[0].result.tag.classes;
+    return res.results[0].result.tag.classes;
   })
 }
