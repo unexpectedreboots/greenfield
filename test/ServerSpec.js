@@ -85,6 +85,17 @@ describe('Unprotected routes: ', function() {
       }
     };
 
+    it('should return empty response for nonexistent users', function(done) {
+      request(loginOptions, function(err, res, body) {
+        if (err) {
+          console.log('ERROR:', err);
+        }
+        expect(res.body).to.be.undefined;
+        expect(res.statusCode).to.equal(401);
+        done();
+      });
+    });
+
     it('should return JWT with successful login', function(done) {
       request(signUpOptions, function(err, res, body) {
         request(loginOptions, function(err, res, body) {
@@ -95,17 +106,6 @@ describe('Unprotected routes: ', function() {
           expect(res.statusCode).to.equal(201);
           done();
         });
-      });
-    });
-
-    it('should return empty response for nonexistent users', function(done) {
-      request(loginOptions, function(err, res, body) {
-        if (err) {
-          console.log('ERROR:', err);
-        }
-        expect(res.body).to.be.undefined;
-        expect(res.statusCode).to.equal(401);
-        done();
       });
     });
 
