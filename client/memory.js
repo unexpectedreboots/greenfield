@@ -69,6 +69,7 @@ export default class Memory extends React.Component {
         'Authorization': 'Bearer ' + token
       }
     }).then(function(memory) {
+      // var analyses = JSON.parse(memory['_bodyInit']).tags;
       var analyses = JSON.parse(memory['_bodyInit']).analyses[0].tags;
       context.setState({tags: analyses, status: 'Tags:'});
     }).catch(function(err) {
@@ -93,6 +94,26 @@ export default class Memory extends React.Component {
     });
   }
 
+  async updateTags() {
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + this.props.id, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      body: {
+        tags: this.state.selectedTags
+      }
+    }).then(function(resp){
+
+    });
+  }
+
   componentDidMount() {
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
@@ -104,9 +125,9 @@ export default class Memory extends React.Component {
   render() {
     return (
       <View>
-        <ModalView tags={this.state.tags} addOneTag={this.selectTag.bind(this)} tagClickFunc={this.setSelectedTags.bind(this)}/>
         <Image style={{width:200, height:200}} source={{uri: this.state.image.uri}}/>
         <MemoryDetails status={this.state.status} tags={this.state.selectedTags}/>
+        <ModalView tags={this.state.tags} updateTags={this.updateTags.bind(this)} addOneTag={this.selectTag.bind(this)} tagClickFunc={this.setSelectedTags.bind(this)}/>
       </View>
     );
   }
@@ -118,7 +139,6 @@ class MemoryDetails extends React.Component {
   }
 
   render() {
-    console.log('TAGS TO RENDER', this.props.tags);
     return (
       <View>
         <Text>{this.props.status}</Text>
@@ -146,6 +166,7 @@ class ModalView extends React.Component {
     this.setModalVisible(!this.state.modalVisible)
   }
 
+  //FOR DELETING TAGS (NOT CURRENLTY WORKING/IN USE)
   setSelectedTags(tagArray) {
     this.setState({
       selectedTags: tagArray
@@ -155,6 +176,7 @@ class ModalView extends React.Component {
   render() {
     return (
       <View style={{marginTop: 22}}>
+        <Button onPress={this.setModalVisible.bind(this, true)}>Edit Tags</Button>
         <Modal
           animationType={"slide"}
           transparent={true}
@@ -166,6 +188,7 @@ class ModalView extends React.Component {
             <TouchableHighlight onPress={() => {
               // this.props.tagClickFunc(this.state.selectedTags);
               this.setModalVisible(!this.state.modalVisible);
+              this.props.updateTags();
             }}>
               <Text style={{fontSize: 50, color: '#000'}}>Done</Text>
             </TouchableHighlight>
