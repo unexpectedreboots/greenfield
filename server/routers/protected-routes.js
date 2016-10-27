@@ -1,8 +1,9 @@
 var memoryController = require('../../db/controllers/memoryController');
-
 var express = require('express');
 var jwt = require('express-jwt');
 var multer = require('multer');
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,15 +28,14 @@ var jwtCheck = jwt({
 router.use('/', jwtCheck);
 
 // User uploads an image to create a memory
-router.route('/upload')
-  .post(upload.single('memoryImage'), memoryController.upload);
+router.route('/upload').post(upload.single('memoryImage'), memoryController.upload);
 
 // User clicks button to view all memories
-router.route('/all')
-  .get(memoryController.fetchMemories);
+router.route('/all').get(memoryController.fetchMemories);
 
 // User clicks on specific memory to view details
-router.route('/id/:id')
-  .get(memoryController.fetchOne);
+router.route('/id/:id').get(memoryController.fetchOne);
+
+router.route('/id/:id').post(jsonParser, memoryController.storeTags);
 
 module.exports = router;
