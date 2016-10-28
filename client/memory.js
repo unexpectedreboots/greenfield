@@ -79,12 +79,13 @@ export default class Memory extends React.Component {
       }
     }).then(function(res) {
       var memory = JSON.parse(res['_bodyInit']);
+      console.log(memory);
       var microsoftTags = [];
       var clarifaiTags = [];
-      if (memory.analyses[0] === null) {
+      if (memory.analyses[0].tags && memory.analyses.tags.length > 0) {
         microsoftTags = memory.analyses[0].tags;
       }
-      if (memory.analyses[1] === null) {
+      if (memory.analyses[0].tags && memory.analyses.tags.length > 0) {
         clarifaiTags = memory.analyses[1].tags;
       }
       var analyses = microsoftTags.concat(clarifaiTags);
