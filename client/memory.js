@@ -21,7 +21,8 @@ export default class Memory extends React.Component {
       image: this.props.image,
       tags: [],
       filteredTags: [],
-      status: false
+      status: false,
+      databaseId: ''
     };
   }
 
@@ -57,8 +58,8 @@ export default class Memory extends React.Component {
           'Content-Type': 'multipart/form-data',
           'Authorization': 'Bearer ' + token
         }
-      }).then(function(resp) {
-        var databaseId = JSON.parse(resp['_bodyInit']);
+      }).then(function(res) {
+        var databaseId = JSON.parse(res['_bodyInit']);
         context.getMemoryData(databaseId);
       });
   }
@@ -86,7 +87,8 @@ export default class Memory extends React.Component {
         tags: analyses, 
         filteredTags: savedTags, 
         status: true, 
-        statusMessage: 'Tags:'
+        statusMessage: 'Tags:',
+        databaseId: id
       });
     }).catch(function(err) {
       console.log('ERROR', err);
@@ -96,7 +98,15 @@ export default class Memory extends React.Component {
   }
 
   async updateTags(filteredTags) {
-    console.log(filteredTags);
+    var id;
+    // console.log(this.state.databaseId);
+    // if (this.props.prevScene === 'Homescreen') {
+      id = this.state.databaseId;
+    // } else {
+      // id = this.props.id;
+    // }
+    // console.log(filteredTags, id);
+
     this.setState({
       filteredTags: filteredTags
     });
@@ -107,7 +117,7 @@ export default class Memory extends React.Component {
       console.log('AsyncStorage error: ' + error.message);
     }
 
-    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + this.props.id, {
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
@@ -116,7 +126,9 @@ export default class Memory extends React.Component {
       body: JSON.stringify({
         tags: this.state.filteredTags
       })
-    });
+    }).catch(function(err) {
+      
+    })
   }
 
   render() {
