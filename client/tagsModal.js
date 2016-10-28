@@ -61,15 +61,24 @@ export default class ModalView extends React.Component {
   render() {
     return (
       <View>
-        <Button onPress={this.setModalVisible.bind(this, true)} bordered>Edit Tags</Button>
+        <Button onPress={this.setModalVisible.bind(this, true)} bordered style={styles.button}>Edit Tags</Button>
         <Modal
           animationType={'slide'}
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => { alert('Modal has been closed.'); }}
         >
-        <Container style={{backgroundColor: 'rgba(255, 255, 255, 0.9)'}}>
-          <Content>
+        <Container style={styles.modal}>
+          <Content
+          contentContainerStyle={
+            {
+              marginTop: 70,
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }>
             {
               this.props.tags.map(tag => 
                 <Tag 
@@ -82,6 +91,7 @@ export default class ModalView extends React.Component {
             <Button 
               success 
               onPress={this.onSubmit.bind(this)}
+              style={styles.button}
             >
               Submit
             </Button>
@@ -120,9 +130,29 @@ class Tag extends Component {
         rounded 
         info
         onPress={this.selectTag.bind(this)}
+        style={styles.tag}
       >
         {this.props.name}
       </Button>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  modal: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)'
+  },
+  container: {
+    marginTop: 70,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  button: {
+    margin: 10
+  },
+  tag: {
+    margin: 10
+  }
+});

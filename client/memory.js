@@ -79,7 +79,6 @@ export default class Memory extends React.Component {
       }
     }).then(function(res) {
       var memory = JSON.parse(res['_bodyInit']);
-      console.log(memory);
       var microsoftTags = [];
       var clarifaiTags = [];
       if (memory.analyses[0].tags && memory.analyses[0].tags.length > 0) {
@@ -139,9 +138,9 @@ export default class Memory extends React.Component {
       />
       : null;
     return (
-      <Container style={{paddingTop: 70}}>
-        <Content>
-          <Image style={{width:200, height:200}} source={{uri: this.state.image.uri}}/>
+      <Container style={styles.container}>
+        <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+          <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
           <MemoryDetails 
             status={this.state.status} 
             tags={this.state.filteredTags}
@@ -164,14 +163,14 @@ class MemoryDetails extends React.Component {
         color='red' 
         animating={true} 
         size='large'
-        style={{padding: 100}}>
+        style={styles.spinner}>
       </Spinner>
       : null;
     return (
-      <View style={{flex: 1}}>       
+      <View style={styles.tagsContainer}>
         {
           this.props.tags.map(tag => 
-            <Button rounded info>{tag}</Button>
+            <Button style={styles.tag} rounded info>{tag}</Button>
           )
         }
         {loading}
@@ -179,3 +178,25 @@ class MemoryDetails extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 70
+  },
+  tagsContainer: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  tag: {
+    margin: 10
+  },
+  image: {
+    width: 325,
+    height: 325
+  },
+  spinner: {
+    padding: 100
+  }
+});

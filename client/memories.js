@@ -66,10 +66,10 @@ export default class Memories extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         {this.state.imageList.map(image => 
           <TouchableHighlight onPress={this._navigate.bind(this, image)}>
-            <Image style={{width:150, height:150}} source={{uri: image.uri}}/>
+            <Image style={styles.thumbnail} source={{uri: image.uri}}/>
           </TouchableHighlight>)}
       </ScrollView>
     );
@@ -78,10 +78,15 @@ export default class Memories extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 70
-    // flex: 1
-    // backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'space-around',
+    marginTop: 70,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  thumbnail: {
+    width: 90,
+    height: 90,
+    margin: 1
   }
 });

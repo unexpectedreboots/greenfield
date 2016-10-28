@@ -52,22 +52,24 @@ export default class Homescreen extends React.Component {
   getImage() {
     // console.log('get image called');
     var oneImage = async function(){
-      return Exponent.ImagePicker.launchImageLibraryAsync({allowsEditing: true, aspect:[1, 1]});
+      return Exponent.ImagePicker.launchImageLibraryAsync({});
     };
-    oneImage().then((image)=> { 
-      this._navigate('Memory', image.uri);
+    oneImage().then((image)=> {
+      if (!image.cancelled) {
+        this._navigate('Memory', image.uri);
+      }
     });
   }
 
   takeImage() {
     // Cannot be run on simulator as it does not have access to a camera
-    // console.log('take image called');
     var newImage = async function() {
-      return Exponent.ImagePicker.launchCameraAsync({allowsEditing: true, aspect: [1, 1]});
+      return Exponent.ImagePicker.launchCameraAsync({});
     };
     newImage().then((image) => {
-      // console.log('image taken at', image);
-      this._navigate('Memory', image.uri);
+      if (!image.cancelled) {
+        this._navigate('Memory', image.uri);
+      }
     });
   }
 
