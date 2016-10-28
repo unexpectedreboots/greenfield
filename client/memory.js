@@ -79,22 +79,18 @@ export default class Memory extends React.Component {
       }
     }).then(function(res) {
       var memory = JSON.parse(res['_bodyInit']);
-      var microsoftTags = [];
-      var clarifaiTags = [];
-      if (memory.analyses[0].tags && memory.analyses[0].tags.length > 0) {
-        microsoftTags = memory.analyses[0].tags;
-      }
-      if (memory.analyses[1].tags && memory.analyses[1].tags.length > 0) {
-        clarifaiTags = memory.analyses[1].tags;
-      }
-      var analyses = microsoftTags.concat(clarifaiTags);
+      var analyses = memory.analyses.reduce(function(analysis) {
+        if (analysis.tags && analysis.tags.length > 0) {
+          return [].concat(analysis.tags);
+        }
+      });
       var savedTags = memory.tags;
       context.setState({
         tags: analyses, 
         filteredTags: savedTags, 
-        status: true, 
         statusMessage: 'Tags:',
-        databaseId: id
+        databaseId: id,
+        status: true
       });
     }).catch(function(err) {
       console.log('ERROR', err);
