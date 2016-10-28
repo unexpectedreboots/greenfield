@@ -69,7 +69,7 @@ export default class Memories extends React.Component {
       <ScrollView contentContainerStyle={styles.container}>
         {this.state.imageList.map(image => 
           <TouchableHighlight onPress={this._navigate.bind(this, image)}>
-            <Image style={styles.thumbnail} source={{uri: image.uri}}/>
+            <Image style={styles.thumbnail} resizeMode={Image.resizeMode.contain} source={{uri: image.uri}}/>
           </TouchableHighlight>)}
       </ScrollView>
     );
