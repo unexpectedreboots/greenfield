@@ -16,16 +16,16 @@ import {
 class App extends React.Component {
   renderScene(route, navigator) {
     if (route.name === 'Login') {
-      return <Login navigator={navigator} />
+      return <Login navigator={navigator} />;
     }
     if (route.name === 'Homescreen') {
-      return <Homescreen navigator={navigator}/>
+      return <Homescreen navigator={navigator}/>;
     }
     if (route.name === 'Memory') {
-      return <Memory navigator={navigator} {...route.passProps}/>
+      return <Memory navigator={navigator} {...route.passProps}/>;
     }
     if (route.name === 'Memories') {
-      return <Memories navigator={navigator} {...route.passProps}/>
+      return <Memories navigator={navigator} {...route.passProps}/>;
     }
   }
 
