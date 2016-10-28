@@ -79,8 +79,14 @@ export default class Memory extends React.Component {
       }
     }).then(function(res) {
       var memory = JSON.parse(res['_bodyInit']);
-      var microsoftTags = memory.analyses[0].tags;
-      var clarifaiTags = memory.analyses[1].tags;
+      var microsoftTags = [];
+      var clarifaiTags = [];
+      if (memory.analyses[0] === null) {
+        microsoftTags = memory.analyses[0].tags;
+      }
+      if (memory.analyses[1] === null) {
+        clarifaiTags = memory.analyses[1].tags;
+      }
       var analyses = microsoftTags.concat(clarifaiTags);
       var savedTags = memory.tags;
       context.setState({
@@ -98,15 +104,6 @@ export default class Memory extends React.Component {
   }
 
   async updateTags(filteredTags) {
-    var id;
-    // console.log(this.state.databaseId);
-    // if (this.props.prevScene === 'Homescreen') {
-      id = this.state.databaseId;
-    // } else {
-      // id = this.props.id;
-    // }
-    // console.log(filteredTags, id);
-
     this.setState({
       filteredTags: filteredTags
     });
@@ -117,7 +114,7 @@ export default class Memory extends React.Component {
       console.log('AsyncStorage error: ' + error.message);
     }
 
-    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + id, {
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/id/' + this.state.databaseId, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + token,
