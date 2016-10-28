@@ -107,6 +107,14 @@ export default class Login extends React.Component {
         <Form
           ref="form"
           type={User}
+          options={{
+            fields: {
+              password: {
+                password: true,
+                secureTextEntry: true
+              }
+            }
+          }}
         />
 
         <TouchableHighlight onPress={this.login.bind(this)}>
