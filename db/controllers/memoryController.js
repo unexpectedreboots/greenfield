@@ -99,7 +99,6 @@ exports.fetchOne = function(req, res) {
 
 exports.storeTags = function(req, res) {
   // If there is no JSON body, return 400
-  req = JSON.parse(req);
   if (!req.body || !req.body.tags) {
     return res.sendStatus(400);
   }
