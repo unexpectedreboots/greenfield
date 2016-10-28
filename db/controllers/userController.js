@@ -7,13 +7,23 @@ var createToken = function(user) {
   return jwt.sign(_.omit(user, 'password'), 'config.secret', { expiresIn: 60 * 60 * 5 });
 };
 
+// Error messages to log and return as responses
+var errNoUsername = 'Username does not exist'; 
+var errIncorrectPassword = 'Incorrect password';
+var errUsernameTaken = 'Username already taken';
+
 exports.login = function(req, res) {
-  console.log('POST: /api/users/login');
+  console.log('POST /api/users/login. username:', req.body.username);
   User.findOne({username: req.body.username})
     .then(function(user) {
       if (!user) {
-        res.status(401).send();
+        console.log(errNoUsername);
+        res.status(401).send(errNoUsername);
+      } else if (user.password !== req.body.password) {
+        console.log(errIncorrectPassword);
+        res.status(401).send(errIncorrectPassword);
       }
+
       res.status(201).send({
         'id_token': createToken(user)
       });
@@ -21,7 +31,7 @@ exports.login = function(req, res) {
 };
 
 exports.signup = function(req, res) {
-  console.log('POST: /api/users/signup');
+  console.log('POST /api/users/signup. username:', req.body.username);
   User.findOne({username: req.body.username})
     .then(function(user) {
       if (!user) {
@@ -34,7 +44,8 @@ exports.signup = function(req, res) {
           });
         });
       } else {
-        res.status(401).send();
+        console.log(errUsernameTaken);
+        res.status(401).send(errUsernameTaken);
       }
     });
 };
