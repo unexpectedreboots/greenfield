@@ -33,10 +33,11 @@ exports.upload = function(req, res) {
             });
 
             // Call Clarifai API and store results
-            clarifai(image.url).then(function(tags) {
+            clarifai(image.url).then(function(tag) {
               var results = {
                 api: 'clarifai',
-                tags: tags
+                tags: tag.classes,
+                original: tag
               };
 
               memory.analyses.push(results);
