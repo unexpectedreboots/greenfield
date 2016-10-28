@@ -1,7 +1,7 @@
 var requestPromise = require('request-promise');
 
 module.exports = function(pubUrl) {
-  var clarifaiToken = 'NJLX0qdAqLAqFaveSs99SW0wr8rbLY';
+  var clarifaiToken = '7UbpUqQ9d5YSG2EFstAN6e89i6Ttop';
   return requestPromise({
     uri: 'https://api.clarifai.com/v1/tag/?url=' + pubUrl, 
     method: 'GET',
@@ -14,4 +14,4 @@ module.exports = function(pubUrl) {
   }).catch(function(err) {
     console.log('error requresting from clarifai', err);
   });
-}
+};

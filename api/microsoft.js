@@ -2,7 +2,6 @@ var requestPromise = require('request-promise');
 
 module.exports = function(pubUrl) {
   var microsoftToken = 'a720fb93241c49da8aa3c42573b12bba';
-  console.log('pubUrl,', pubUrl);
   return requestPromise({
     'method': 'POST',
     'uri': 'https://api.projectoxford.ai/vision/v1.0/tag', 
