@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Image
 } from 'react-native';
+import { Font } from 'exponent';
 import { Container, Header, Title, Content, Footer, Button } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
 
@@ -20,8 +21,18 @@ export default class Memories extends React.Component {
     super(props);
     this.state = {
       image: {},
-      imageList: []
+      imageList: [],
+      fontLoaded: false
     };
+  }
+
+  async componentDidMount() {
+    var context = this;
+    await Font.loadAsync({
+      'pacifico': require('./assets/fonts/Pacifico.ttf'),
+    });
+    this.setState({ fontLoaded: true });
+    this.fetchMemories();
   }
 
   _navigate(image) {
@@ -62,13 +73,15 @@ export default class Memories extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.fetchMemories(); 
-  }
+  // componentDidMount() {
+  //   this.fetchMemories(); 
+  // }
 
   render() {
     return (
       <Container>
+        {
+          this.state.fontLoaded ? (
         <Header>
           <Button 
             transparent
@@ -76,8 +89,10 @@ export default class Memories extends React.Component {
           >
             <Ionicons name="ios-arrow-back" size={32} style={{color: 'dodgerblue', marginTop: 5}}/>
           </Button>
-          <Title>{this.props.username}'s Memories</Title>
+          <Title style={styles.headerText}>{this.props.username}'s Memories</Title>
         </Header>
+          ) : null
+        }
         <Content contentContainerStyle={{
           flexWrap: 'wrap',
           flexDirection: 'row',
@@ -98,6 +113,12 @@ export default class Memories extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  headerText: {
+    ...Font.style('pacifico'),
+    fontSize: 30,
+    color: '#444',
+    paddingTop: 25
+  },
   thumbnail: {
     width: 90,
     height: 90,
