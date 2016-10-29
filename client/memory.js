@@ -159,8 +159,6 @@ export default class Memory extends React.Component {
           />
           {loading}
         </Content>
-        <Footer>
-        </Footer>
       </Container>
     );
   }
