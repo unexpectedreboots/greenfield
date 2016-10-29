@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  View,
   AsyncStorage,
   Image
 } from 'react-native';
@@ -182,21 +183,14 @@ class MemoryDetails extends React.Component {
       </Spinner>
       : null;
     return (
-      <Content 
-        contentContainerStyle={
-          { flexWrap: 'wrap',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }
-        }>
+      <View style={styles.tagsContainer}>
         {
           this.props.tags.map(tag => 
             <Button style={styles.tag} rounded info>{tag}</Button>
           )
         }
         {loading}
-      </Content>
+      </View>
     );
   }
 }
@@ -207,6 +201,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#444',
     paddingTop: 25
+  },
+
+  tagsContainer: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   tag: {
