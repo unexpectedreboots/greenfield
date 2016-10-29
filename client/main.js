@@ -34,31 +34,7 @@ class App extends React.Component {
       <Navigator
         initialRoute={{ name: 'Login' }}
         renderScene={this.renderScene}
-        navigationBar={
-          <Navigator.NavigationBar
-          routeMapper={{
-            LeftButton: (route, navigator, index, navState) => {
-              if (route.index === 0) {
-                return null;
-              } else {
-                return (
-                  <TouchableHighlight onPress={() => navigator.pop()}>
-                    <Text style={{fontSize: 30}}>{'\<'}</Text>
-                  </TouchableHighlight>
-                );
-              }
-            },
-            RightButton: (route, navigator, index, navState) => {
-              
-            },
-            Title: (route, navigator, index, navState) => {
-              return (<Text style={{fontSize: 30}}>Awesome Nav Bar</Text>);
-            }
-          }}
-          style={{backgroundColor: 'gray'}}
-          /> //Navigator.NavigationBar
-        }
-      /> //Navigator
+      />
     );
   }
 }

@@ -10,7 +10,7 @@ import {
   Image
 } from 'react-native';
 import ModalView from './tagsModal';
-import { Container, Content, Button, Spinner } from 'native-base';
+import { Container, Header, Title, Content, Footer, Button, Spinner } from 'native-base';
 
 var STORAGE_KEY = 'id_token';
 
@@ -138,7 +138,12 @@ export default class Memory extends React.Component {
       />
       : null;
     return (
-      <Container style={styles.container}>
+      <Container>
+        <Header>
+          <Button transparent style={{fontSize: 40}} onPress={() => this.props.navigator.pop()}>{'\<'}</Button>
+          <Title>Date Here?</Title>
+          <Button transparent>Settings</Button>
+        </Header>
         <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
           <MemoryDetails 
@@ -147,6 +152,8 @@ export default class Memory extends React.Component {
           />
           {loading}
         </Content>
+        <Footer>
+        </Footer>
       </Container>
     );
   }
