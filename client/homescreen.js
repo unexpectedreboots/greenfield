@@ -90,76 +90,95 @@ export default class Homescreen extends React.Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Title>TagMe</Title>
+        <Header style={{height: 80}}>
+          <Button transparent><Ionicons name="ios-home" size={35} color="#444" /></Button>
+          <Title style={styles.headerText}>TagMe</Title>
+          <Button transparent onPress={this.logout.bind(this)}><Ionicons name="ios-log-out" size={35} color="#444" /></Button>
         </Header>
-        <View style={styles.container}>
+        <Content contentContainerStyle={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           {
             this.state.fontLoaded ? (
-            <View>
-              <Button
-                primary
-                style={styles.button}
-                onPress={() => this._navigate('Memories')}>
-                <Text style={styles.buttonText}>
-                  View All   <Ionicons name="ios-images-outline" size={25} color="white" />
-                </Text>
-              </Button>
+            <View style={{alignItems: 'center'}}>
+              <View style={{flexDirection: 'row'}}>
+                <Button
+                  primary
+                  style={styles.takePhotoButton}
+                  onPress={this.takeImage.bind(this)}>
+                  <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                  <Text style={styles.takePhotoButtonText}>Take Photo</Text>
+                  <Ionicons name="ios-camera-outline" size={40} color="white" />
+                  </View>
+                </Button>
+              </View>
 
-              <Button
-                primary
-                style={styles.button}
-                onPress={this.getImage.bind(this)}>
-                <Text style={styles.buttonText}>
-                  Upload Photo   <Ionicons name="ios-cloud-upload-outline" size={25} color="white" />
-                </Text>
-              </Button>
+              <View style={{flexDirection: 'row', marginTop: 100}}>
+                <Button
+                  primary
+                  style={styles.button}
+                  onPress={() => this._navigate('Memories')}>
+                  <Text style={styles.buttonText}>
+                    View All    <Ionicons name="ios-images-outline" size={30} color="white" />
+                  </Text>
+                </Button>
 
-              <Button
-                primary
-                style={styles.button}
-                onPress={this.takeImage.bind(this)}>
-                <Text style={styles.buttonText}>
-                  Take Photo   <Ionicons name="ios-camera-outline" size={25} color="white" />
-                </Text>
-              </Button>
-
-              <Button
-                primary
-                style={styles.button}
-                onPress={this.logout.bind(this)}>
-                <Text style={styles.buttonText}>
-                  Logout   <Ionicons name="ios-log-out" size={25} color="white" />
-                </Text>
-              </Button>
+                <Button
+                  primary
+                  style={styles.button}
+                  onPress={this.getImage.bind(this)}>
+                  <Text style={styles.buttonText}>
+                    Upload    <Ionicons name="ios-cloud-upload-outline" size={30} color="white" />
+                  </Text>
+                </Button>
+              </View>
             </View>
             ) : null
           }
-        </View>
+        </Content>
       </Container>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  headerText: {
+    ...Font.style('pacifico'),
+    fontSize: 30,
+    color: '#444',
+    paddingTop: 25
+  },
   container: {
     flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#fff',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  buttonText: {
-    ...Font.style('montserrat'),
-    color: '#fff',
-    fontSize: 20
   },
   button: {
     padding: 10,
     overflow: 'hidden',
     borderRadius: 4,
-    margin: 20,
     backgroundColor: '#f6755e',
-    height: 45
+    margin: 5,
+    height: 80,
+    width: 180
+  },
+  buttonText: {
+    ...Font.style('montserrat'),
+    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 22
+  },
+  takePhotoButton: {
+    padding: 10,
+    height: 220,
+    width: 220,
+    borderRadius: 110,
+    backgroundColor: '#25a2c3',
+  },
+  takePhotoButtonText: {
+    ...Font.style('montserrat'),
+    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 27,
+    paddingTop: 20
   }
 });
