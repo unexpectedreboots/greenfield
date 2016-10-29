@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Image
 } from 'react-native';
+import { Container, Header, Title, Content, Footer, Button } from 'native-base';
 
 var STORAGE_KEY = 'id_token';
 
@@ -50,7 +51,6 @@ export default class Homescreen extends React.Component {
   }
 
   getImage() {
-    // console.log('get image called');
     var oneImage = async function(){
       return Exponent.ImagePicker.launchImageLibraryAsync({});
     };
@@ -75,23 +75,33 @@ export default class Homescreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableHighlight onPress={() => this._navigate('Memories')}>
-          <Text style={styles.textbox}>View All</Text>
-        </TouchableHighlight> 
+      <Container style={styles.container}>
+        <Header>
+          <Title>TagMe</Title>
+          <Button transparent>Settings</Button>
+        </Header>
+        <Content>
+          <View style={styles.container}>
+            <TouchableHighlight onPress={() => this._navigate('Memories')}>
+              <Text style={styles.textbox}>View All</Text>
+            </TouchableHighlight> 
 
-        <TouchableHighlight onPress={this.getImage.bind(this)}>
-          <Text style={styles.textbox}>Upload Photo</Text>
-        </TouchableHighlight> 
+            <TouchableHighlight onPress={this.getImage.bind(this)}>
+              <Text style={styles.textbox}>Upload Photo</Text>
+            </TouchableHighlight> 
 
-        <TouchableHighlight onPress={this.takeImage.bind(this)}>
-          <Text style={styles.textbox}>Take Photo</Text>
-        </TouchableHighlight> 
+            <TouchableHighlight onPress={this.takeImage.bind(this)}>
+              <Text style={styles.textbox}>Take Photo</Text>
+            </TouchableHighlight> 
 
-        <TouchableHighlight>
-          <Text style={styles.textbox} onPress={this.logout.bind(this)}>Logout</Text>
-        </TouchableHighlight> 
-      </View>
+            <TouchableHighlight>
+              <Text style={styles.textbox} onPress={this.logout.bind(this)}>Logout</Text>
+            </TouchableHighlight> 
+          </View>
+        </Content>
+        <Footer>
+        </Footer>
+      </Container>
     );
   }
 }

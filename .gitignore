@@ -40,3 +40,6 @@ jspm_packages
 
 # Aws credentials
 .aws/credentials
+
+#Apple
+.DS_Store

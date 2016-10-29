@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Image
 } from 'react-native';
+import { Container, Header, Title, Content, Footer, Button } from 'native-base';
 
 var STORAGE_KEY = 'id_token';
 
@@ -66,12 +67,23 @@ export default class Memories extends React.Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        {this.state.imageList.map(image => 
-          <TouchableHighlight onPress={this._navigate.bind(this, image)}>
-            <Image style={styles.thumbnail} resizeMode={Image.resizeMode.contain} source={{uri: image.uri}}/>
-          </TouchableHighlight>)}
-      </ScrollView>
+      <Container>
+        <Header>
+          <Button transparent style={{fontSize: 40}} onPress={() => this.props.navigator.pop()}>{'\<'}</Button>
+          <Title>Memories</Title>
+          <Button transparent>Settings</Button>
+        </Header>
+        <Content>
+          <ScrollView contentContainerStyle={styles.container}>
+            {this.state.imageList.map(image => 
+              <TouchableHighlight onPress={this._navigate.bind(this, image)}>
+                <Image style={styles.thumbnail} resizeMode={Image.resizeMode.contain} source={{uri: image.uri}}/>
+              </TouchableHighlight>)}
+          </ScrollView>
+        </Content>
+        <Footer>
+        </Footer>
+      </Container>
     );
   }
 }
