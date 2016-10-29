@@ -20,8 +20,11 @@ Photo and video journaling with automated tagging
 1. [Contributing](#contributing)
 
 ## Usage
-
-> Some usage instructions
+ 
+From inside the greenfield folder, run npm install
+From inside the client folder, run npm install
+Download the Exponent Development Environment (XDE) [for Mac](https://xde-updates.exponentjs.com/download/mac) or [for Windows](https://xde-updates.exponentjs.com/download/win32)
+Once XDE is installed, go to 'open project' and choose the client folder
 
 ## Requirements
 
