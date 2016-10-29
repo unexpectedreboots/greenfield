@@ -144,15 +144,27 @@ exports.storeTags = function(req, res) {
 // TODO: deal with multi-word search queries 
 // TODO: deal with tags that have multiple words
 exports.searchMemories = function(req, res) {
-  
+  console.log('username', req.user.username);
   var searchTerm = req.params.query;
   searchTerm = searchTerm.replace('_', ' ');
-  Memory.find().then(function(memories) {
-
-    var memsWithTags = memories.filter(function(memory) {
+  User.findOne({username: req.user.username}).populate('memories').then(function(user) {
+    console.log('user', user);
+    var memsWithTags = user.memories.filter(function(memory) {
       var found = false; 
-      // for both microsoft and clarifai, see if there is a tag match
-      memory.analyses.forEach(function(classifier) {
+
+      memory.tags.forEach(function(tag) {
+        if (_.includes(tag, searchTerm)) {
+          found = true;
+        }
+      });
+      return found; 
+    });
+
+    res.status(201).send(memsWithTags);
+
+      /*
+      If we wnat to search our original analyses, here is the code to do that
+       memory.tags.forEach(function(classifier) {
         if (classifier.tags) {
           classifier.tags.forEach(function(tag) {
             if (_.includes(tag, searchTerm)) {
@@ -161,10 +173,8 @@ exports.searchMemories = function(req, res) {
           });
         }
       });
-      return found; 
-    });
+      */
 
-    res.status(201).send(memsWithTags);
   })
   .catch(function(err) {
     console.log('err getting memories', err);
