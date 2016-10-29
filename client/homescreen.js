@@ -4,11 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   AlertIOS,
-  AsyncStorage,
-  TouchableHighlight,
-  Image
+  AsyncStorage
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Header, Title, Content, Footer, Button } from 'native-base';
@@ -42,7 +39,6 @@ export default class Homescreen extends React.Component {
   }
 
   _navigate(sceneName, imageUri) {
-    console.log('changing scenes!');
     this.props.navigator.push({
       name: sceneName,
       passProps: {
@@ -54,7 +50,6 @@ export default class Homescreen extends React.Component {
   }
 
   logout() {
-    console.log('logout called');
     this._userLogout()
     .then(()=> {
       this.props.navigator.pop();
@@ -76,7 +71,6 @@ export default class Homescreen extends React.Component {
   }
 
   takeImage() {
-    // Cannot be run on simulator as it does not have access to a camera
     var newImage = async function() {
       return Exponent.ImagePicker.launchCameraAsync({});
     };
@@ -91,41 +85,44 @@ export default class Homescreen extends React.Component {
     return (
       <Container>
         <Header style={{height: 80}}>
-          <Button transparent><Ionicons name="ios-home" size={35} color="#444" /></Button>
+          <Button transparent>
+            <Ionicons name="ios-home" size={35} color="#444" />
+          </Button>
           <Title style={styles.headerText}>TagMe</Title>
-          <Button transparent onPress={this.logout.bind(this)}><Ionicons name="ios-log-out" size={35} color="#444" /></Button>
+          <Button transparent onPress={this.logout.bind(this)}>
+            <Ionicons name="ios-log-out" size={35} color="#444" />
+          </Button>
         </Header>
-        <Content contentContainerStyle={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <Content 
+          contentContainerStyle={
+            {
+              flex: 1,
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }>
           {
             this.state.fontLoaded ? (
-            <View style={{alignItems: 'center'}}>
-              <View style={{flexDirection: 'row'}}>
-                <Button
-                  primary
-                  style={styles.takePhotoButton}
-                  onPress={this.takeImage.bind(this)}>
-                  <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                  <Text style={styles.takePhotoButtonText}>Take Photo</Text>
-                  <Ionicons name="ios-camera-outline" size={40} color="white" />
+            <View style={styles.centered}>
+              <View style={styles.flexRow}>
+                <Button primary style={styles.takePhotoButton} onPress={this.takeImage.bind(this)}>
+                  <View style={[styles.centered, styles.flexCol]}>
+                    <Text style={[styles.buttonText, styles.takePhotoButtonText]}>Take Photo</Text>
+                    <Ionicons name="ios-camera-outline" size={40} color="white" />
                   </View>
                 </Button>
               </View>
 
-              <View style={{flexDirection: 'row', marginTop: 100}}>
-                <Button
-                  primary
-                  style={styles.button}
-                  onPress={() => this._navigate('Memories')}>
-                  <Text style={styles.buttonText}>
+              <View style={[styles.flexRow, {marginTop: 100}]}>
+                <Button primary style={styles.choiceButton} onPress={() => this._navigate('Memories')}>
+                  <Text style={[styles.buttonText, styles.choiceButtonText]}>
                     View All    <Ionicons name="ios-images-outline" size={30} color="white" />
                   </Text>
                 </Button>
 
-                <Button
-                  primary
-                  style={styles.button}
-                  onPress={this.getImage.bind(this)}>
-                  <Text style={styles.buttonText}>
+                <Button primary style={styles.choiceButton} onPress={this.getImage.bind(this)}>
+                  <Text style={[styles.buttonText, styles.choiceButtonText]}>
                     Upload    <Ionicons name="ios-cloud-upload-outline" size={30} color="white" />
                   </Text>
                 </Button>
@@ -144,40 +141,47 @@ const styles = StyleSheet.create({
     ...Font.style('pacifico'),
     fontSize: 30,
     color: '#444',
-    paddingTop: 25
+    paddingTop: 35
   },
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center'
+
+  centered: {
+    alignItems: 'center'
   },
-  button: {
-    padding: 10,
-    overflow: 'hidden',
+
+  flexRow: {
+    flexDirection: 'row'
+  },
+
+  flexCol: {
+    flexDirection: 'column'
+  },
+
+  choiceButton: {
+    height: 80,
+    width: 180,
     borderRadius: 4,
     backgroundColor: '#f6755e',
-    margin: 5,
-    height: 80,
-    width: 180
+    margin: 5
   },
-  buttonText: {
-    ...Font.style('montserrat'),
-    fontWeight: 'bold',
-    color: '#fff',
-    fontSize: 22
-  },
+
   takePhotoButton: {
-    padding: 10,
     height: 220,
     width: 220,
     borderRadius: 110,
     backgroundColor: '#25a2c3',
   },
-  takePhotoButtonText: {
+
+  buttonText: {
     ...Font.style('montserrat'),
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#fff'
+  },
+
+  choiceButtonText: {
+    fontSize: 22
+  },
+
+  takePhotoButtonText: {
     fontSize: 27,
     paddingTop: 20
   }

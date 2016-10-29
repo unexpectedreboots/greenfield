@@ -1,11 +1,6 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TextInput,
-  AlertIOS,
   AsyncStorage,
   TouchableHighlight,
   Image
@@ -35,7 +30,6 @@ export default class Memories extends React.Component {
   }
 
   _navigate(image) {
-    console.log('changing scenes!');
     this.props.navigator.push({
       name: 'Memory',
       passProps: {
@@ -111,6 +105,7 @@ const styles = StyleSheet.create({
     color: '#444',
     paddingTop: 25
   },
+  
   thumbnail: {
     width: 90,
     height: 90,

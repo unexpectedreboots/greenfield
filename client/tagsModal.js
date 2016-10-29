@@ -3,11 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  AlertIOS,
   AsyncStorage,
-  TouchableHighlight,
-  Image,
   Modal
 } from 'react-native';
 import { Font } from 'exponent';
@@ -80,15 +76,15 @@ export default class ModalView extends React.Component {
           <Content
           contentContainerStyle={
             {
-              marginTop: 10,
+              marginTop: 20,
               justifyContent: 'center',
               alignItems: 'center'
             }
           }>
             <Button transparent onPress={this.setModalVisible.bind(this, false)}>
-              <Ionicons name="ios-close" size={35} color="#444" />
+              <Ionicons name="ios-close" size={40} color="#444" />
             </Button>
-            <View style={{marginTop: 50, flexWrap: 'wrap', flexDirection: 'row'}}>
+            <View style={styles.tagsContainer}>
               {
                 this.props.tags.map(tag => 
                   <Tag 
@@ -100,11 +96,7 @@ export default class ModalView extends React.Component {
               }
             </View>
             <View>
-              <Button 
-                success 
-                onPress={this.onSubmit.bind(this)}
-                style={styles.button}
-              >
+              <Button success onPress={this.onSubmit.bind(this)} style={styles.button}>
                 Submit
               </Button>
             </View>
@@ -155,21 +147,23 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)'
   },
-  container: {
-    marginTop: 70,
+
+  tagsContainer: {
+    marginTop: 50,
     flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: 'row'
   },
+
   button: {
     margin: 10,
     backgroundColor: '#f6755e'
   },
+
   buttonText: {
     ...Font.style('montserrat'),
     color: '#fff'
   },
+
   tag: {
     margin: 10
   }

@@ -3,9 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableHighlight,
-  Navigator,
   AlertIOS,
   AsyncStorage
 } from 'react-native';
@@ -34,7 +31,6 @@ export default class Login extends React.Component {
   }
 
   _navigate(username) {
-    console.log('changing scenes!');
     this.props.navigator.push({
       name: 'Homescreen',
       passProps: {
@@ -53,7 +49,6 @@ export default class Login extends React.Component {
   }
 
   login() {
-    // check if username exits (make fetch to database) and check password to see if matches
     var context = this;
 
     if (this.state.username && this.state.password) {
@@ -164,7 +159,7 @@ export default class Login extends React.Component {
           </List>
           {
             this.state.fontLoaded ? (
-            <View style={{flexDirection: 'row', marginTop: 50, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={styles.buttonsContainer}>
               <Button primary style={styles.button} onPress={this.login.bind(this)}>
                 <Text style={styles.buttonText}>
                   Login <Ionicons name="ios-log-in" size={23} color="white" />
@@ -189,6 +184,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+
+  buttonsContainer: {
+    flexDirection: 'row',
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   title: {
@@ -225,18 +227,18 @@ const styles = StyleSheet.create({
     marginLeft: 3
   },
 
-  buttonText: {
-    ...Font.style('montserrat'),
-    color: '#fff',
-    fontSize: 18,
-    marginBottom: 5
-  },
-
   button: {
     backgroundColor: '#f6755e',
     height: 45,
     width: 100,
     marginRight: 10,
     marginLeft: 10
+  },
+
+  buttonText: {
+    ...Font.style('montserrat'),
+    color: '#fff',
+    fontSize: 18,
+    marginBottom: 5
   }
 });

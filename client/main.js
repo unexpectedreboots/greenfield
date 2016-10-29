@@ -5,11 +5,6 @@ import Homescreen from './homescreen';
 import Memory from './memory';
 import Memories from './memories';
 import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableHighlight,
   Navigator
 } from 'react-native';
 

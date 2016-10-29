@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
-  View,
-  TextInput,
-  AlertIOS,
   AsyncStorage,
-  TouchableHighlight,
   Image
 } from 'react-native';
 import { Font } from 'exponent';
@@ -153,7 +148,13 @@ export default class Memory extends React.Component {
           </Button>
           <Title style={styles.headerText}>{this.state.date}</Title>
         </Header>
-        <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+        <Content 
+          contentContainerStyle={
+            {
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
           <MemoryDetails 
             status={this.state.status} 
@@ -207,22 +208,16 @@ const styles = StyleSheet.create({
     color: '#444',
     paddingTop: 25
   },
-  container: {
-    marginTop: 70
-  },
-  tagsContainer: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
+
   tag: {
     margin: 10
   },
+
   image: {
     width: 325,
     height: 325
   },
+
   spinner: {
     padding: 100
   }
