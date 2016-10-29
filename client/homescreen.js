@@ -93,15 +93,7 @@ export default class Homescreen extends React.Component {
             <Ionicons name="ios-log-out" size={35} color="#444" />
           </Button>
         </Header>
-        <Content 
-          contentContainerStyle={
-            {
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }
-          }>
+        <View style={styles.container}>
           {
             this.state.fontLoaded ? (
             <View style={styles.centered}>
@@ -130,7 +122,7 @@ export default class Homescreen extends React.Component {
             </View>
             ) : null
           }
-        </Content>
+        </View>
       </Container>
     );
   }
@@ -142,6 +134,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#444',
     paddingTop: 35
+  },
+
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   centered: {
