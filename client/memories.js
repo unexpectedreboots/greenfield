@@ -73,10 +73,6 @@ export default class Memories extends React.Component {
     });
   }
 
-  // componentDidMount() {
-  //   this.fetchMemories(); 
-  // }
-
   render() {
     return (
       <Container>
