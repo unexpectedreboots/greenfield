@@ -100,12 +100,13 @@ export default class Login extends React.Component {
         })
       })
       .then(function(response) {
+        var username = context.state.username;
         context.clearInput();
         if (response.status === 201) {
           var token = JSON.parse(response._bodyText).id_token;
           return context._onValueChange(STORAGE_KEY, token)
             .then(function() {
-              context._navigate();
+              context._navigate(username);
             });
         } else {
           AlertIOS.alert('Username already exists.');
