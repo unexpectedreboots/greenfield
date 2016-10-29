@@ -27,7 +27,6 @@ export default class Memories extends React.Component {
   }
 
   async componentDidMount() {
-    var context = this;
     await Font.loadAsync({
       'pacifico': require('./assets/fonts/Pacifico.ttf'),
     });
@@ -79,11 +78,8 @@ export default class Memories extends React.Component {
         {
           this.state.fontLoaded ? (
         <Header>
-          <Button 
-            transparent
-            onPress={() => this.props.navigator.pop()}
-          >
-            <Ionicons name="ios-arrow-back" size={32} style={{color: 'dodgerblue', marginTop: 5}}/>
+          <Button transparent onPress={() => this.props.navigator.pop()}>
+            <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
           <Title style={styles.headerText}>{this.props.username}'s Memories</Title>
         </Header>

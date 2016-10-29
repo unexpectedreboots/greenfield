@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   Image
 } from 'react-native';
+import { Font } from 'exponent';
 import ModalView from './tagsModal';
 import { Container, Header, Title, Content, Footer, Button, Spinner } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
@@ -27,7 +28,11 @@ export default class Memory extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await Font.loadAsync({
+      'pacifico': require('./assets/fonts/Pacifico.ttf'),
+    });
+    this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
     } else {
@@ -143,13 +148,10 @@ export default class Memory extends React.Component {
     return (
       <Container>
         <Header>
-          <Button 
-            transparent
-            onPress={() => this.props.navigator.pop()}
-          >
-            <Ionicons name="ios-arrow-back" size={32} style={{color: 'dodgerblue', marginTop: 5}}/>
+          <Button transparent onPress={() => this.props.navigator.pop()}>
+            <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
-          <Title>{this.state.date}</Title>
+          <Title style={styles.headerText}>{this.state.date}</Title>
         </Header>
         <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
@@ -179,19 +181,32 @@ class MemoryDetails extends React.Component {
       </Spinner>
       : null;
     return (
-      <View style={styles.tagsContainer}>
+      <Content 
+        contentContainerStyle={
+          { flexWrap: 'wrap',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }
+        }>
         {
           this.props.tags.map(tag => 
             <Button style={styles.tag} rounded info>{tag}</Button>
           )
         }
         {loading}
-      </View>
+      </Content>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  headerText: {
+    ...Font.style('pacifico'),
+    fontSize: 30,
+    color: '#444',
+    paddingTop: 25
+  },
   container: {
     marginTop: 70
   },

@@ -10,6 +10,7 @@ import {
   Image,
   Modal
 } from 'react-native';
+import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
 
 export default class ModalView extends React.Component {
@@ -22,7 +23,11 @@ export default class ModalView extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await Font.loadAsync({
+      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+    });
+    this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
       this.setState({modalVisible: true});
     } else {
@@ -61,7 +66,9 @@ export default class ModalView extends React.Component {
   render() {
     return (
       <View>
-        <Button onPress={this.setModalVisible.bind(this, true)} bordered style={styles.button}>Edit Tags</Button>
+        <Button onPress={this.setModalVisible.bind(this, true)} style={styles.button}>
+          <Text style={styles.buttonText}>Edit Tags</Text>
+        </Button>
         <Modal
           animationType={'slide'}
           transparent={true}
@@ -73,28 +80,30 @@ export default class ModalView extends React.Component {
           contentContainerStyle={
             {
               marginTop: 70,
-              flexWrap: 'wrap',
-              flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center'
             }
           }>
-            {
-              this.props.tags.map(tag => 
-                <Tag 
-                  name={tag}
-                  addTag={this.addTag.bind(this)}
-                  removeTag={this.removeTag.bind(this)}
-                />
-              )
-            }
-            <Button 
-              success 
-              onPress={this.onSubmit.bind(this)}
-              style={styles.button}
-            >
-              Submit
-            </Button>
+            <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+              {
+                this.props.tags.map(tag => 
+                  <Tag 
+                    name={tag}
+                    addTag={this.addTag.bind(this)}
+                    removeTag={this.removeTag.bind(this)}
+                  />
+                )
+              }
+            </View>
+            <View>
+              <Button 
+                success 
+                onPress={this.onSubmit.bind(this)}
+                style={styles.button}
+              >
+                Submit
+              </Button>
+            </View>
           </Content>
          </Container>
         </Modal>
@@ -150,7 +159,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   button: {
-    margin: 10
+    margin: 10,
+    backgroundColor: '#f6755e'
+  },
+  buttonText: {
+    ...Font.style('montserrat'),
+    color: '#fff'
   },
   tag: {
     margin: 10
