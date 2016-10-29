@@ -124,9 +124,6 @@ export default class Login extends React.Component {
   render() {
     return (
       <Container style={styles.container}>
-        <Header>
-          <Title>Welcome!</Title>
-        </Header>
         <View>
           {
             this.state.fontLoaded ? (
@@ -195,7 +192,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    marginTop: 50,
+    marginTop: 100,
     marginBottom: 10,
     alignItems: 'center'
   },
