@@ -19,7 +19,7 @@ class App extends React.Component {
       return <Login navigator={navigator} />;
     }
     if (route.name === 'Homescreen') {
-      return <Homescreen navigator={navigator}/>;
+      return <Homescreen navigator={navigator} {...route.passProps}/>;
     }
     if (route.name === 'Memory') {
       return <Memory navigator={navigator} {...route.passProps}/>;

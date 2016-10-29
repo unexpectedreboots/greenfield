@@ -6,10 +6,12 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
+    "@exponent/vector-icons": "^1.0.4",
     "exponent": "^10.0.4",
     "native-base": "^0.5.11",
     "react": "~15.3.2",
     "react-native": "github:exponentjs/react-native#sdk-10.1.2",
+    "react-native-button": "^1.7.1",
     "react-native-fetch-blob": "^0.9.6",
     "tcomb-form-native": "^0.6.1"
   },

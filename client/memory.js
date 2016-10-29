@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import ModalView from './tagsModal';
 import { Container, Header, Title, Content, Footer, Button, Spinner } from 'native-base';
+import { Ionicons } from '@exponent/vector-icons';
 
 var STORAGE_KEY = 'id_token';
 
@@ -89,12 +90,14 @@ export default class Memory extends React.Component {
       }
       var analyses = _.uniq(microsoftTags.concat(clarifaiTags));
       var savedTags = memory.tags;
+      var date = new Date(memory.createdAt).toString().slice(0, 15);
       context.setState({
         tags: analyses, 
         filteredTags: savedTags, 
         status: true, 
         statusMessage: 'Tags:',
-        databaseId: id
+        databaseId: id,
+        date: date
       });
     }).catch(function(err) {
       console.log('ERROR', err);
@@ -140,9 +143,13 @@ export default class Memory extends React.Component {
     return (
       <Container>
         <Header>
-          <Button transparent style={{fontSize: 40}} onPress={() => this.props.navigator.pop()}>{'\<'}</Button>
-          <Title>Date Here?</Title>
-          <Button transparent>Settings</Button>
+          <Button 
+            transparent
+            onPress={() => this.props.navigator.pop()}
+          >
+            <Ionicons name="ios-arrow-back" size={32} style={{color: 'dodgerblue', marginTop: 5}}/>
+          </Button>
+          <Title>{this.state.date}</Title>
         </Header>
         <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>

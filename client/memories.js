@@ -11,6 +11,7 @@ import {
   Image
 } from 'react-native';
 import { Container, Header, Title, Content, Footer, Button } from 'native-base';
+import { Ionicons } from '@exponent/vector-icons';
 
 var STORAGE_KEY = 'id_token';
 
@@ -69,33 +70,34 @@ export default class Memories extends React.Component {
     return (
       <Container>
         <Header>
-          <Button transparent style={{fontSize: 40}} onPress={() => this.props.navigator.pop()}>{'\<'}</Button>
-          <Title>Memories</Title>
-          <Button transparent>Settings</Button>
+          <Button 
+            transparent
+            onPress={() => this.props.navigator.pop()}
+          >
+            <Ionicons name="ios-arrow-back" size={32} style={{color: 'dodgerblue', marginTop: 5}}/>
+          </Button>
+          <Title>{this.props.username}'s Memories</Title>
         </Header>
-        <Content>
-          <ScrollView contentContainerStyle={styles.container}>
-            {this.state.imageList.map(image => 
+        <Content contentContainerStyle={{
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          {
+            this.state.imageList.map(image => 
               <TouchableHighlight onPress={this._navigate.bind(this, image)}>
                 <Image style={styles.thumbnail} resizeMode={Image.resizeMode.contain} source={{uri: image.uri}}/>
-              </TouchableHighlight>)}
-          </ScrollView>
+              </TouchableHighlight>
+            )
+          }
         </Content>
-        <Footer>
-        </Footer>
       </Container>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 70,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   thumbnail: {
     width: 90,
     height: 90,

@@ -10,13 +10,26 @@ import {
   TouchableHighlight,
   Image
 } from 'react-native';
+import { Font } from 'exponent';
 import { Container, Header, Title, Content, Footer, Button } from 'native-base';
+import { Ionicons } from '@exponent/vector-icons';
 
 var STORAGE_KEY = 'id_token';
 
 export default class Homescreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fontLoaded: false
+    }
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'pacifico': require('./assets/fonts/Pacifico.ttf'),
+      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf')
+    });
+    this.setState({ fontLoaded: true });
   }
 
   async _userLogout() {
@@ -34,6 +47,7 @@ export default class Homescreen extends React.Component {
       name: sceneName,
       passProps: {
         'image': {uri: imageUri},
+        'username': this.props.username,
         'prevScene': 'Homescreen'
       }
     });
@@ -45,7 +59,7 @@ export default class Homescreen extends React.Component {
     .then(()=> {
       this.props.navigator.pop();
     })
-    .catch((err)=>{
+    .catch((err)=> {
       console.log('error logging out', err);
     });
   }
@@ -75,32 +89,53 @@ export default class Homescreen extends React.Component {
 
   render() {
     return (
-      <Container style={styles.container}>
+      <Container>
         <Header>
           <Title>TagMe</Title>
-          <Button transparent>Settings</Button>
         </Header>
-        <Content>
-          <View style={styles.container}>
-            <TouchableHighlight onPress={() => this._navigate('Memories')}>
-              <Text style={styles.textbox}>View All</Text>
-            </TouchableHighlight> 
+        <View style={styles.container}>
+          {
+            this.state.fontLoaded ? (
+            <View>
+              <Button
+                primary
+                style={styles.button}
+                onPress={() => this._navigate('Memories')}>
+                <Text style={styles.buttonText}>
+                  View All   <Ionicons name="ios-images-outline" size={25} color="white" />
+                </Text>
+              </Button>
 
-            <TouchableHighlight onPress={this.getImage.bind(this)}>
-              <Text style={styles.textbox}>Upload Photo</Text>
-            </TouchableHighlight> 
+              <Button
+                primary
+                style={styles.button}
+                onPress={this.getImage.bind(this)}>
+                <Text style={styles.buttonText}>
+                  Upload Photo   <Ionicons name="ios-cloud-upload-outline" size={25} color="white" />
+                </Text>
+              </Button>
 
-            <TouchableHighlight onPress={this.takeImage.bind(this)}>
-              <Text style={styles.textbox}>Take Photo</Text>
-            </TouchableHighlight> 
+              <Button
+                primary
+                style={styles.button}
+                onPress={this.takeImage.bind(this)}>
+                <Text style={styles.buttonText}>
+                  Take Photo   <Ionicons name="ios-camera-outline" size={25} color="white" />
+                </Text>
+              </Button>
 
-            <TouchableHighlight>
-              <Text style={styles.textbox} onPress={this.logout.bind(this)}>Logout</Text>
-            </TouchableHighlight> 
-          </View>
-        </Content>
-        <Footer>
-        </Footer>
+              <Button
+                primary
+                style={styles.button}
+                onPress={this.logout.bind(this)}>
+                <Text style={styles.buttonText}>
+                  Logout   <Ionicons name="ios-log-out" size={25} color="white" />
+                </Text>
+              </Button>
+            </View>
+            ) : null
+          }
+        </View>
       </Container>
     );
   }
@@ -109,14 +144,22 @@ export default class Homescreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
-
-  textbox: {
-    height: 40, 
-    borderColor: 'gray', 
-    borderWidth: 1
+  buttonText: {
+    ...Font.style('montserrat'),
+    color: '#fff',
+    fontSize: 20
+  },
+  button: {
+    padding: 10,
+    overflow: 'hidden',
+    borderRadius: 4,
+    margin: 20,
+    backgroundColor: '#f6755e',
+    height: 45
   }
 });

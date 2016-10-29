@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Header, Title, Content, Footer, Button, List, ListItem, Input, InputGroup } from 'native-base';
+import { Ionicons } from '@exponent/vector-icons';
 
 var STORAGE_KEY = 'id_token';
 
@@ -32,10 +33,13 @@ export default class Login extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  _navigate() {
+  _navigate(username) {
     console.log('changing scenes!');
     this.props.navigator.push({
       name: 'Homescreen',
+      passProps: {
+        'username': username
+      }
     })
   }
   
@@ -64,11 +68,13 @@ export default class Login extends React.Component {
         })
       })
       .then(function(response) {
+        var username = context.state.username;
+        context.clearInput();
         if (response.status === 201) {
           var token = JSON.parse(response._bodyText).id_token;
           return context._onValueChange(STORAGE_KEY, token)
             .then(function() {
-              context._navigate();
+              context._navigate(username);
             });
         } else {
           AlertIOS.alert('Invalid username/password.');
@@ -94,6 +100,7 @@ export default class Login extends React.Component {
         })
       })
       .then(function(response) {
+        context.clearInput();
         if (response.status === 201) {
           var token = JSON.parse(response._bodyText).id_token;
           return context._onValueChange(STORAGE_KEY, token)
@@ -109,13 +116,17 @@ export default class Login extends React.Component {
     }
   }
 
+  clearInput() {
+    this.setState({username: '', password: ''});
+  }
+
   render() {
     return (
       <Container style={styles.container}>
         <Header>
           <Title>Welcome!</Title>
         </Header>
-        <Content>
+        <View>
           {
             this.state.fontLoaded ? (
             <View>
@@ -130,15 +141,26 @@ export default class Login extends React.Component {
             </View>
             ) : null
           }
-          <List>
+          <List style={{marginRight:20}}>
             <ListItem>
               <InputGroup>
-                  <Input placeholder='USERNAME' onChangeText={(text) => this.setState({username: text})}/>
+                <Input
+                  placeholder='USERNAME'
+                  placeholderTextColor='gray'
+                  onChangeText={(text) => this.setState({username: text})}
+                  value={this.state.username}
+                />
               </InputGroup>
             </ListItem>
             <ListItem>
               <InputGroup>
-                  <Input placeholder='PASSWORD' secureTextEntry={true} onChangeText={(text) => this.setState({password: text})} />
+                <Input
+                  placeholder='PASSWORD'
+                  placeholderTextColor='gray'
+                  secureTextEntry={true}
+                  onChangeText={(text) => this.setState({password: text})}
+                  value={this.state.password}
+                />
               </InputGroup>
             </ListItem>
           </List>
@@ -146,18 +168,20 @@ export default class Login extends React.Component {
             this.state.fontLoaded ? (
             <View style={{flexDirection: 'row', marginTop: 50, justifyContent: 'center', alignItems: 'center'}}>
               <Button primary style={styles.button} onPress={this.login.bind(this)}>
-                <Text style={styles.buttonText}>Login</Text>
+                <Text style={styles.buttonText}>
+                  Login <Ionicons name="ios-log-in" size={23} color="white" />
+                </Text>
               </Button>
 
               <Button primary style={styles.button} onPress={this.signup.bind(this)}>
-                <Text style={styles.buttonText}>Signup</Text>
+                <Text style={styles.buttonText}>
+                  Signup <Ionicons name="ios-person-add-outline" size={25} color="white" />
+                </Text>
               </Button>
             </View>
             ) : null
           }
-        </Content>
-        <Footer>
-        </Footer>
+        </View>
       </Container>
     );
   }
@@ -189,7 +213,6 @@ const styles = StyleSheet.create({
   },
 
   subtitleText: {
-    // ...Font.style('montserrat'),
     color: '#25a2c3',
     fontSize: 16,
     textAlign: 'center',
@@ -207,7 +230,8 @@ const styles = StyleSheet.create({
   buttonText: {
     ...Font.style('montserrat'),
     color: '#fff',
-    fontSize: 18
+    fontSize: 18,
+    marginBottom: 5
   },
 
   button: {
