@@ -179,6 +179,24 @@ describe('Unprotected routes: ', function() {
       });
     });
 
+    it ('should find a memory with the water tag', function(done) {
+      var searchOptions = {
+        method: 'GET',
+        url: 'http://localhost:3000/api/memories/search/water',
+        headers: {
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
+        }
+      };
+
+      request(searchOptions, function(err, res) {
+        if (err) {
+          console.log('err searching for memory', err);
+        }
+        expect(res.body[0]).to.not.be.undefined;
+        done();
+      });
+    });
+
   });
 
   // TODO: write tests for routes
