@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
+import { Ionicons } from '@exponent/vector-icons';
 
 export default class ModalView extends React.Component {
 
@@ -79,12 +80,15 @@ export default class ModalView extends React.Component {
           <Content
           contentContainerStyle={
             {
-              marginTop: 70,
+              marginTop: 10,
               justifyContent: 'center',
               alignItems: 'center'
             }
           }>
-            <View style={{flexWrap: 'wrap', flexDirection: 'row'}}>
+            <Button transparent onPress={this.setModalVisible.bind(this, false)}>
+              <Ionicons name="ios-close" size={35} color="#444" />
+            </Button>
+            <View style={{marginTop: 50, flexWrap: 'wrap', flexDirection: 'row'}}>
               {
                 this.props.tags.map(tag => 
                   <Tag 
