@@ -40,6 +40,12 @@ export default class Memories extends React.Component {
     });
   }
 
+  _navigateHome() {
+    this.props.navigator.push({
+      name: 'Homescreen'
+    });
+  }
+
   async fetchMemories() {
     var context = this;
     try {
@@ -76,6 +82,9 @@ export default class Memories extends React.Component {
             <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
           <Title style={styles.headerText}>{this.props.username}'s Memories</Title>
+          <Button transparent onPress={this._navigateHome.bind(this)}>
+            <Ionicons name="ios-home" size={35} color="#444" />
+          </Button>
         </Header>
           ) : null
         }
@@ -105,7 +114,7 @@ const styles = StyleSheet.create({
     color: '#444',
     paddingTop: 25
   },
-  
+
   thumbnail: {
     width: 90,
     height: 90,

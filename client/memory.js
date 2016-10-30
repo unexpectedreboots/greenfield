@@ -24,6 +24,12 @@ export default class Memory extends React.Component {
     };
   }
 
+   _navigate() {
+    this.props.navigator.push({
+      name: 'Homescreen'
+    });
+  }
+
   async componentDidMount() {
     await Font.loadAsync({
       'pacifico': require('./assets/fonts/Pacifico.ttf'),
@@ -148,6 +154,9 @@ export default class Memory extends React.Component {
             <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
           <Title style={styles.headerText}>{this.state.date}</Title>
+          <Button transparent onPress={this._navigate.bind(this)}>
+            <Ionicons name="ios-home" size={35} color="#444" />
+          </Button>
         </Header>
         <Content 
           contentContainerStyle={
