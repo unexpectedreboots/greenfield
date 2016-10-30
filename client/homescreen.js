@@ -49,10 +49,16 @@ export default class Homescreen extends React.Component {
     });
   }
 
+  _navigateLogout() {
+    this.props.navigator.push({
+      name: 'Login'
+    })
+  }
+
   logout() {
     this._userLogout()
     .then(()=> {
-      this.props.navigator.pop();
+      this._navigateLogout();
     })
     .catch((err)=> {
       console.log('error logging out', err);
