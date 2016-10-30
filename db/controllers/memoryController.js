@@ -66,6 +66,20 @@ exports.upload = function(req, res) {
               memory.save();
             });
 
+            caption('https://s3-us-west-1.amazonaws.com/invalidmemories/images/02c9dce5-e903-4396-82ea-66f5892a821e-large.jpg', 
+              function(err, content) {
+                if (err) {
+                  console.log('err getting caption', err);
+                } else {
+                  var results = {
+                    api: 'caption',
+                    tags: [content],
+                    original: content
+                  };
+                memory.analyses.push(results);
+                memory.save();
+            });
+
             User.findOne({username: req.user.username}).then(function(user) {
               user.memories.push(memory._id);   
               user.save(function(err) {

@@ -89,13 +89,19 @@ export default class Memory extends React.Component {
       var memory = JSON.parse(res['_bodyInit']);
       var microsoftTags = [];
       var clarifaiTags = [];
+      var caption = [];
+      // it isnt guranteed that microsoft will be before clarifai, correct?
       if (memory.analyses[0].tags && memory.analyses[0].tags.length > 0) {
         microsoftTags = memory.analyses[0].tags;
       }
       if (memory.analyses[1].tags && memory.analyses[1].tags.length > 0) {
         clarifaiTags = memory.analyses[1].tags;
       }
-      var analyses = _.uniq(microsoftTags.concat(clarifaiTags));
+
+      if (memory.analyses[2].tags && memory.analyses[2].tags.length > 0) {
+        caption = memory.analyses[2].tags;
+      }
+      var analyses = _.uniq(caption.concat(microsoftTags).concat(clarifaiTags));
       var savedTags = memory.tags;
       var date = new Date(memory.createdAt).toString().slice(0, 15);
       context.setState({
