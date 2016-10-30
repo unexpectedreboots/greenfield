@@ -42,7 +42,10 @@ export default class Memories extends React.Component {
 
   _navigateHome() {
     this.props.navigator.push({
-      name: 'Homescreen'
+      name: 'Homescreen',
+      passProps: {
+        'username': this.props.username
+      }
     });
   }
 
