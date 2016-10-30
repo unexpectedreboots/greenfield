@@ -4,6 +4,7 @@ var awsClient = require('../../server/aws');
 var fs = require('fs');
 var clarifai = require('../../api/clarifai');
 var microsoft = require('../../api/microsoft');
+var caption = require('../../api/caption');
 
 // techdebt: break upload into several functions to make it readable
 exports.upload = function(req, res) {
