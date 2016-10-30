@@ -76,9 +76,10 @@ exports.upload = function(req, res) {
                     tags: [content],
                     original: content
                   };
-                memory.analyses.push(results);
-                memory.save();
-            });
+                  memory.analyses.push(results);
+                  memory.save();
+                }
+              });
 
             User.findOne({username: req.user.username}).then(function(user) {
               user.memories.push(memory._id);   
