@@ -66,7 +66,7 @@ exports.upload = function(req, res) {
               memory.save();
             });
 
-            caption('https://s3-us-west-1.amazonaws.com/invalidmemories/images/02c9dce5-e903-4396-82ea-66f5892a821e-large.jpg', 
+            caption(image.url, 
               function(err, content) {
                 if (err) {
                   console.log('err getting caption', err);
