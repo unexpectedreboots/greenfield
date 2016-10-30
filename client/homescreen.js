@@ -85,9 +85,7 @@ export default class Homescreen extends React.Component {
     return (
       <Container>
         <Header style={{height: 80}}>
-          <Button transparent>
-            <Ionicons name="ios-home" size={35} color="#444" />
-          </Button>
+          <Button transparent> </Button>
           <Title style={styles.headerText}>TagMe</Title>
           <Button transparent onPress={this.logout.bind(this)}>
             <Ionicons name="ios-log-out" size={35} color="#444" />
