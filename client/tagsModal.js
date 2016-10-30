@@ -3,14 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
-  AlertIOS,
   AsyncStorage,
-  TouchableHighlight,
-  Image,
   Modal
 } from 'react-native';
+import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
+import { Ionicons } from '@exponent/vector-icons';
 
 export default class ModalView extends React.Component {
 
@@ -22,7 +20,11 @@ export default class ModalView extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await Font.loadAsync({
+      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+    });
+    this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
       this.setState({modalVisible: true});
     } else {
@@ -61,7 +63,9 @@ export default class ModalView extends React.Component {
   render() {
     return (
       <View>
-        <Button onPress={this.setModalVisible.bind(this, true)} bordered style={styles.button}>Edit Tags</Button>
+        <Button onPress={this.setModalVisible.bind(this, true)} style={styles.button}>
+          <Text style={styles.buttonText}>Edit Tags</Text>
+        </Button>
         <Modal
           animationType={'slide'}
           transparent={true}
@@ -72,29 +76,30 @@ export default class ModalView extends React.Component {
           <Content
           contentContainerStyle={
             {
-              marginTop: 70,
-              flexWrap: 'wrap',
-              flexDirection: 'row',
+              marginTop: 20,
               justifyContent: 'center',
               alignItems: 'center'
             }
           }>
-            {
-              this.props.tags.map(tag => 
-                <Tag 
-                  name={tag}
-                  addTag={this.addTag.bind(this)}
-                  removeTag={this.removeTag.bind(this)}
-                />
-              )
-            }
-            <Button 
-              success 
-              onPress={this.onSubmit.bind(this)}
-              style={styles.button}
-            >
-              Submit
+            <Button transparent onPress={this.setModalVisible.bind(this, false)}>
+              <Ionicons name="ios-close" size={40} color="#444" />
             </Button>
+            <View style={styles.tagsContainer}>
+              {
+                this.props.tags.map(tag => 
+                  <Tag 
+                    name={tag}
+                    addTag={this.addTag.bind(this)}
+                    removeTag={this.removeTag.bind(this)}
+                  />
+                )
+              }
+            </View>
+            <View>
+              <Button success onPress={this.onSubmit.bind(this)} style={styles.button}>
+                Submit
+              </Button>
+            </View>
           </Content>
          </Container>
         </Modal>
@@ -142,16 +147,23 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)'
   },
-  container: {
-    marginTop: 70,
+
+  tagsContainer: {
+    marginTop: 50,
     flexWrap: 'wrap',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: 'row'
   },
+
   button: {
-    margin: 10
+    margin: 10,
+    backgroundColor: '#f6755e'
   },
+
+  buttonText: {
+    ...Font.style('montserrat'),
+    color: '#fff'
+  },
+
   tag: {
     margin: 10
   }

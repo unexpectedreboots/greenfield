@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  TextInput,
-  AlertIOS,
   AsyncStorage,
-  TouchableHighlight,
   Image
 } from 'react-native';
+import { Font } from 'exponent';
 import ModalView from './tagsModal';
 import { Container, Header, Title, Content, Footer, Button, Spinner } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
@@ -27,7 +24,17 @@ export default class Memory extends React.Component {
     };
   }
 
-  componentDidMount() {
+   _navigate() {
+    this.props.navigator.push({
+      name: 'Homescreen'
+    });
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'pacifico': require('./assets/fonts/Pacifico.ttf'),
+    });
+    this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
     } else {
@@ -143,15 +150,21 @@ export default class Memory extends React.Component {
     return (
       <Container>
         <Header>
-          <Button 
-            transparent
-            onPress={() => this.props.navigator.pop()}
-          >
-            <Ionicons name="ios-arrow-back" size={32} style={{color: 'dodgerblue', marginTop: 5}}/>
+          <Button transparent onPress={() => this.props.navigator.pop()}>
+            <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
-          <Title>{this.state.date}</Title>
+          <Title style={styles.headerText}>{this.state.date}</Title>
+          <Button transparent onPress={this._navigate.bind(this)}>
+            <Ionicons name="ios-home" size={35} color="#444" />
+          </Button>
         </Header>
-        <Content contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
+        <Content 
+          contentContainerStyle={
+            {
+              justifyContent: 'center',
+              alignItems: 'center'
+            }
+          }>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
           <MemoryDetails 
             status={this.state.status} 
@@ -192,22 +205,29 @@ class MemoryDetails extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 70
+  headerText: {
+    ...Font.style('pacifico'),
+    fontSize: 30,
+    color: '#444',
+    paddingTop: 25
   },
+
   tagsContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
+
   tag: {
     margin: 10
   },
+
   image: {
     width: 325,
     height: 325
   },
+
   spinner: {
     padding: 100
   }
