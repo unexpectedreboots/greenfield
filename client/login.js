@@ -121,7 +121,7 @@ export default class Login extends React.Component {
     return (
       <Container>
         <View style={styles.backgroundImageWrapper}>
-          <Image source={require('./assets/london.jpg')} style={styles.backgroundImage} />
+          <Image source={require('./assets/images/london.jpg')} style={styles.backgroundImage} />
         </View>
         <View style={styles.container}>
           {
@@ -143,7 +143,7 @@ export default class Login extends React.Component {
               <InputGroup>
                 <Input
                   placeholder='USERNAME'
-                  placeholderTextColor='#333'
+                  placeholderTextColor='#444'
                   onChangeText={(text) => this.setState({username: text})}
                   value={this.state.username}
                   style={styles.formText}
@@ -154,7 +154,7 @@ export default class Login extends React.Component {
               <InputGroup>
                 <Input
                   placeholder='PASSWORD'
-                  placeholderTextColor='#333'
+                  placeholderTextColor='#444'
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password: text})}
                   value={this.state.password}
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
 
   formText: {
     fontSize: 17,
-    color: '#777'
+    color: '#333'
   },
 
   button: {

@@ -92,7 +92,7 @@ export default class Homescreen extends React.Component {
     return (
       <Container>
         <View style={styles.backgroundImageWrapper}>
-          <Image source={require('./assets/city.jpg')} style={styles.backgroundImage} />
+          <Image source={require('./assets/images/city.jpg')} style={styles.backgroundImage} />
         </View>
         <Header style={{height: 80, zIndex: 1}}>
           <Button transparent> </Button>
