@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
 
   formText: {
     fontSize: 17,
-    color: '#333'
+    color: '#777'
   },
 
   button: {
