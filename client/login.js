@@ -143,7 +143,7 @@ export default class Login extends React.Component {
               <InputGroup>
                 <Input
                   placeholder='USERNAME'
-                  placeholderTextColor='gray'
+                  placeholderTextColor='#333'
                   onChangeText={(text) => this.setState({username: text})}
                   value={this.state.username}
                   style={styles.formText}
@@ -154,7 +154,7 @@ export default class Login extends React.Component {
               <InputGroup>
                 <Input
                   placeholder='PASSWORD'
-                  placeholderTextColor='gray'
+                  placeholderTextColor='#333'
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password: text})}
                   value={this.state.password}
@@ -189,12 +189,7 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   backgroundImageWrapper: {
     position: 'absolute',
-    // top: 50,
-    // bottom: 50,
     alignItems: 'center'
-    // left: -800
-    // height: 800,
-    // width: null
   },
 
   backgroundImage: {
@@ -204,7 +199,6 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
   },
 
   buttonsContainer: {
@@ -249,7 +243,8 @@ const styles = StyleSheet.create({
   },
 
   formText: {
-    fontSize: 17
+    fontSize: 17,
+    color: '#333'
   },
 
   button: {

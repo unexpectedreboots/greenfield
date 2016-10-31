@@ -141,11 +141,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     zIndex: 0,
-    // bottom: 50,
     alignItems: 'center'
-    // left: -800
-    // height: null,
-    // width: null
   },
 
   backgroundImage: {
