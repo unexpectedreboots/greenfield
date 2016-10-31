@@ -35,6 +35,7 @@ export default class Memories extends React.Component {
       passProps: {
         'image': {uri: image.uri},
         'id': image.id,
+        'username': this.props.username,
         'prevScene': 'Memories'
       }
     });
