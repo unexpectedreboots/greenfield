@@ -38,7 +38,8 @@ export default class Memory extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'pacifico': require('./assets/fonts/Pacifico.ttf'),
-      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf')
+      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'helvetica': require('./assets/fonts/HelveticaNeueMed.ttf')
     });
     this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
@@ -221,7 +222,7 @@ class MemoryDetails extends React.Component {
         <View style={styles.tagsContainer}>
           {
             this.props.tags.map(tag =>
-              <Button style={styles.tag} rounded info>{tag}</Button>
+              <Button style={styles.tag} rounded info><Text style={styles.tagText}>{tag}</Text></Button>
             )
           }
         </View>
@@ -257,6 +258,13 @@ const styles = StyleSheet.create({
 
   tag: {
     margin: 10
+  },
+
+  tagText: {
+    ...Font.style('helvetica'),
+    color: '#fff',
+    fontSize: 16,
+    letterSpacing: 1
   },
 
   image: {
