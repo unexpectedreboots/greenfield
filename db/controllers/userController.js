@@ -18,10 +18,10 @@ exports.login = function(req, res) {
     .then(function(user) {
       if (!user) {
         console.log(errNoUsername);
-        res.status(401).send(errNoUsername);
+        res.status(401).send();
       } else if (user.password !== req.body.password) {
         console.log(errIncorrectPassword);
-        res.status(401).send(errIncorrectPassword);
+        res.status(401).send();
       }
 
       res.status(201).send({
@@ -45,7 +45,7 @@ exports.signup = function(req, res) {
         });
       } else {
         console.log(errUsernameTaken);
-        res.status(401).send(errUsernameTaken);
+        res.status(401).send();
       }
     });
 };
