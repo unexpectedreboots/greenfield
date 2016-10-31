@@ -8,6 +8,7 @@ var caption = require('../../api/caption');
 
 // techdebt: break upload into several functions to make it readable
 exports.upload = function(req, res) {
+  console.log('POST /api/memories/upload. username:', req.user.username);
   if (!req.file) {
     console.log('Multer failed to save file');
     res.status(404).send();
@@ -15,7 +16,7 @@ exports.upload = function(req, res) {
     awsClient.upload('uploads/' + req.file.filename, {}, function(err, versions, meta) {
       if (err) { 
         console.log('s3 upload error: ', err); 
-      } 
+      }
 
       versions.forEach(function(image) {
         // S3-uploader library returns all images, including created thumbnails. Use only the original image
@@ -27,6 +28,7 @@ exports.upload = function(req, res) {
             filePath: image.url, 
             createdAt: Date.now()
           }).then(function(memory) {
+
             fs.unlink('uploads/' + req.file.filename, function(err, success) {
               if (err) {
                 console.log('Error deleting file,', err);
@@ -81,11 +83,16 @@ exports.upload = function(req, res) {
                 }
               });
 
-            User.findOne({username: req.user.username}).then(function(user) {
+            User.findOne({username: req.user.username})
+            .then(function(user) {
               user.memories.push(memory._id);   
               user.save(function(err) {
                 res.status(201).send(memory._id);
               });
+            })
+            .catch(function(err) {
+              console.log('Err saving user', err);
+              res.status(404).send();
             });
           }).catch(function(err) {
             console.log('Error creating memory,', err);
@@ -98,6 +105,7 @@ exports.upload = function(req, res) {
 };
 
 exports.fetchMemories = function(req, res) {
+  console.log('GET /api/memories/all. username:', req.user.username);
   User.findOne({ username: req.user.username }).populate('memories').then(function(user) {
     res.status(200).send(user.memories);
   }).catch(function(err) {
@@ -107,6 +115,7 @@ exports.fetchMemories = function(req, res) {
 };
 
 exports.fetchOne = function(req, res) {
+  console.log('GET /api/memories/id/*. username:', req.user.username);
   Memory.findOne({ _id: req.params.id }).then(function(memory) {
     res.status(200).send(memory);
   }).catch(function(err) {
@@ -116,13 +125,12 @@ exports.fetchOne = function(req, res) {
 
 exports.storeTags = function(req, res) {
   // If there is no JSON body, return 400
+  console.log('POST /api/memories/id/*. username:', req.user.username);
   if (!req.body || !req.body.tags) {
     return res.sendStatus(400);
   }
 
   Memory.findOne({ _id: req.params.id }).then(function(memory) {
-    console.log('tags:', req.body.tags);
-    console.log('found memory:', memory);
     memory.tags = req.body.tags;
     memory.save(function(err) {
       if (err) {

@@ -113,47 +113,64 @@ describe('Unprotected routes: ', function() {
 
   describe('Memory creation', function() {
    
+    var signUpOptions = {
+      method: 'POST',
+      url: 'http://localhost:3000/api/users/signup',
+      json: {
+        username: 'new',
+        password: 'new'
+      }
+    };
+
     // note: need aws credentials set up (in the current tab) for this to work
     it ('should create a local file and push it to s3', function(done) {
       // set timeout to 5 sec to give enough time to upload to s3
       this.timeout(5000);
-      var form = new FormData();
-      form.append('type', 'image/png');
-      form.append('name', 'testImage.png');
-      form.append('memoryImage', fs.createReadStream('test/successkid.png'));
 
-      form.submit({
-        port: 3000,
-        path: '/api/memories/upload',
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'}
-      }, function(err, res) {
-        // res is the response to the form submission, not the response from the server (does not contain id)
+      // First create the user
+      request(signUpOptions, function(err, res, body) {
         if (err) {
-          console.log('err uploading image was ', err);
-        } 
-        expect(err).to.be.null;
-        expect(res.statusCode).to.equal(201);
-        done();
+          console.log('ERROR:', err);
+        }
+        
+        var form = new FormData();
+        form.append('type', 'image/png');
+        form.append('name', 'testImage.png');
+        form.append('memoryImage', fs.createReadStream('test/successkid.png'));
+
+        form.submit({
+          port: 3000,
+          path: '/api/memories/upload',
+          headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'}
+        }, function(err, res) {
+          // res is the response to the form submission, not the response from the server (does not contain id)
+          
+          if (err) {
+            console.log('err uploading image was ', err);
+          } 
+          expect(err).to.be.null;
+          expect(res.statusCode).to.equal(201);
+          done();
+        });
       });
+      
     });
   });
 
   describe('Memory access', function() {
     it ('should return the details of a memory given an id', function(done) {
-      // give it 5 sec to return all images
       var accessOneOptions = {
         method: 'GET',
-        url: 'http://localhost:3000/api/memories/id/5811455a578e4b766f7782f7',
+        url: 'http://localhost:3000/api/memories/id/5816923fc196a000184ae43a',
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
-        }
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'
+        },
       };
 
       request(accessOneOptions, function(err, res) {
         if (err) {
           console.log('err retrieving all', err);
         }
-        // console.log('res.body', JSON.parse(res.body));
         expect(JSON.parse(res.body).title).to.be.a('string');
         done();
       });
@@ -173,14 +190,10 @@ describe('Unprotected routes: ', function() {
         if (err) {
           console.log('err retrieving all', err);
         }
-        // console.log('res.body', JSON.parse(res.body)[0]);
         expect(JSON.parse(res.body)[0].title).to.be.a('string');
         done();
       });
     });
 
   });
-
-  // TODO: write tests for routes
-
 });
