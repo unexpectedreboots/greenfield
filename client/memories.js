@@ -80,10 +80,9 @@ export default class Memories extends React.Component {
   render() {
     return (
       <Container>
-        
         {
           this.state.fontLoaded ? (
-        <Header style={{zIndex: 1}}>
+        <Header>
           <Button transparent onPress={() => this.props.navigator.pop()}>
             <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
@@ -114,18 +113,6 @@ export default class Memories extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  backgroundImageWrapper: {
-    position: 'absolute',
-    top: 0,
-    zIndex: 0,
-    alignItems: 'center'
-  },
-
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'stretch'
-  },
-
   headerText: {
     ...Font.style('pacifico'),
     fontSize: 30,
