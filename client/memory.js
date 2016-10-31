@@ -239,7 +239,8 @@ const styles = StyleSheet.create({
   caption: {
     ...Font.style('montserrat'),
     fontSize: 16,
-    textAlign: 'center'
+    textAlign: 'center',
+    margin: 10
   },
 
   tag: {
