@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   AlertIOS,
   AsyncStorage
 } from 'react-native';
@@ -118,8 +119,11 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <Container style={styles.container}>
-        <View>
+      <Container>
+        <View style={styles.backgroundImageWrapper}>
+          <Image source={require('./assets/london.jpg')} style={styles.backgroundImage} />
+        </View>
+        <View style={styles.container}>
           {
             this.state.fontLoaded ? (
             <View>
@@ -142,6 +146,7 @@ export default class Login extends React.Component {
                   placeholderTextColor='gray'
                   onChangeText={(text) => this.setState({username: text})}
                   value={this.state.username}
+                  style={styles.formText}
                 />
               </InputGroup>
             </ListItem>
@@ -153,6 +158,7 @@ export default class Login extends React.Component {
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password: text})}
                   value={this.state.password}
+                  style={styles.formText}
                 />
               </InputGroup>
             </ListItem>
@@ -181,9 +187,24 @@ export default class Login extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  backgroundImageWrapper: {
+    position: 'absolute',
+    // top: 50,
+    // bottom: 50,
+    alignItems: 'center'
+    // left: -800
+    // height: 800,
+    // width: null
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'stretch'
+  },
+
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
 
   buttonsContainer: {
@@ -225,6 +246,10 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     marginRight: 3,
     marginLeft: 3
+  },
+
+  formText: {
+    fontSize: 17
   },
 
   button: {
