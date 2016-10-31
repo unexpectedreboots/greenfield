@@ -38,7 +38,8 @@ export default class Memory extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'pacifico': require('./assets/fonts/Pacifico.ttf'),
-      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf')
+      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'helvetica': require('./assets/fonts/HelveticaNeueMed.ttf')
     });
     this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
@@ -121,7 +122,19 @@ export default class Memory extends React.Component {
     }).catch(function(err) {
       console.log('ERROR', err);
       // Try pinging database again
-      context.getMemoryData(id);
+      if (pings < 50) {
+        context.getMemoryData(id, pings + 1);
+      } else {
+        var date = new Date().toString().slice(0, 15);
+        context.setState({
+          tags: ['cant tag this right now sorry'], 
+          filteredTags: ['cant tag this right now sorry'], 
+          status: true, 
+          statusMessage: 'Tags:',
+          databaseId: id,
+          date: date
+        });
+      }
     });
   }
 
@@ -209,7 +222,7 @@ class MemoryDetails extends React.Component {
         <View style={styles.tagsContainer}>
           {
             this.props.tags.map(tag =>
-              <Button style={styles.tag} rounded info>{tag}</Button>
+              <Button style={styles.tag} rounded info><Text style={styles.tagText}>{tag}</Text></Button>
             )
           }
         </View>
@@ -245,6 +258,13 @@ const styles = StyleSheet.create({
 
   tag: {
     margin: 10
+  },
+
+  tagText: {
+    ...Font.style('helvetica'),
+    color: '#fff',
+    fontSize: 16,
+    letterSpacing: 1
   },
 
   image: {

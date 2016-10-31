@@ -95,7 +95,7 @@ export default class Homescreen extends React.Component {
           <Image source={require('./assets/images/city.jpg')} style={styles.backgroundImage} />
         </View>
         <Header style={{height: 80, zIndex: 1}}>
-          <Button transparent> </Button>
+          <Button transparent><Text style={styles.buttonText}> </Text></Button>
           <Title style={styles.headerText}>TagMe</Title>
           <Button transparent onPress={this.logout.bind(this)}>
             <Ionicons name="ios-log-out" size={35} color="#444" />

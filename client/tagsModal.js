@@ -23,6 +23,7 @@ export default class ModalView extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+      'helvetica': require('./assets/fonts/HelveticaNeueMed.ttf')
     });
     this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
@@ -133,7 +134,7 @@ class Tag extends Component {
         onPress={this.selectTag.bind(this)}
         style={styles.tag}
       >
-        {this.props.name}
+        <Text style={this.state.selected ? [styles.tagText, styles.tagSelected] : [styles.tagText, styles.tagNotSelected]}>{this.props.name}</Text>
       </Button>
     );
   }
@@ -173,10 +174,25 @@ const styles = StyleSheet.create({
 
   buttonText: {
     ...Font.style('montserrat'),
-    color: '#fff'
+    color: '#fff',
+    fontSize: 18
   },
 
   tag: {
     margin: 10
+  },
+
+  tagText: {
+    ...Font.style('helvetica'),
+    fontSize: 16,
+    letterSpacing: 1
+  },
+
+  tagSelected: {
+    color: '#fff'
+  },
+
+  tagNotSelected: {
+    color: '#25a2c3'
   }
 });
