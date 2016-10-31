@@ -121,7 +121,19 @@ export default class Memory extends React.Component {
     }).catch(function(err) {
       console.log('ERROR', err);
       // Try pinging database again
-      context.getMemoryData(id);
+      if (pings < 50) {
+        context.getMemoryData(id, pings + 1);
+      } else {
+        var date = new Date().toString().slice(0, 15);
+        context.setState({
+          tags: ['cant tag this right now sorry'], 
+          filteredTags: ['cant tag this right now sorry'], 
+          status: true, 
+          statusMessage: 'Tags:',
+          databaseId: id,
+          date: date
+        });
+      }
     });
   }
 
