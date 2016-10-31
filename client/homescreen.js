@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 
   choiceButton: {
     height: 80,
-    width: 180,
+    width: 170,
     borderRadius: 4,
     backgroundColor: '#f6755e',
     margin: 5
