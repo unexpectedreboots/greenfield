@@ -45,7 +45,7 @@ export default class Memory extends React.Component {
     if (this.props.prevScene === 'Homescreen') {
       this.uploadPhoto();
     } else {
-      this.getMemoryData(this.props.id);
+      this.getMemoryData(this.props.id, 0);
     }
   }
 
@@ -75,11 +75,11 @@ export default class Memory extends React.Component {
         }
       }).then(function(res) {
         var databaseId = JSON.parse(res['_bodyInit']);
-        context.getMemoryData(databaseId);
+        context.getMemoryData(databaseId, 0);
       });
   }
 
-  async getMemoryData(id) {
+  async getMemoryData(id, pings) {
     var context = this;
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
@@ -127,12 +127,12 @@ export default class Memory extends React.Component {
       } else {
         var date = new Date().toString().slice(0, 15);
         context.setState({
-          tags: ['cant tag this right now sorry'], 
-          filteredTags: ['cant tag this right now sorry'], 
+          tags: [], 
+          filteredTags: [], 
           status: true, 
-          statusMessage: 'Tags:',
           databaseId: id,
-          date: date
+          date: date,
+          caption: 'Request Timeout'
         });
       }
     });
