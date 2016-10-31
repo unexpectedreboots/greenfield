@@ -114,7 +114,6 @@ export default class Memory extends React.Component {
         tags: analyses, 
         filteredTags: savedTags, 
         status: true, 
-        statusMessage: 'Tags:',
         databaseId: id,
         date: date,
         caption: caption
@@ -206,12 +205,14 @@ class MemoryDetails extends React.Component {
       </Spinner>
       : null;
     return (
-      <View style={styles.tagsContainer}>
-        {
-          this.props.tags.map(tag => 
-            <Button style={styles.tag} rounded info>{tag}</Button>
-          )
-        }
+      <View>
+        <View style={styles.tagsContainer}>
+          {
+            this.props.tags.map(tag =>
+              <Button style={styles.tag} rounded info>{tag}</Button>
+            )
+          }
+        </View>
         {loading}
       </View>
     );
@@ -226,19 +227,19 @@ const styles = StyleSheet.create({
     paddingTop: 25
   },
 
-  caption: {
-    ...Font.style('montserrat'),
-    fontSize: 16,
-    textAlign: 'center'
-  },
-
   tagsContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 10
+    margin: 10,
+    flex: 1
+  },
+
+  caption: {
+    ...Font.style('montserrat'),
+    fontSize: 16,
+    textAlign: 'center'
   },
 
   tag: {
