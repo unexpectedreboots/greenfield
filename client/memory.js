@@ -105,7 +105,7 @@ export default class Memory extends React.Component {
       }
 
       if (memory.analyses[2].tags && memory.analyses[2].tags.length > 0) {
-        caption = memory.analyses[2].tags;
+        caption = memory.analyses[2].tags[0].replace(/(\r\n|\n|\r)/gm, ' ').replace('.', '');
       }
       var analyses = _.uniq(microsoftTags.concat(clarifaiTags));
       var savedTags = memory.tags;
