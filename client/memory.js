@@ -122,7 +122,7 @@ export default class Memory extends React.Component {
     }).catch(function(err) {
       console.log('ERROR', err);
       // Try pinging database again
-      if (pings < 50) {
+      if (pings < 200) {
         context.getMemoryData(id, pings + 1);
       } else {
         var date = new Date().toString().slice(0, 15);
