@@ -126,14 +126,14 @@ describe('Unprotected routes: ', function() {
         port: 3000,
         path: '/api/memories/upload',
         headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ODBmYzdiMTZhYWE2ODM2OTk2NDc5MTQiLCJ1c2VybmFtZSI6Im5ldyIsInBhc3N3b3JkIjoidXNlciIsIl9fdiI6MCwibWVtb3JpZXMiOltdfQ.VfV0DtedVfOUZNAM6fOrMQCakF6Zrcbk-ujie0YGvd4'}
-        }, function(err, res) {
-          // res is the response to the form submission, not the response from the server (does not contain id)
-          if (err) {
-            console.log('err uploading image was ', err);
-          } 
-          expect(err).to.be.null;
-          expect(res.statusCode).to.equal(201);
-          done();
+      }, function(err, res) {
+        // res is the response to the form submission, not the response from the server (does not contain id)
+        if (err) {
+          console.log('err uploading image was ', err);
+        } 
+        expect(err).to.be.null;
+        expect(res.statusCode).to.equal(201);
+        done();
       });
     });
   });
