@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   AsyncStorage,
   Image
 } from 'react-native';
@@ -20,7 +21,8 @@ export default class Memory extends React.Component {
       tags: [],
       filteredTags: [],
       status: false,
-      databaseId: ''
+      databaseId: '',
+      caption: ''
     };
   }
 
@@ -36,6 +38,7 @@ export default class Memory extends React.Component {
   async componentDidMount() {
     await Font.loadAsync({
       'pacifico': require('./assets/fonts/Pacifico.ttf'),
+      'montserrat': require('./assets/fonts/Montserrat-Regular.ttf')
     });
     this.setState({ fontLoaded: true });
     if (this.props.prevScene === 'Homescreen') {
@@ -104,7 +107,7 @@ export default class Memory extends React.Component {
       if (memory.analyses[2].tags && memory.analyses[2].tags.length > 0) {
         caption = memory.analyses[2].tags;
       }
-      var analyses = _.uniq(caption.concat(microsoftTags).concat(clarifaiTags));
+      var analyses = _.uniq(microsoftTags.concat(clarifaiTags));
       var savedTags = memory.tags;
       var date = new Date(memory.createdAt).toString().slice(0, 15);
       context.setState({
@@ -113,7 +116,8 @@ export default class Memory extends React.Component {
         status: true, 
         statusMessage: 'Tags:',
         databaseId: id,
-        date: date
+        date: date,
+        caption: caption
       });
     }).catch(function(err) {
       console.log('ERROR', err);
@@ -175,6 +179,7 @@ export default class Memory extends React.Component {
             }
           }>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
+          <Text style={styles.caption}>{this.state.caption}</Text>
           <MemoryDetails 
             status={this.state.status} 
             tags={this.state.filteredTags}
@@ -221,11 +226,19 @@ const styles = StyleSheet.create({
     paddingTop: 25
   },
 
+  caption: {
+    ...Font.style('montserrat'),
+    fontSize: 16,
+    textAlign: 'center'
+  },
+
   tagsContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10
   },
 
   tag: {
