@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   AlertIOS,
   AsyncStorage
 } from 'react-native';
@@ -90,7 +91,10 @@ export default class Homescreen extends React.Component {
   render() {
     return (
       <Container>
-        <Header style={{height: 80}}>
+        <View style={styles.backgroundImageWrapper}>
+          <Image source={require('./assets/images/city.jpg')} style={styles.backgroundImage} />
+        </View>
+        <Header style={{height: 80, zIndex: 1}}>
           <Button transparent> </Button>
           <Title style={styles.headerText}>TagMe</Title>
           <Button transparent onPress={this.logout.bind(this)}>
@@ -133,6 +137,18 @@ export default class Homescreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  backgroundImageWrapper: {
+    position: 'absolute',
+    top: 0,
+    zIndex: 0,
+    alignItems: 'center'
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'stretch'
+  },
+
   headerText: {
     ...Font.style('pacifico'),
     fontSize: 30,

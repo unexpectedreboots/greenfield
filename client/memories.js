@@ -2,6 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   AsyncStorage,
+  View,
   TouchableHighlight,
   Image
 } from 'react-native';
