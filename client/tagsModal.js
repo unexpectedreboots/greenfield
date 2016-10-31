@@ -72,15 +72,16 @@ export default class ModalView extends React.Component {
           visible={this.state.modalVisible}
           onRequestClose={() => { alert('Modal has been closed.'); }}
         >
-        <Container style={styles.modal}>
+        <Content style={styles.modal}>
           <View style={styles.modalContent}>
             <Button transparent onPress={this.setModalVisible.bind(this, false)}>
               <Ionicons name="ios-close" size={40} color="#444" />
             </Button>
             <View><Text style={styles.modalText}>Select tags to save</Text></View>
-            <View style={styles.tagsContainer}>
+            <View>
+              <View style={styles.tagsContainer}>
               {
-                this.props.tags.map(tag => 
+                this.props.tags.map(tag =>
                   <Tag 
                     name={tag}
                     addTag={this.addTag.bind(this)}
@@ -88,6 +89,7 @@ export default class ModalView extends React.Component {
                   />
                 )
               }
+              </View>
             </View>
             <View>
               <Button success onPress={this.onSubmit.bind(this)} style={styles.button}>
@@ -95,7 +97,7 @@ export default class ModalView extends React.Component {
               </Button>
             </View>
           </View>
-         </Container>
+         </Content>
         </Modal>
       </View>
     );
@@ -156,8 +158,12 @@ const styles = StyleSheet.create({
 
   tagsContainer: {
     marginTop: 30,
+    marginBottom: 10,
     flexWrap: 'wrap',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
   },
 
   button: {
