@@ -17,20 +17,29 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
+TagMe
 
 ## Sub-Heading ##
+An autotagging photo journal powered by computer vision
 
 ## Summary ##
+TagMe takes a photo you have, stores it in the cloud, and annotates your photo with tags using Microsoft and Clarifai's computer vision APIs. Choose which tags/captions/etc... you want to keep!
 
 ## Problem ##
+Photo journaling is high-effort
   
 ## Solution ##
+Use cutting-edge computer vision APIs to help you tag and search
 
 ## Quote from You ##
+'This is dope' - Bill Zito
 
 ## How to Get Started ##
+See [README.md](README.md).
 
 ## Customer Quote ##
+'This would make an awesome drinking game' - Alec Maliwanag
 
 ## Closing and Call to Action ##
+TagMe will make you realize that computer vision APIs definitely have room for improvement
   

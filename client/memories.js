@@ -3,11 +3,12 @@ import {
   StyleSheet,
   AsyncStorage,
   View,
+  Text,
   TouchableHighlight,
   Image
 } from 'react-native';
 import { Font } from 'exponent';
-import { Container, Header, Title, Content, Footer, Button } from 'native-base';
+import { Container, Header, Title, Content, Footer, InputGroup, Input, Button } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
 
 var STORAGE_KEY = 'id_token';
@@ -18,7 +19,10 @@ export default class Memories extends React.Component {
     this.state = {
       image: {},
       imageList: [],
-      fontLoaded: false
+      queryList: [],
+      fontLoaded: false,
+      searchQuery: '',
+      searching: false
     };
   }
 
@@ -53,6 +57,7 @@ export default class Memories extends React.Component {
 
   async fetchMemories() {
     var context = this;
+    this.setState({searching: false});
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
@@ -77,6 +82,33 @@ export default class Memories extends React.Component {
     });
   }
 
+  async search() {
+    var context = this;
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/search/' + this.state.searchQuery.toLowerCase(), {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }).then(function(memories) {
+      var memoryArray = JSON.parse(memories['_bodyInit']);
+      var images = memoryArray.map(memory => {
+        return {
+          id: memory._id,
+          uri: memory.filePath
+        };
+      });
+      context.setState({
+        queryList: images,
+        searching: true,
+        searchQuery: ''});
+    })
+  }
+
   render() {
     return (
       <Container>
@@ -88,11 +120,31 @@ export default class Memories extends React.Component {
           </Button>
           <Title style={styles.headerText}>{this.props.username}'s Memories</Title>
           <Button transparent onPress={this._navigateHome.bind(this)}>
-            <Ionicons name="ios-home" size={35} color="#444" />
+              <Ionicons name="ios-home" size={35} color="#444" />
           </Button>
         </Header>
           ) : null
         }
+        <View style={{flexDirection: 'row', margin: 10}}>
+          <InputGroup borderType='rounded' style={{width: 250}}>
+              <Input 
+                placeholder='Search'
+                onChangeText={(text) => this.setState({searchQuery: text})}
+                value={this.state.searchQuery}
+              />
+          </InputGroup>
+          <Button rounded style={{backgroundColor: '#25a2c3', marginLeft: 5}} onPress={this.search.bind(this)}>
+            <Ionicons name='ios-search' size={25} color="#fff"/>
+          </Button>
+          {
+              this.state.searching ? (
+                <Button rounded bordered style={{borderColor: '#ccc', marginLeft: 5}} 
+                        onPress={this.fetchMemories.bind(this)}>
+                  <Text style={{color: '#444'}}>Cancel</Text>
+                </Button>
+            ) : null
+          }
+        </View>
         <Content contentContainerStyle={{
           flexWrap: 'wrap',
           flexDirection: 'row',
@@ -100,6 +152,14 @@ export default class Memories extends React.Component {
           alignItems: 'center'
         }}>
           {
+            this.state.searching ? (
+              this.state.queryList.map(image => 
+                <TouchableHighlight onPress={this._navigate.bind(this, image)}>
+                  <Image style={styles.thumbnail} resizeMode={Image.resizeMode.contain} source={{uri: image.uri}}/>
+                </TouchableHighlight>
+              )
+            )
+            :
             this.state.imageList.map(image => 
               <TouchableHighlight onPress={this._navigate.bind(this, image)}>
                 <Image style={styles.thumbnail} resizeMode={Image.resizeMode.contain} source={{uri: image.uri}}/>
@@ -126,3 +186,28 @@ const styles = StyleSheet.create({
     margin: 1
   }
 });
+
+/*
+
+<Header searchBar rounded>
+           <InputGroup>
+               <Ionicons name='ios-search' />
+               <Input placeholder='Search' />
+               <Ionicons name='ios-people' />
+           </InputGroup>
+           <Button transparent>
+               Search
+           </Button>
+       </Header>
+
+
+<Header>
+          <Button transparent onPress={() => this.props.navigator.pop()}>
+            <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
+          </Button>
+          <Title style={styles.headerText}>{this.props.username}'s Memories</Title>
+          <Button transparent onPress={this._navigateHome.bind(this)}>
+            <Ionicons name="ios-home" size={35} color="#444" />
+          </Button>
+        </Header>
+        */
