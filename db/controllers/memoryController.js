@@ -5,6 +5,7 @@ var fs = require('fs');
 var clarifai = require('../../api/clarifai');
 var microsoft = require('../../api/microsoft');
 var caption = require('../../api/caption');
+var _ = require('lodash');
 
 // techdebt: break upload into several functions to make it readable
 exports.upload = function(req, res) {
@@ -135,5 +136,38 @@ exports.storeTags = function(req, res) {
   }).catch(function(err) {
     console.log('Error retrieving memory with ID:', req.params.id);
     res.status(404).send();
+  });
+};
+
+// searchMemories looks through all memories for the given search term
+// and returns all memories that match that tag
+// TODO: deal with multi-word search queries 
+// TODO: deal with tags that have multiple words
+exports.searchMemories = function(req, res) {
+  
+  var searchTerm = req.params.query;
+  searchTerm = searchTerm.replace('_', ' ');
+  Memory.find().then(function(memories) {
+
+    var memsWithTags = memories.filter(function(memory) {
+      var found = false; 
+      // for both microsoft and clarifai, see if there is a tag match
+      memory.analyses.forEach(function(classifier) {
+        if (classifier.tags) {
+          classifier.tags.forEach(function(tag) {
+            if (_.includes(tag, searchTerm)) {
+              found = true;
+            }
+          });
+        }
+      });
+      return found; 
+    });
+
+    res.status(201).send(memsWithTags);
+  })
+  .catch(function(err) {
+    console.log('err getting memories', err);
+    res.status(404).send('error searching the databse');
   });
 };
