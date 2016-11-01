@@ -5,12 +5,14 @@ var client = new transloadit(
   'c13e43c6792aca5c9c8c1c93f012d2e91c6fc89b'
 );
 
+module.exports.addVideo = function(fileName, filePath) {
+  client.addFile(fileName, __dirname + filePath);
+};
+
 var params = {
   steps: {
     ':original': {
-      robot: '/http/import',
-      url: 'http://techslides.com/demos/sample-videos/small.mp4'
-      // TODO: make dynamic
+      robot: '/video/encode',
     },
     'store': {
       use: ':original',
@@ -22,8 +24,7 @@ var params = {
   }
 };
 
-module.exports.uploadVideo = function(callback) {
-  // TODO: add argument to accept file path
+module.exports.batchUpload = function(callback) {
   client.send(params, function(success) {
     callback('Success:', JSON.stringify(success));
   }, function (err) {
