@@ -5,5 +5,9 @@ var transloadit = new TransloaditClient({
 });
 
 var params = {
-
+  encode: {
+    use: ':original',
+    robot: '/video/encode',
+    preset: 'iphone'
+  }
 };
