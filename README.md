@@ -47,6 +47,7 @@ npm install
 Download the Exponent Development Environment (XDE) [for Mac](https://xde-updates.exponentjs.com/download/mac) or [for Windows](https://xde-updates.exponentjs.com/download/win32)
 
 Download watchman (https://docs.getexponent.com/versions/v10.0.0/introduction/installation.html at bottom)
+
 Once XDE is installed, go to 'open project' and choose the client folder
 
 [Add environment variables for Amazon S3](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment)
