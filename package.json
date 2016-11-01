@@ -38,9 +38,11 @@
     "mocha": "^3.1.2",
     "mongoose": "^4.6.4",
     "multer": "^1.2.0",
+    "node-transloadit": "0.0.4",
     "nodemon": "^1.11.0",
     "request": "^2.75.0",
     "request-promise": "^4.1.1",
-    "s3-uploader": "^2.0.2"
+    "s3-uploader": "^2.0.2",
+    "transloadit": "1.9.1"
   }
 }

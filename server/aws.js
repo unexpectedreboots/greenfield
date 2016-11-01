@@ -1,9 +1,9 @@
 var Upload = require('s3-uploader');
 
-module.exports = new Upload('invalidmemories', {
+module.exports = new Upload('unexpected-reboots-photos', {
   aws: {
-    path: 'images/',
-    region: 'us-west-1',
+    path: '',
+    region: 'us-west-2',
     acl: 'public-read'
   },
 
