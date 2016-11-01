@@ -1,8 +1,9 @@
+var keys = require('./config/keys');
 var transloadit = require('node-transloadit');
 
 var client = new transloadit(
-  '8a87b470a08611e6829ce1fc61bcc136',
-  'c13e43c6792aca5c9c8c1c93f012d2e91c6fc89b'
+  keys.TRANSLOADIT_KEY,
+  keys.TRANSLOADIT_SECRET
 );
 
 module.exports.addVideo = function(fileName, filePath) {
@@ -17,8 +18,8 @@ var params = {
     'store': {
       use: ':original',
       robot: '/s3/store',
-      key: 'AKIAJTWXU5UJG3U627AQ',
-      secret: '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',
+      key: keys.AWS_KEY,
+      secret: keys.AWS_SECRET,
       bucket: 'unexpected-reboots-videos'
     }
   }

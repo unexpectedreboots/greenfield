@@ -43,3 +43,6 @@ jspm_packages
 
 #Apple
 .DS_Store
+
+# Credentials
+server/config/keys.js
