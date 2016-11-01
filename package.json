@@ -41,6 +41,7 @@
     "nodemon": "^1.11.0",
     "request": "^2.75.0",
     "request-promise": "^4.1.1",
-    "s3-uploader": "^2.0.2"
+    "s3-uploader": "^2.0.2",
+    "transloadit": "1.9.1"
   }
 }
