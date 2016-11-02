@@ -10,6 +10,7 @@ module.exports = function(pubUrl) {
       'Authorization': 'Bearer ' + clarifaiToken
     }
   }).then(function(res) {
+    console.log('clarifai request successful');
     return res.results[0].result.tag;
   }).catch(function(err) {
     console.log('error requresting from clarifai', err);
