@@ -12,6 +12,7 @@ import { Font } from 'exponent';
 import { Container, Header, Title, Content, Footer, Button } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
 
+
 var STORAGE_KEY = 'id_token';
 
 export default class Homescreen extends React.Component {
@@ -28,6 +29,7 @@ export default class Homescreen extends React.Component {
       'montserrat': require('./assets/fonts/Montserrat-Regular.ttf')
     });
     this.setState({ fontLoaded: true });
+
   }
 
   async _userLogout() {
@@ -39,11 +41,11 @@ export default class Homescreen extends React.Component {
     }
   }
 
-  _navigate(sceneName, imageUri) {
+  _navigate(sceneName, imageUri, imgLatitude, imgLongitude) {
     this.props.navigator.push({
       name: sceneName,
       passProps: {
-        'image': {uri: imageUri},
+        'image': {uri: imageUri, latitude: imgLatitude, longitude: imgLongitude},
         'username': this.props.username,
         'prevScene': 'Homescreen'
       }
@@ -78,12 +80,23 @@ export default class Homescreen extends React.Component {
   }
 
   takeImage() {
+    var getLocation = async function() {
+      return Exponent.Location.getCurrentPositionAsync({});
+    };
+
+    var latitude = 0, longitude = 0
+    getLocation().then((coords) => { 
+      latitude = coords.latitude;
+      longitude = coords.longitude;
+    });
+
     var newImage = async function() {
       return Exponent.ImagePicker.launchCameraAsync({});
     };
+
     newImage().then((image) => {
-      if (!image.cancelled) {
-        this._navigate('Memory', image.uri);
+      if (!image.cancelled) {  
+        this._navigate('Memory', image.uri, 0.0, 0.0);
       }
     });
   }
