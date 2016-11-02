@@ -55,7 +55,9 @@ export default class Homescreen extends React.Component {
     this.props.navigator.push({
       name: sceneName,
       passProps: {
-        'image': {uri: imageUri, latitude: imgLatitude, longitude: imgLongitude},
+        'image': {uri: imageUri},
+        'latitude': imgLatitude,
+        'longitude': imgLongitude,
         'username': this.props.username,
         'prevScene': 'Homescreen'
       }

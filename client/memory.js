@@ -22,6 +22,8 @@ export default class Memory extends React.Component {
       tags: [],
       filteredTags: [],
       status: false,
+      lat: this.props.latitude,
+      lon: this.props.longitude,
       databaseId: '',
       caption: ''
     };
@@ -57,6 +59,10 @@ export default class Memory extends React.Component {
       type: 'image/jpeg',
       name: 'image.jpg'
     };
+    var location = {
+      latitude: this.state.image.latitude,
+      longitude: this.state.image.longitude,
+    }
 
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
@@ -66,6 +72,7 @@ export default class Memory extends React.Component {
 
     var form = new FormData();
     form.append('memoryImage', photo);
+    form.append('location', location);
     fetch('https://dunkmasteralec.herokuapp.com/api/memories/upload', 
       {
         body: form,
