@@ -24,6 +24,16 @@ export default class Homescreen extends React.Component {
   }
 
   async componentDidMount() {
+
+        navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var initialPosition = JSON.stringify(position);
+        this.setState({initialPosition});
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+
     await Font.loadAsync({
       'pacifico': require('./assets/fonts/Pacifico.ttf'),
       'montserrat': require('./assets/fonts/Montserrat-Regular.ttf')
@@ -80,23 +90,23 @@ export default class Homescreen extends React.Component {
   }
 
   takeImage() {
-    var getLocation = async function() {
-      return Exponent.Location.getCurrentPositionAsync({});
-    };
-
-    var latitude = 0, longitude = 0
-    getLocation().then((coords) => { 
-      latitude = coords.latitude;
-      longitude = coords.longitude;
-    });
+    var latitude = 0, longitude = 0;    
+    navigator.geolocation.getCurrentPosition((position) => {  
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+        
+    },
+    (error) => alert(JSON.stringify(error)),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );    
 
     var newImage = async function() {
       return Exponent.ImagePicker.launchCameraAsync({});
     };
 
     newImage().then((image) => {
-      if (!image.cancelled) {  
-        this._navigate('Memory', image.uri, 0.0, 0.0);
+      if (!image.cancelled) { 
+        this._navigate('Memory', image.uri, latitude, longitude);
       }
     });
   }
