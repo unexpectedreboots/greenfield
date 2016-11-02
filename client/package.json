@@ -7,13 +7,14 @@
   "main": "main.js",
   "dependencies": {
     "@exponent/vector-icons": "^1.0.4",
+    "babel-plugin-transform-react-jsx-source": "^6.9.0",
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "exponent": "^10.0.4",
     "native-base": "^0.5.11",
     "react": "~15.3.2",
     "react-native": "github:exponentjs/react-native#sdk-10.1.2",
     "react-native-button": "^1.7.1",
-    "babel-plugin-transform-react-jsx-source": "^6.9.0",
-    "babel-preset-react-native-stage-0": "^1.0.1"
+    "watchman": "^0.1.8"
   },
   "devDependencies": {
     "jest-exponent": "^0.1.0",

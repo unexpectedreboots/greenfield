@@ -64,7 +64,7 @@ export default class Memories extends React.Component {
       console.log('AsyncStorage error: ' + error.message);
     }
 
-    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/all', {
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/all', {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + token
@@ -89,7 +89,7 @@ export default class Memories extends React.Component {
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
-    fetch('https://invalid-memories-greenfield.herokuapp.com/api/memories/search/' + this.state.searchQuery.toLowerCase(), {
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/search/' + this.state.searchQuery.toLowerCase(), {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + token
