@@ -72,7 +72,7 @@ export default class Memory extends React.Component {
 
     var form = new FormData();
     form.append('memoryImage', photo);
-    form.append('location', location);
+    // form.append('location', location);
     fetch('https://dunkmasteralec.herokuapp.com/api/memories/upload', 
       {
         body: form,
