@@ -29,8 +29,8 @@ exports.upload = function(req, res) {
             title: req.file.filename,
             filePath: image.url, 
             createdAt: Date.now(),
-            lat: req.file.latitude,
-            lon: req.file.longitude
+            // lat: req.file.latitude,
+            // lon: req.file.longitude
           }).then(function(memory) {
 
             fs.unlink('uploads/' + req.file.filename, function(err, success) {
