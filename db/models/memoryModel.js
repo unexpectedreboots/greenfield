@@ -5,6 +5,8 @@ var memorySchema = new Schema({
   title: String,
   filePath: String,
   createdAt: Date,
+  //lat: Number,
+  //lon: Number,
   analyses: [],
   tags: []
 });
