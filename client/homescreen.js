@@ -90,16 +90,18 @@ export default class Homescreen extends React.Component {
   }
 
   takeImage() {
-    var latitude = 0, longitude = 0;    
+    var latitude = 0, longitude = 0;  
+    console.log('before navigator');  
     navigator.geolocation.getCurrentPosition((position) => {  
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
+      console.log('latitude: ', latitude, 'longitude: ', longitude); 
         
     },
     (error) => alert(JSON.stringify(error)),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );    
-
+    console.log('after navigator');
     var newImage = async function() {
       return Exponent.ImagePicker.launchCameraAsync({});
     };
