@@ -10,6 +10,7 @@ import { Font } from 'exponent';
 import ModalView from './tagsModal';
 import { Container, Header, Title, Content, Footer, Button, Spinner } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
+import { Components } from 'exponent';
 
 var STORAGE_KEY = 'id_token';
 
@@ -196,9 +197,36 @@ export default class Memory extends React.Component {
             status={this.state.status} 
             tags={this.state.filteredTags}
           />
+          <DisplayMap />
           {loading}
         </Content>
       </Container>
+    );
+  }
+}
+
+class DisplayMap extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  static route = {
+    navigationBar: {
+      visible: false,
+    },
+  }
+
+  render() {
+    return (
+      <Components.MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
     );
   }
 }
@@ -274,5 +302,13 @@ const styles = StyleSheet.create({
 
   spinner: {
     padding: 100
+  },
+
+  map: {
+    ...StyleSheet.absoluteFillObject,
+    width: 125,
+    height: 125,
+    top: 450,
+    left: 125
   }
 });
