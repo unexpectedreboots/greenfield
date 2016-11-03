@@ -82,7 +82,7 @@ export default class Homescreen extends React.Component {
 
   getImage() {
     var oneImage = async function(){
-      return Exponent.ImagePicker.launchImageLibraryAsync({});
+      return Exponent.ImagePicker.launchImageLibraryAsync({allowsEditing: true});
     };
     oneImage().then((image)=> {
       if (!image.cancelled) {
