@@ -39,8 +39,11 @@ export default class CaptionView extends React.Component {
   }
 
 
-
 }
+
+/*****************************
+    MODAL STYLESHEET
+******************************/
 
 const styles = StyleSheet.create({
 
