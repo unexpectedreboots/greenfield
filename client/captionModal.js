@@ -34,8 +34,10 @@ export default class CaptionView extends React.Component {
   ******************************/
 
   render() {
+    return (
 
-    
+
+    );
   }
 
   /*****************************
