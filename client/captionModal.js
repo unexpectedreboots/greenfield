@@ -9,3 +9,8 @@ import {
 import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
+
+export default class CaptionView extends React.Component {
+
+  
+}
