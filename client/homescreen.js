@@ -93,7 +93,7 @@ export default class Homescreen extends React.Component {
 
   takeImage() {
     var newImage = async function() {
-      return Exponent.ImagePicker.launchCameraAsync({});
+      return Exponent.ImagePicker.launchCameraAsync({allowsEditing: true});
     };
     var latitude, longitude;  
     console.log('before navigator');  
@@ -102,7 +102,8 @@ export default class Homescreen extends React.Component {
       longitude = position.coords.longitude;
       console.log('latitude: ', latitude, 'longitude: ', longitude); 
       newImage().then((image) => {
-        if (!image.cancelled) { 
+        if (!image.cancelled) {
+
           this._navigate('Memory', image.uri, latitude, longitude);
         }
       });
