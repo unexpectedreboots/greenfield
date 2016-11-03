@@ -1,3 +1,7 @@
+/*****************************
+      REQUIRED MODULES
+******************************/
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -10,6 +14,10 @@ import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
 
+/*****************************
+    (EXPORTED) CAPTION VIEW
+******************************/
+
 export default class CaptionView extends React.Component {
 
   constructor(props) {
@@ -21,10 +29,16 @@ export default class CaptionView extends React.Component {
     };
   }
 
+  /*****************************
+        MODAL FUNCTIONS
+  ******************************/
+
   setVisibility(show) {
     // Accepts `true` or `false` to define visibility setting
     this.setState({visible: show});
   }
+
+
 
 }
 
