@@ -11,11 +11,11 @@ var _ = require('lodash');
 exports.upload = function(req, res) {
   console.log(req.body);
   console.log('POST /api/memories/upload. username:', req.user.username);
-  if (!req.files) {
+  if (!req.file) {
     console.log('Multer failed to save file');
     res.status(404).send();
   } else {
-    awsClient.upload('uploads/' + req.files.filename, {}, function(err, versions, meta) {
+    awsClient.upload('uploads/' + req.file.filename, {}, function(err, versions, meta) {
       if (err) { 
         console.log('s3 upload error: ', err); 
       }
@@ -26,14 +26,14 @@ exports.upload = function(req, res) {
 
           // Create the memory document and save to the server
           Memory.create({
-            title: req.files.filename,
+            title: req.file.filename,
             filePath: image.url, 
             createdAt: Date.now(),
             // lat: req.file.latitude,
             // lon: req.file.longitude
           }).then(function(memory) {
 
-            fs.unlink('uploads/' + req.files.filename, function(err, success) {
+            fs.unlink('uploads/' + req.file.filename, function(err, success) {
               if (err) {
                 console.log('Error deleting file,', err);
               }
