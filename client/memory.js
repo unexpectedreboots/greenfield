@@ -72,7 +72,7 @@ export default class Memory extends React.Component {
 
     var form = new FormData();
     form.append('memoryImage', photo);
-    form.append('location', location);
+    // form.append('location', location);
     fetch('https://dunkmasteralec.herokuapp.com/api/memories/upload', 
       {
         body: form,
@@ -83,7 +83,20 @@ export default class Memory extends React.Component {
         }
       }).then(function(res) {
         var databaseId = JSON.parse(res['_bodyInit']);
+        var memoryID = JSON.parse(res['_bodyText']);
         context.getMemoryData(databaseId, 0);
+        fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
+          {
+            body: {id: memoryID, lat: location.latitude, lon: location.longitude},
+            method: 'POST',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': 'Bearer ' + token
+            }
+          }).then(function(res) {
+            console.log('posted to endpoint');
+          }
+        
       });
   }
 

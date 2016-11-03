@@ -32,7 +32,6 @@ exports.upload = function(req, res) {
             lat: 0,
             lon: 0
           }).then(function(memory) {
-
             fs.unlink('uploads/' + req.file.filename, function(err, success) {
               if (err) {
                 console.log('Error deleting file,', err);
