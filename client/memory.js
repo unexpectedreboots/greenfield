@@ -83,33 +83,42 @@ export default class Memory extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       }).then(function(res) {
-        var memoryID = JSON.parse(res['_bodyText']);
+        // var memoryID = JSON.parse(res['_bodyText']);
         var databaseId = JSON.parse(res['_bodyInit']);
         console.log(context.props.latitude,"context.props.latitude before post");
-        context.updateLoc(memoryID, context);
+        context.updateLoc(databaseId);
         context.getMemoryData(databaseId, 0);
 
       });
         
   }
-  async updateLoc(memoryID, oldContext) {
+  async updateLoc(id) {
     var context = this;
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
-    console.log(token);
-    fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
-      {
-        method: 'POST',
-        body: {id: memoryID, lat: context.props.latitude, lon: context.props.longitude},
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        }
-      }).then(function(res) { console.log('success 109') }).catch(function(err) {console.log('err123: ', err);});
-  }
+
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/id/' + id, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }).then(function(res) {
+      var memory = JSON.parse(res['_bodyInit'])._id;
+      console.log(memory, 'memory');
+      fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
+        {
+          method: 'POST',
+          body: JSON.stringify({id: memory, lat: context.props.latitude, lon: context.props.longitude}),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        }).then(function(res) { console.log('success 109') }).catch(function(err) {console.log('err123: ', err);});
+    })
+  };
   async getMemoryData(id, pings) {
     var context = this;
     try {
