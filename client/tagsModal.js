@@ -5,7 +5,7 @@ import {
   View,
   AsyncStorage,
   Modal, 
-  Vibrate
+  Vibration
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
