@@ -30,7 +30,16 @@ export default class CaptionView extends React.Component {
   }
 
   /*****************************
-      RENDERED (JSX)
+        modal functions
+  ******************************/
+
+  setVisibility(show) {
+    // Accepts `true` or `false` to define visibility setting
+    this.setState({visible: show});
+  }
+
+  /*****************************
+        rendered (jsx)
   ******************************/
 
   render() {
@@ -39,17 +48,6 @@ export default class CaptionView extends React.Component {
 
     );
   }
-
-  /*****************************
-        MODAL FUNCTIONS
-  ******************************/
-
-  setVisibility(show) {
-    // Accepts `true` or `false` to define visibility setting
-    this.setState({visible: show});
-  }
-
-
 }
 
 /*****************************
