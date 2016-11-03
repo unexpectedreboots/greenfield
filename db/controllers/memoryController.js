@@ -112,13 +112,13 @@ exports.uploadGeoTags = function(req, res) {
   var lat = req.body.lat;
   var lon = req.body.lon;
 
+  console.log('Upload GEO TAGS:', id, lat, lon);
+
   Memory.update(
-    {id: id},
-    {$set: {
-      {lat: lat},
-      {lon: lon}
-    }
-  })
+    {_id: id}, 
+      {lat: lat,
+      lon: lon}
+    )
   .then(function(memory) {
     res.status(201).send(memory);
   })

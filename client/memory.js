@@ -50,6 +50,7 @@ export default class Memory extends React.Component {
     } else {
       this.getMemoryData(this.props.id, 0);
     }
+    console.log(this.props.latitude, "compdidmount latitude");
   }
 
   async uploadPhoto() {
@@ -60,10 +61,10 @@ export default class Memory extends React.Component {
       name: 'image.jpg'
     };
     var location = {
-      latitude: this.state.image.latitude,
-      longitude: this.state.image.longitude,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
     }
-
+    console.log(JSON.stringify(location), 'location line 67');
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
@@ -82,24 +83,42 @@ export default class Memory extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       }).then(function(res) {
+        // var memoryID = JSON.parse(res['_bodyText']);
         var databaseId = JSON.parse(res['_bodyInit']);
-        var memoryID = JSON.parse(res['_bodyText']);
+        console.log(context.props.latitude,"context.props.latitude before post");
+        context.updateLoc(databaseId);
         context.getMemoryData(databaseId, 0);
-        fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
-          {
-            body: {id: memoryID, lat: location.latitude, lon: location.longitude},
-            method: 'POST',
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer ' + token
-            }
-          }).then(function(res) {
-            console.log('posted to endpoint');
-          }
-        
-      });
-  }
 
+      });
+        
+  }
+  async updateLoc(id) {
+    var context = this;
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/id/' + id, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }).then(function(res) {
+      var memory = JSON.parse(res['_bodyInit'])._id;
+      console.log(memory, 'memory');
+      fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
+        {
+          method: 'POST',
+          body: JSON.stringify({id: memory, lat: context.props.latitude, lon: context.props.longitude}),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        }).then(function(res) { console.log('success 109') }).catch(function(err) {console.log('err123: ', err);});
+    })
+  };
   async getMemoryData(id, pings) {
     var context = this;
     try {
