@@ -14,12 +14,16 @@ export default class CaptionView extends React.Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      modalVisible: false,
+      visible: false,
       caption: ''
     };
   }
 
-}
+  setVisibility(show) {
+    // Accepts `true` or `false` to define visibility setting
+    this.setState({visible: show});
+  }
 
+}
