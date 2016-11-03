@@ -115,10 +115,10 @@ exports.uploadGeoTags = function(req, res) {
   Memory.update(
     {id: id},
     {$set: {
-      {lat: lat},
-      {lon: lon}
-    }
-  })
+        lat: lat,
+        lon: lon
+      }
+    })
   .then(function(memory) {
     res.status(201).send(memory);
   })

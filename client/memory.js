@@ -85,18 +85,15 @@ export default class Memory extends React.Component {
         var databaseId = JSON.parse(res['_bodyInit']);
         var memoryID = JSON.parse(res['_bodyText']);
         context.getMemoryData(databaseId, 0);
-        fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
-          {
-            body: {id: memoryID, lat: location.latitude, lon: location.longitude},
-            method: 'POST',
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer ' + token
-            }
-          }).then(function(res) {
-            console.log('posted to endpoint');
-          }
-        
+        // fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
+        //   {
+        //     body: {id: memoryID, lat: location.latitude, lon: location.longitude},
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data',
+        //       'Authorization': 'Bearer ' + token
+        //     }
+        //   })
       });
   }
 
