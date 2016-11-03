@@ -287,7 +287,7 @@ class MemoryDetails extends React.Component {
   }
 
   componentDidMount() {
-    Vibration.vibrate()
+    Vibration.vibrate();
   }
 
   render() {

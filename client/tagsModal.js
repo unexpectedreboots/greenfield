@@ -4,7 +4,8 @@ import {
   Text,
   View,
   AsyncStorage,
-  Modal
+  Modal, 
+  Vibrate
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
@@ -21,6 +22,7 @@ export default class ModalView extends React.Component {
   }
 
   async componentDidMount() {
+    Vibration.vibrate();
     await Font.loadAsync({
       'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
       'helvetica': require('./assets/fonts/HelveticaNeueMed.ttf')
