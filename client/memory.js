@@ -4,7 +4,8 @@ import {
   View,
   Text,
   AsyncStorage,
-  Image
+  Image,
+  Vibration
 } from 'react-native';
 import { Font } from 'exponent';
 import ModalView from './tagsModal';
@@ -283,6 +284,10 @@ class DisplayMap extends React.Component {
 class MemoryDetails extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    Vibration.vibrate();
   }
 
   render() {
