@@ -85,21 +85,31 @@ export default class Memory extends React.Component {
       }).then(function(res) {
         var memoryID = JSON.parse(res['_bodyText']);
         var databaseId = JSON.parse(res['_bodyInit']);
-        context.getMemoryData(databaseId, 0);
         console.log(context.props.latitude,"context.props.latitude before post");
-        fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
-          {
-            body: {id: memoryID, lat: context.props.latitude, lon: context.props.longitude},
-            method: 'POST',
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer ' + token
-            }
-          })
+        context.updateLoc(memoryID, context);
+        context.getMemoryData(databaseId, 0);
+
       });
         
   }
-
+  async updateLoc(memoryID, oldContext) {
+    var context = this;
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+    console.log(token);
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
+      {
+        method: 'POST',
+        body: {id: memoryID, lat: context.props.latitude, lon: context.props.longitude},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      }).then(function(res) { console.log('success 109') }).catch(function(err) {console.log('err123: ', err);});
+  }
   async getMemoryData(id, pings) {
     var context = this;
     try {
