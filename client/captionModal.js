@@ -30,6 +30,15 @@ export default class CaptionView extends React.Component {
   }
 
   /*****************************
+      RENDERED (JSX)
+  ******************************/
+
+  render() {
+
+    
+  }
+
+  /*****************************
         MODAL FUNCTIONS
   ******************************/
 
