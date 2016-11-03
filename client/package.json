@@ -6,6 +6,7 @@
   "private": true,
   "main": "main.js",
   "dependencies": {
+    "@exponent/react-native-fade-in-image": "^1.0.0",
     "@exponent/vector-icons": "^1.0.4",
     "babel-plugin-transform-react-jsx-source": "^6.9.0",
     "babel-preset-react-native-stage-0": "^1.0.1",
@@ -14,6 +15,7 @@
     "react": "~15.3.2",
     "react-native": "github:exponentjs/react-native#sdk-10.1.2",
     "react-native-button": "^1.7.1",
+    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "watchman": "^0.1.8"
   },
   "devDependencies": {
