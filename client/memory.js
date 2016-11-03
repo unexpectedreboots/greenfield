@@ -134,6 +134,7 @@ export default class Memory extends React.Component {
       }
     }).then(function(res) {
       var memory = JSON.parse(res['_bodyInit']);
+      console.log(memory);
       var microsoftTags = [];
       var clarifaiTags = [];
       var caption = [];
@@ -157,7 +158,9 @@ export default class Memory extends React.Component {
         status: true, 
         databaseId: id,
         date: date,
-        caption: caption
+        caption: caption,
+        lat: memory.lat,
+        lon: memory.lon
       });
     }).catch(function(err) {
       console.log('ERROR', err);
@@ -236,7 +239,7 @@ export default class Memory extends React.Component {
             status={this.state.status} 
             tags={this.state.filteredTags}
           />
-          <DisplayMap />
+          <DisplayMap lat={this.state.lat} lon={this.state.lon} />
           {loading}
         </Content>
       </Container>
@@ -260,12 +263,19 @@ class DisplayMap extends React.Component {
       <Components.MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: 38.78825,
+          longitude: -123.4324,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
+          longitudeDelta: 0.0421
+        }} 
+      >
+        <Components.MapView.Marker
+          coordinate={
+            {latitude: this.props.lat,
+            longitude: this.props.lon}
+          }
+        />
+      </Components.MapView>
     );
   }
 }
