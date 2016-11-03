@@ -29,8 +29,8 @@ exports.upload = function(req, res) {
             title: req.file.filename,
             filePath: image.url, 
             createdAt: Date.now(),
-            // lat: req.file.latitude,
-            // lon: req.file.longitude
+            lat: 0,
+            lon: 0
           }).then(function(memory) {
             fs.unlink('uploads/' + req.file.filename, function(err, success) {
               if (err) {
@@ -105,6 +105,26 @@ exports.upload = function(req, res) {
       });
     });
   }
+};
+
+exports.uploadGeoTags = function(req, res) {
+  var id = req.body.id;
+  var lat = req.body.lat;
+  var lon = req.body.lon;
+
+  Memory.update(
+    {id: id},
+    {$set: {
+      {lat: lat},
+      {lon: lon}
+    }
+  })
+  .then(function(memory) {
+    res.status(201).send(memory);
+  })
+  .catch(function(err) {
+    res.status(404).send(err);
+  });
 };
 
 exports.fetchMemories = function(req, res) {

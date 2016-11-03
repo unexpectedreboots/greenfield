@@ -30,6 +30,9 @@ router.use('/', jwtCheck);
 // User uploads an image to create a memory
 router.route('/upload').post(upload.single('memoryImage'), memoryController.upload);
 
+// User uploads geo-location along with memory
+router.route('/uploadloc').post(memoryController.uploadGeoTags);
+
 // User clicks button to view all memories
 router.route('/all').get(memoryController.fetchMemories);
 
