@@ -118,7 +118,7 @@ exports.uploadGeoTags = function(req, res) {
     {_id: id}, 
       {lat: lat,
       lon: lon}
-    ),
+    )
   .then(function(memory) {
     res.status(201).send(memory);
   })
