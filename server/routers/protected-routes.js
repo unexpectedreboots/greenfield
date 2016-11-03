@@ -28,7 +28,7 @@ var jwtCheck = jwt({
 router.use('/', jwtCheck);
 
 // User uploads an image to create a memory
-router.route('/upload').post(upload.fields([{name:'memoryImage'}]), memoryController.upload);
+router.route('/upload').post(upload.array(['memoryImage']), memoryController.upload);
 
 // User clicks button to view all memories
 router.route('/all').get(memoryController.fetchMemories);
