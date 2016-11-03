@@ -108,6 +108,26 @@ exports.upload = function(req, res) {
   }
 };
 
+exports.uploadGeoTags = function(req, res) {
+  var id = req.body.id;
+  var lat = req.body.lat;
+  var lon = req.body.lon;
+
+  Memory.update(
+    {id: id},
+    {$set: {
+      {lat: lat},
+      {lon: lon}
+    }
+  })
+  .then(function(memory) {
+    res.status(201).send(memory);
+  })
+  .catch(function(err) {
+    res.status(404).send(err);
+  });
+};
+
 exports.fetchMemories = function(req, res) {
   console.log('GET /api/memories/all. username:', req.user.username);
   User.findOne({ username: req.user.username }).populate('memories').then(function(user) {
