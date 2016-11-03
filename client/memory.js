@@ -263,8 +263,8 @@ class DisplayMap extends React.Component {
       <Components.MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: this.props.lat,
+          longitude: this.props.lon,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }} 
