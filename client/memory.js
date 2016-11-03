@@ -82,6 +82,7 @@ export default class Memory extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       }).then(function(res) {
+        console.log(res.body);
         var databaseId = JSON.parse(res['_bodyInit']);
         context.getMemoryData(databaseId, 0);
       });
