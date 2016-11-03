@@ -50,6 +50,7 @@ export default class Memory extends React.Component {
     } else {
       this.getMemoryData(this.props.id, 0);
     }
+    console.log(this.props.latitude, "compdidmount latitude");
   }
 
   async uploadPhoto() {
@@ -60,10 +61,10 @@ export default class Memory extends React.Component {
       name: 'image.jpg'
     };
     var location = {
-      latitude: this.state.image.latitude,
-      longitude: this.state.image.longitude,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
     }
-
+    console.log(JSON.stringify(location), 'location line 67');
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
@@ -82,19 +83,21 @@ export default class Memory extends React.Component {
           'Authorization': 'Bearer ' + token
         }
       }).then(function(res) {
-        var databaseId = JSON.parse(res['_bodyInit']);
         var memoryID = JSON.parse(res['_bodyText']);
+        var databaseId = JSON.parse(res['_bodyInit']);
         context.getMemoryData(databaseId, 0);
-        // fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
-        //   {
-        //     body: {id: memoryID, lat: location.latitude, lon: location.longitude},
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //       'Authorization': 'Bearer ' + token
-        //     }
-        //   })
+        console.log(context.props.latitude,"context.props.latitude before post");
+        fetch('https://dunkmasteralec.herokuapp.com/api/memories/uploadloc', 
+          {
+            body: {id: memoryID, lat: context.props.latitude, lon: context.props.longitude},
+            method: 'POST',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': 'Bearer ' + token
+            }
+          })
       });
+        
   }
 
   async getMemoryData(id, pings) {

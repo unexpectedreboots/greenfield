@@ -92,27 +92,25 @@ export default class Homescreen extends React.Component {
   }
 
   takeImage() {
-    var latitude = 0, longitude = 0;  
+    var newImage = async function() {
+      return Exponent.ImagePicker.launchCameraAsync({});
+    };
+    var latitude, longitude;  
     console.log('before navigator');  
     navigator.geolocation.getCurrentPosition((position) => {  
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
       console.log('latitude: ', latitude, 'longitude: ', longitude); 
-        
+      newImage().then((image) => {
+        if (!image.cancelled) { 
+          this._navigate('Memory', image.uri, latitude, longitude);
+        }
+      });
     },
     (error) => alert(JSON.stringify(error)),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );    
     console.log('after navigator');
-    var newImage = async function() {
-      return Exponent.ImagePicker.launchCameraAsync({});
-    };
-
-    newImage().then((image) => {
-      if (!image.cancelled) { 
-        this._navigate('Memory', image.uri, latitude, longitude);
-      }
-    });
   }
 
   render() {
