@@ -49,8 +49,11 @@ export default class CaptionView extends React.Component {
           <Text>Edit Caption</Text>
         </Button>
 
-        <Modal>
-
+        <Modal
+          animationType={'slide'}
+          transparent={true}
+          visible={this.state.visible}
+        >
         </Modal>
       </View>
     );
