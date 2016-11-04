@@ -127,6 +127,21 @@ exports.uploadGeoTags = function(req, res) {
   });
 };
 
+exports.updateCaption = function(req, res) {
+  var caption = req.body.caption;
+  var id = req.body.id;
+
+  Memory.update(
+    {_id: id}, 
+    {analyses[2].tags[0]: caption}
+  ).then(function(memory) {
+    res.status(201).send(memory);
+  })
+  .catch(function(err) {
+    res.status(404).send(err);
+  });
+};
+
 exports.fetchMemories = function(req, res) {
   console.log('GET /api/memories/all. username:', req.user.username);
   User.findOne({ username: req.user.username }).populate('memories').then(function(user) {
