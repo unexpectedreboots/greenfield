@@ -43,6 +43,7 @@ export default class CaptionView extends React.Component {
 
   save() {
     // Method called for SAVE button onPress
+    updateCaption(this.state.caption);
     this.setState({visible: false});
   }
 
@@ -56,6 +57,7 @@ export default class CaptionView extends React.Component {
       console.log('AsyncStorage error:', error.message);
     }
 
+    // Attempt to access the `UPDATE CAPTION` endpoint
     fetch('https://dunkmasteralec.herokuapp.com/api/memories/updatecaption', {
       method: 'POST',
       body: 
