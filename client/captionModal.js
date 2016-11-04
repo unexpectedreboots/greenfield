@@ -56,9 +56,13 @@ export default class CaptionView extends React.Component {
         >
           <Content style={styles.modal}>
             <View>
+            
+              {/* [x] exit button to close the modal */}
               <Button transparent onPress={this.setVisibility.bind(this, false)}>
                 <Ionicons name="ios-close" size={40} color="#444" />
               </Button>
+
+
             </View>
           </Content>
         </Modal>
