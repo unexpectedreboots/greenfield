@@ -39,10 +39,12 @@ export default class CaptionView extends React.Component {
   }
 
   save() {
+    // Method called for SAVE button onPress
     this.setState({visible: false});
   }
 
   updateCaption(caption) {
+    // Method that calls API endpoint to update image caption
     try {
       var token = await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
