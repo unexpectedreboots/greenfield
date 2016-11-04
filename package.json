@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/hr-memories/greenfield#readme",
   "dependencies": {
+    "@exponent/react-native-fade-in-image": "^1.0.0",
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
