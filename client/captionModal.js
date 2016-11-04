@@ -43,7 +43,12 @@ export default class CaptionView extends React.Component {
   }
 
   updateCaption(caption) {
-    
+    try {
+      var token = await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error:', error.message);
+    }
+
   }
 
   /*****************************
