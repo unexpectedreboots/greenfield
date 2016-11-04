@@ -43,7 +43,7 @@ export default class CaptionView extends React.Component {
 
   save() {
     // Method called for SAVE button onPress
-    updateCaption(this.state.caption);
+    this.updateCaption(this.state.caption);
     this.setState({visible: false});
   }
 
