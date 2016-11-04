@@ -68,7 +68,7 @@ export default class ModalView extends React.Component {
       }
     });
     this.setState({modalVisible: false});
-    this.setState({text: ''});
+    this.setState({text: ''}); 
     
   }
 
@@ -103,15 +103,14 @@ export default class ModalView extends React.Component {
               }
               </View>
             </View>
-            <View>
               <View style={{padding: 10}}>
                       <TextInput
-                        style={{height: 40, width: 150}} 
-                        ref= "tag" 
-                        placeholder="Type here to translate!"
+                        style={{height: 50, width: 330, justifyContent: 'center', alignItems: 'center', marginTop: 5}}  
+                        placeholder="Type custom tags, seaparated by commas"
                         onChangeText={(text) => this.setState({text: text})}
                       />
                     </View>
+            <View>
               <Button success onPress={this.onSubmit.bind(this)} style={styles.button}>
                 <Text style={styles.buttonText}>Save</Text>
               </Button>
@@ -188,7 +187,9 @@ const styles = StyleSheet.create({
 
   button: {
     margin: 10,
-    backgroundColor: '#f6755e'
+    backgroundColor: '#f6755e',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   buttonText: {
