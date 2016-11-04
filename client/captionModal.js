@@ -39,7 +39,7 @@ export default class CaptionView extends React.Component {
   }
 
   save() {
-
+    this.setState({visible: false});
   }
 
   /*****************************
