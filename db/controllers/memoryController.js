@@ -127,6 +127,19 @@ exports.uploadGeoTags = function(req, res) {
   });
 };
 
+exports.delete = function(req, res) {
+  Memory.remove({_id: req.body.id;}, function(err) {
+    if (!err) {
+            console.log('fucking removed toaster');
+            res.status(201).end();
+    }
+    else {
+            console.log("ERROR ERASING ALL FILES");
+            res.status(404).send(err);
+    }
+  });
+
+}
 exports.fetchMemories = function(req, res) {
   console.log('GET /api/memories/all. username:', req.user.username);
   User.findOne({ username: req.user.username }).populate('memories').then(function(user) {

@@ -33,6 +33,9 @@ router.route('/upload').post(upload.single('memoryImage'), memoryController.uplo
 // User uploads geo-location along with memory
 router.route('/uploadloc').post(memoryController.uploadGeoTags);
 
+// User deletes an image to remove from memory
+router.route('/delete').post(memoryController.delete);
+
 // User clicks button to view all memories
 router.route('/all').get(memoryController.fetchMemories);
 

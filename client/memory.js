@@ -223,6 +223,9 @@ export default class Memory extends React.Component {
             <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
           <Title style={styles.headerText}>{this.state.date}</Title>
+          <Button transparent>
+            <Ionicons name="ios-trash" size={35} color="#444" />
+          </Button>  
           <Button transparent onPress={this._navigate.bind(this)}>
             <Ionicons name="ios-home" size={35} color="#444" />
           </Button>
