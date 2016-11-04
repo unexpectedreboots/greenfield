@@ -12,6 +12,7 @@ import ModalView from './tagsModal';
 import { Container, Header, Title, Content, Footer, Button, Spinner } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
 import { Components } from 'exponent';
+import CaptionView from './captionModal';
 
 var STORAGE_KEY = 'id_token';
 
@@ -239,6 +240,10 @@ export default class Memory extends React.Component {
           }>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
           <Text style={styles.caption}>{this.state.caption}</Text>
+          <CaptionView 
+            caption={this.state.caption}
+            id={this.state.databaseId}
+            />
           <MemoryDetails 
             status={this.state.status} 
             tags={this.state.filteredTags}

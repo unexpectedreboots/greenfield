@@ -36,6 +36,9 @@ router.route('/uploadloc').post(memoryController.uploadGeoTags);
 // User deletes an image to remove from memory
 router.route('/delete').post(memoryController.delete);
 
+// User updates caption on a specific memory
+router.route('/updatecaption').post(memoryController.updateCaption);
+
 // User clicks button to view all memories
 router.route('/all').get(memoryController.fetchMemories);
 
