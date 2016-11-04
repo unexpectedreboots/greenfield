@@ -42,6 +42,10 @@ export default class CaptionView extends React.Component {
     this.setState({visible: false});
   }
 
+  updateCaption(caption) {
+    
+  }
+
   /*****************************
         rendered (jsx)
   ******************************/
