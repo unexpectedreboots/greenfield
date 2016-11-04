@@ -18,6 +18,9 @@ import { Ionicons } from '@exponent/vector-icons';
     (EXPORTED) CAPTION VIEW
 ******************************/
 
+// variable required to retrieve JWT
+var STORAGE_KEY = 'id_token';
+
 export default class CaptionView extends React.Component {
 
   constructor(props) {
@@ -43,14 +46,13 @@ export default class CaptionView extends React.Component {
     this.setState({visible: false});
   }
 
-  updateCaption(caption) {
+  async updateCaption(caption) {
     // Method that calls API endpoint to update image caption
     try {
       var token = await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
       console.log('AsyncStorage error:', error.message);
     }
-
   }
 
   /*****************************
