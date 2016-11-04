@@ -364,10 +364,10 @@ const styles = StyleSheet.create({
   },
 
   map: {
-    ...StyleSheet.absoluteFillObject,
-    width: 125,
-    height: 125,
-    top: 450,
-    left: 125
+    // ...StyleSheet.absoluteFillObject,
+    width: 200,
+    height: 200,
+    // top: 450,
+    // left: 125
   }
 });
