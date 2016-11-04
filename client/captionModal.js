@@ -54,9 +54,11 @@ export default class CaptionView extends React.Component {
           transparent={true}
           visible={this.state.visible}
         >
-          <Content>
+          <Content style={styles.modal}>
             <View>
-              
+              <Button transparent onPress={this.setVisibility.bind(this, false)}>
+                <Ionicons name="ios-close" size={40} color="#444" />
+              </Button>
             </View>
           </Content>
         </Modal>
@@ -70,5 +72,7 @@ export default class CaptionView extends React.Component {
 ******************************/
 
 const styles = StyleSheet.create({
-
+  modal: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)'
+  }
 });
