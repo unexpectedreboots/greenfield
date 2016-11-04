@@ -56,12 +56,23 @@ export default class CaptionView extends React.Component {
       console.log('AsyncStorage error:', error.message);
     }
 
-    fetch('', {
-
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/updatecaption', {
+      method: 'POST',
+      body: 
+        JSON.stringify({
+          id: this.props.id,
+          caption: this.state.caption
+        }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
     }).then(function(result) {
-
+      console.log('Successfully updated caption!');
+      console.log(result);
     }).catch(function(error) {
-
+      console.log('Did not update caption :(');
+      console.log(error);
     });
   }
 
