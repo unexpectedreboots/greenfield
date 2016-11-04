@@ -11,7 +11,7 @@ import {
   Modal
 } from 'react-native';
 import { Font } from 'exponent';
-import { Container, Content, Button } from 'native-base';
+import { Container, Content, Button, Input } from 'native-base';
 import { Ionicons } from '@exponent/vector-icons';
 
 /*****************************
@@ -56,12 +56,17 @@ export default class CaptionView extends React.Component {
         >
           <Content style={styles.modal}>
             <View>
-            
+
               {/* [x] exit button to close the modal */}
               <Button transparent onPress={this.setVisibility.bind(this, false)}>
                 <Ionicons name="ios-close" size={40} color="#444" />
               </Button>
 
+              {/* caption editing field and save button */}
+              <Input />
+              <Button>
+                <Text>Save</Text>
+              </Button>
 
             </View>
           </Content>
