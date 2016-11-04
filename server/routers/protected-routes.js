@@ -33,6 +33,9 @@ router.route('/upload').post(upload.single('memoryImage'), memoryController.uplo
 // User uploads geo-location along with memory
 router.route('/uploadloc').post(memoryController.uploadGeoTags);
 
+// User updates caption on a specific memory
+router.route('/updatecaption').post(memoryController.updateCaption);
+
 // User clicks button to view all memories
 router.route('/all').get(memoryController.fetchMemories);
 
