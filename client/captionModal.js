@@ -48,6 +48,8 @@ export default class CaptionView extends React.Component {
 
   async updateCaption(caption) {
     // Method that calls API endpoint to update image caption
+    
+    // Attempt to retrieve JWT stored in AsyncStorage
     try {
       var token = await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
@@ -62,15 +64,19 @@ export default class CaptionView extends React.Component {
   render() {
     return (
       <View>
+        {/* rendered button on `memory` view */}
         <Button onPress={this.setVisibility.bind(this, true)}>
           <Text>Edit Caption</Text>
         </Button>
 
+        {/* popup modal settings */}
         <Modal
           animationType={'slide'}
           transparent={true}
           visible={this.state.visible}
         >
+
+          {/* modal view for editing captions */}
           <Content style={styles.modal}>
             <View>
 
