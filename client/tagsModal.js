@@ -5,7 +5,8 @@ import {
   View,
   AsyncStorage,
   Modal, 
-  Vibration
+  Vibration,
+  TextInput
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
@@ -17,7 +18,8 @@ export default class ModalView extends React.Component {
     super(props);
     this.state = {
       modalVisible: false,
-      filteredTags: []
+      filteredTags: [],
+      text: ''
     };
   }
 
@@ -60,7 +62,14 @@ export default class ModalView extends React.Component {
     this.setState({
       filteredTags: []
     });
+    this.state.text.split(',').forEach((tag) => {
+      if (tag !== '') {
+        this.addTag(tag);
+      }
+    });
     this.setState({modalVisible: false});
+    this.setState({text: ''});
+    
   }
 
   render() {
@@ -95,6 +104,14 @@ export default class ModalView extends React.Component {
               </View>
             </View>
             <View>
+              <View style={{padding: 10}}>
+                      <TextInput
+                        style={{height: 40, width: 150}} 
+                        ref= "tag" 
+                        placeholder="Type here to translate!"
+                        onChangeText={(text) => this.setState({text: text})}
+                      />
+                    </View>
               <Button success onPress={this.onSubmit.bind(this)} style={styles.button}>
                 <Text style={styles.buttonText}>Save</Text>
               </Button>
