@@ -55,6 +55,14 @@ export default class CaptionView extends React.Component {
     } catch (error) {
       console.log('AsyncStorage error:', error.message);
     }
+
+    fetch('', {
+
+    }).then(function(result) {
+
+    }).catch(function(error) {
+
+    });
   }
 
   /*****************************
