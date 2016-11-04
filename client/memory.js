@@ -237,7 +237,10 @@ export default class Memory extends React.Component {
           }>
           <Image style={styles.image} resizeMode={Image.resizeMode.contain} source={{uri: this.state.image.uri}}/>
           <Text style={styles.caption}>{this.state.caption}</Text>
-          <CaptionView caption={this.state.caption} />
+          <CaptionView 
+            caption={this.state.caption}
+            id={this.state.databaseId}
+            />
           <MemoryDetails 
             status={this.state.status} 
             tags={this.state.filteredTags}
