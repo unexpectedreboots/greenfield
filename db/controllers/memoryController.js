@@ -128,7 +128,7 @@ exports.uploadGeoTags = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-  Memory.remove({_id: req.body.id;}, function(err) {
+  Memory.remove({_id: req.body.id}, function(err) {
     if (!err) {
             console.log('fucking removed toaster');
             res.status(201).end();
