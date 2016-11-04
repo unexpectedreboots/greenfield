@@ -54,6 +54,11 @@ export default class CaptionView extends React.Component {
           transparent={true}
           visible={this.state.visible}
         >
+          <Content>
+            <View>
+              
+            </View>
+          </Content>
         </Modal>
       </View>
     );
