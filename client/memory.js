@@ -208,6 +208,25 @@ export default class Memory extends React.Component {
     })
   }
 
+  async deleteMemory() {
+    try {
+      var token =  await AsyncStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+    fetch('https://dunkmasteralec.herokuapp.com/api/memories/delete', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: this.state.databaseId
+      })
+    }).catch(function(err) {
+      
+    })
+  }
   render() {
     var loading = this.state.status ? 
       <ModalView 
