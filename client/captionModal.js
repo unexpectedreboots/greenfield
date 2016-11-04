@@ -25,7 +25,7 @@ export default class CaptionView extends React.Component {
 
     this.state = {
       visible: false,
-      caption: 'HEYA'
+      caption: ''
     };
   }
 
@@ -65,6 +65,8 @@ export default class CaptionView extends React.Component {
               {/* caption editing field and save button */}
               <Input
                 placeholder={this.props.caption}
+                onChangeText={(text) => this.setState({caption: text})}
+                value={this.state.caption}
               />
               <Button>
                 <Text>Save</Text>
