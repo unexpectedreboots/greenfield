@@ -48,6 +48,10 @@ export default class CaptionView extends React.Component {
         <Button onPress={this.setVisibility.bind(this, true)}>
           <Text>Edit Caption</Text>
         </Button>
+
+        <Modal>
+
+        </Modal>
       </View>
     );
   }
