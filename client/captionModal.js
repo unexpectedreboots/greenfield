@@ -38,6 +38,10 @@ export default class CaptionView extends React.Component {
     this.setState({visible: show});
   }
 
+  save() {
+
+  }
+
   /*****************************
         rendered (jsx)
   ******************************/
@@ -68,7 +72,7 @@ export default class CaptionView extends React.Component {
                 onChangeText={(text) => this.setState({caption: text})}
                 value={this.state.caption}
               />
-              <Button>
+              <Button onPress={this.save.bind(this)}>
                 <Text>Save</Text>
               </Button>
 
