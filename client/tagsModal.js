@@ -5,7 +5,8 @@ import {
   View,
   AsyncStorage,
   Modal, 
-  Vibration
+  Vibration,
+  TextInput
 } from 'react-native';
 import { Font } from 'exponent';
 import { Container, Content, Button } from 'native-base';
@@ -17,7 +18,8 @@ export default class ModalView extends React.Component {
     super(props);
     this.state = {
       modalVisible: false,
-      filteredTags: []
+      filteredTags: [],
+      text: ''
     };
   }
 
@@ -60,7 +62,14 @@ export default class ModalView extends React.Component {
     this.setState({
       filteredTags: []
     });
+    this.state.text.split(',').forEach((tag) => {
+      if (tag !== '') {
+        this.addTag(tag);
+      }
+    });
     this.setState({modalVisible: false});
+    this.setState({text: ''}); 
+    
   }
 
   render() {
@@ -94,6 +103,13 @@ export default class ModalView extends React.Component {
               }
               </View>
             </View>
+              <View style={{padding: 10}}>
+                      <TextInput
+                        style={{height: 50, width: 330, justifyContent: 'center', alignItems: 'center', marginTop: 5}}  
+                        placeholder="Type custom tags, seaparated by commas"
+                        onChangeText={(text) => this.setState({text: text})}
+                      />
+                    </View>
             <View>
               <Button success onPress={this.onSubmit.bind(this)} style={styles.button}>
                 <Text style={styles.buttonText}>Save</Text>
@@ -171,7 +187,9 @@ const styles = StyleSheet.create({
 
   button: {
     margin: 10,
-    backgroundColor: '#f6755e'
+    backgroundColor: '#f6755e',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   buttonText: {
