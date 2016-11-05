@@ -209,6 +209,7 @@ export default class Memory extends React.Component {
   }
 
   async deleteMemory() {
+    var context = this;
     try {
       var token =  await AsyncStorage.getItem(STORAGE_KEY);
     } catch (error) {
@@ -223,10 +224,20 @@ export default class Memory extends React.Component {
       body: JSON.stringify({
         id: this.state.databaseId
       })
+    }).then(function(res) {
+      console.log('success');
+     context._navigate(); 
     }).catch(function(err) {
       
     })
   }
+
+updateCap(caption) {
+  this.setState({
+    caption: caption
+  })
+}
+
   render() {
     var loading = this.state.status ? 
       <ModalView 
@@ -243,7 +254,7 @@ export default class Memory extends React.Component {
             <Ionicons name="ios-arrow-back" size={32} style={{color: '#25a2c3', marginTop: 5}}/>
           </Button>
           <Title style={styles.headerText}>{this.state.date}</Title>
-          <Button transparent>
+          <Button transparent onPress={() => {this.deleteMemory()}}>
             <Ionicons name="ios-trash" size={35} color="#444" />
           </Button>  
           <Button transparent onPress={this._navigate.bind(this)}>
@@ -262,6 +273,7 @@ export default class Memory extends React.Component {
           <CaptionView 
             caption={this.state.caption}
             id={this.state.databaseId}
+            updateCap={this.updateCap.bind(this)}
             />
           <MemoryDetails 
             status={this.state.status} 
