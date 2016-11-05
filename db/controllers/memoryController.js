@@ -146,7 +146,7 @@ exports.updateCaption = function(req, res) {
 
   Memory.update(
     {_id: id}, 
-    {analyses[2].original: caption}
+    {'analyses[2].original': caption}
   ).then(function(memory) {
     res.status(201).send(memory);
   })
