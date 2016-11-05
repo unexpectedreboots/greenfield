@@ -147,7 +147,7 @@ exports.updateCaption = function(req, res) {
   Memory.findOne({_id: id}).then(function(memory) {
     console.log(memory.analyses);
     tempAnalyses = memory.analyses;
-    tempAnalyses[2].original = caption;
+    tempAnalyses[2].tags[0] = caption;
     Memory.update(
       {_id: id}, 
       {analyses: tempAnalyses})
