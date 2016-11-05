@@ -127,18 +127,36 @@ exports.uploadGeoTags = function(req, res) {
   });
 };
 
+exports.delete = function(req, res) {
+  Memory.remove({_id: req.body.id}, function(err) {
+    if (!err) {
+            console.log('fucking removed toaster');
+            res.status(201).end();
+    }
+    else {
+            console.log("ERROR ERASING ALL FILES");
+            res.status(404).send(err);
+    }
+  });
+
+}
 exports.updateCaption = function(req, res) {
   var caption = req.body.caption;
   var id = req.body.id;
-
-  Memory.update(
-    {_id: id}, 
-    {analyses[2].tags[0]: caption}
-  ).then(function(memory) {
-    res.status(201).send(memory);
-  })
-  .catch(function(err) {
-    res.status(404).send(err);
+  var tempAnalyses ='';
+  Memory.findOne({_id: id}).then(function(memory) {
+    console.log(memory.analyses);
+    tempAnalyses = memory.analyses;
+    tempAnalyses[2].tags[0] = caption;
+    Memory.update(
+      {_id: id}, 
+      {analyses: tempAnalyses})
+    .then(function(memory) {
+      res.status(201).send(memory);
+    })
+    .catch(function(err) {
+      res.status(404).send(err);
+    });
   });
 };
 

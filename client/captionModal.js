@@ -71,7 +71,9 @@ export default class CaptionView extends React.Component {
       }
     }).then(function(result) {
       console.log('Successfully updated caption!');
+      this.props.updateCap(caption);
       console.log(result);
+      this.props.caption = caption;
     }).catch(function(error) {
       console.log('Did not update caption :(');
       console.log(error);
