@@ -5,7 +5,8 @@ import {
   Text,
   AsyncStorage,
   Image,
-  Vibration
+  Vibration,
+  TextInput
 } from 'react-native';
 import { Font } from 'exponent';
 import ModalView from './tagsModal';
