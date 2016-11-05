@@ -143,19 +143,21 @@ exports.delete = function(req, res) {
 exports.updateCaption = function(req, res) {
   var caption = req.body.caption;
   var id = req.body.id;
+  var tempAnalyses ='';
   Memory.findOne({_id: id}).then(function(memory) {
     console.log(memory.analyses);
-  })
-
-  // Memory.update(
-  //   {_id: id}, 
-  //   {analyses: caption}
-  // ).then(function(memory) {
-  //   res.status(201).send(memory);
-  // })
-  // .catch(function(err) {
-  //   res.status(404).send(err);
-  // });
+    tempAnalyses = memory.analyses;
+    tempAnalyses[2].original = caption;
+    Memory.update(
+      {_id: id}, 
+      {analyses: tempAnalyses})
+    .then(function(memory) {
+      res.status(201).send(memory);
+    })
+    .catch(function(err) {
+      res.status(404).send(err);
+    });
+  });
 };
 
 exports.fetchMemories = function(req, res) {
